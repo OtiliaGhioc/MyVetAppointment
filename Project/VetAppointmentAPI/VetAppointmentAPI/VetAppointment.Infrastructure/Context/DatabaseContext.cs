@@ -13,6 +13,7 @@ namespace VetAppointment.Infrastructure.Context
         public DbSet<PrescriptionDrug> PrescriptionDrugs => Set<PrescriptionDrug>();
         public DbSet<Drug> Drugs => Set<Drug>();
         public DbSet<DrugStock> DrugStocks => Set<DrugStock>();
+        public DbSet<BillingEntry> BillingEntries => Set<BillingEntry>();
 
         public void Save()
         {

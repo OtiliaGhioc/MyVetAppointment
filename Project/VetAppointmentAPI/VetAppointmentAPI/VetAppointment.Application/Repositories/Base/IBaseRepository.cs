@@ -6,6 +6,7 @@ namespace VetAppointment.Application.Repositories.Base
     {
         T Add(T entity);
         T Update(T entity);
+        void Delete(T entity);
         T? Get(Guid id);
         IEnumerable<T> All();
         IEnumerable<T> Find(Expression<Func<T, bool>> predicate);

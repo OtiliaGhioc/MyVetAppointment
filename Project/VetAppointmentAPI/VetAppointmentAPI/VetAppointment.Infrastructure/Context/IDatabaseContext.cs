@@ -13,6 +13,7 @@ namespace VetAppointment.Infrastructure.Context
         DbSet<PrescriptionDrug> PrescriptionDrugs { get; }
         DbSet<Drug> Drugs { get; }
         DbSet<DrugStock> DrugStocks { get; }
+        DbSet<BillingEntry> BillingEntries { get; }
         void Save();
 
         Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry<TEntity> Add<TEntity>(TEntity entity) where TEntity : class;
@@ -22,6 +23,8 @@ namespace VetAppointment.Infrastructure.Context
         TEntity? Find<TEntity>(params object?[]? keyValues) where TEntity : class;
 
         Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry Update(object entity);
+
+        Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry Remove(object entity);
 
         int SaveChanges();
     }
