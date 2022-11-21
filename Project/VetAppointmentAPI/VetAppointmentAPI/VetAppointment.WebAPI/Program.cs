@@ -12,13 +12,13 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IDatabaseContext, DatabaseContext>();
-//builder.Services.AddScoped<IAppointmentRepository, AppointmentRepository>();
-//builder.Services.AddScoped<IBillingEntryRepository, BillingEntryRepository>();
-//builder.Services.AddScoped<IDrugRepository, DrugRepository>();
-//builder.Services.AddScoped<IMedicalHistoryEntryRepository, MedicalHistoryEntryRepository>();
-//builder.Services.AddScoped<IOfficeRepository, OfficeRepository>();
-//builder.Services.AddScoped<IPrescriptionRepository, PrescriptionRepository>();
-//builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IAppointmentRepository, AppointmentRepository>();
+builder.Services.AddScoped<IBillingEntryRepository, BillingEntryRepository>();
+builder.Services.AddScoped<IDrugRepository, DrugRepository>();
+builder.Services.AddScoped<IMedicalHistoryEntryRepository, MedicalHistoryEntryRepository>();
+builder.Services.AddScoped<IOfficeRepository, OfficeRepository>();
+builder.Services.AddScoped<IPrescriptionRepository, PrescriptionRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 var app = builder.Build();
 

@@ -13,7 +13,16 @@ namespace VetAppointment.Infrastructure.Context
         DbSet<PrescriptionDrug> PrescriptionDrugs { get; }
         DbSet<Drug> Drugs { get; }
         DbSet<DrugStock> DrugStocks { get; }
-
         void Save();
+
+        Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry<TEntity> Add<TEntity>(TEntity entity) where TEntity : class;
+
+        Microsoft.EntityFrameworkCore.DbSet<TEntity> Set<TEntity>() where TEntity : class;
+
+        TEntity? Find<TEntity>(params object?[]? keyValues) where TEntity : class;
+
+        Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry Update(object entity);
+
+        int SaveChanges();
     }
 }
