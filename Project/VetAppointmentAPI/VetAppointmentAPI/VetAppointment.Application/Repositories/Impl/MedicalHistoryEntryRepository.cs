@@ -7,6 +7,6 @@ namespace VetAppointment.Application.Repositories.Impl
 {
     public class MedicalHistoryEntryRepository : BaseRepository<MedicalHistoryEntry>, IMedicalHistoryEntryRepository
     {
-        public MedicalHistoryEntryRepository(DatabaseContext context) : base(context) { }
+        public MedicalHistoryEntryRepository(IDatabaseContext context) : base(context) { }
     }
 }

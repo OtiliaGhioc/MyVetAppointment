@@ -7,6 +7,6 @@ namespace VetAppointment.Application.Repositories.Impl
 {
     public class UserRepository : BaseRepository<User>, IUserRepository
     {
-        public UserRepository(DatabaseContext context) : base(context) { }
+        public UserRepository(IDatabaseContext context) : base(context) { }
     }
 }

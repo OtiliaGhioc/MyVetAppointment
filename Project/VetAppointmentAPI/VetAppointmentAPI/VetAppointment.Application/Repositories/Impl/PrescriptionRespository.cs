@@ -7,6 +7,6 @@ namespace VetAppointment.Application.Repositories.Impl
 {
     public class PrescriptionRepository : BaseRepository<Prescription>, IPrescriptionRepository
     {
-        public PrescriptionRepository(DatabaseContext context) : base(context) { }
+        public PrescriptionRepository(IDatabaseContext context) : base(context) { }
     }
 }

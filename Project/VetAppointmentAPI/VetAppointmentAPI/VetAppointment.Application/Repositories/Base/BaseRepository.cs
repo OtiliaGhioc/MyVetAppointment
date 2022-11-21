@@ -5,9 +5,9 @@ namespace VetAppointment.Application.Repositories.Base
 {
     public abstract class BaseRepository<T> : IBaseRepository<T> where T : class
     {
-        protected readonly DatabaseContext context;
+        protected readonly IDatabaseContext context;
 
-        public BaseRepository(DatabaseContext context)
+        public BaseRepository(IDatabaseContext context)
         {
             this.context = context;
         }
@@ -39,7 +39,7 @@ namespace VetAppointment.Application.Repositories.Base
 
         public virtual T Update(T entity)
         {
-            return context.Update(entity)
+            return (T)context.Update(entity)
                 .Entity;
         }
 
