@@ -1,5 +1,4 @@
 ﻿using VetAppointment.Domain.Helpers;
-using VetAppointment.Domain.Entities;
 
 namespace VetAppointment.Domain.Entities
 {

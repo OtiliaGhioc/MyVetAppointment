@@ -15,6 +15,7 @@ builder.Services.AddScoped<IDatabaseContext, DatabaseContext>();
 builder.Services.AddScoped<IAppointmentRepository, AppointmentRepository>();
 builder.Services.AddScoped<IBillingEntryRepository, BillingEntryRepository>();
 builder.Services.AddScoped<IDrugRepository, DrugRepository>();
+builder.Services.AddScoped<IDrugStockRepository,DrugStockRepository>();
 builder.Services.AddScoped<IMedicalHistoryEntryRepository, MedicalHistoryEntryRepository>();
 builder.Services.AddScoped<IOfficeRepository, OfficeRepository>();
 builder.Services.AddScoped<IPrescriptionRepository, PrescriptionRepository>();
