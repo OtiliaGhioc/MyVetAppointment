@@ -19,6 +19,10 @@ namespace VetAppointment.Application.Repositories.Base
                 .Entity;
         }
 
+        public virtual void Delete(T entity)
+        {
+            context.Remove(entity);
+        }
         public virtual IEnumerable<T> Find(Expression<Func<T, bool>> predicate)
         {
             return context.Set<T>()

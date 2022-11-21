@@ -23,6 +23,8 @@ namespace VetAppointment.Infrastructure.Context
 
         Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry Update(object entity);
 
+        Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry Remove(object entity);
+
         int SaveChanges();
     }
 }
