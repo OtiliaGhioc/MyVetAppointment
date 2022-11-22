@@ -8,5 +8,6 @@ namespace VetAppointment.Application.Repositories.Impl
     public class BillingEntryRepository : BaseRepository<BillingEntry>, IBillingEntryRepository
     {
         public BillingEntryRepository(IDatabaseContext context) : base(context) { }
+        
     }
 }

@@ -5,5 +5,6 @@ namespace VetAppointment.Application.Repositories.Interfaces
 {
     public interface IBillingEntryRepository : IBaseRepository<BillingEntry>
     {
+       
     }
 }
