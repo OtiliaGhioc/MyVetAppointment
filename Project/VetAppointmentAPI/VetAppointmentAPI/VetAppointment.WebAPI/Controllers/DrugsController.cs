@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using VetAppointment.Application.Repositories.Impl;
 using VetAppointment.Application.Repositories.Interfaces;
 using VetAppointment.Domain.Entities;
 using VetAppointment.WebAPI.DTOs;
@@ -18,10 +19,10 @@ namespace VetAppointment.WebAPI.Controllers
         [HttpGet]
         public IActionResult SearchDrugs([FromQuery] string? title, [FromQuery] int? price)
         {
-            if (title != null && price != null)
-                return (drugRepository.Find(x => x.Title == title && x.Price == price) != null) ? Ok(drugRepository.Find(x => x.Title == title && x.Price == price)) : NotFound();
-            else
-                return (drugRepository.Find(x => x.Title == title || x.Price == price) != null) ? Ok(drugRepository.Find(x => x.Title == title || x.Price == price)) : NotFound();
+            var drugStocks = drugRepository.Find(x => x.Title == title || x.Price == price);
+            if (drugStocks != null)
+                return Ok(drugStocks);
+            return NotFound();
         }
 
         [HttpGet("GetAll")]
