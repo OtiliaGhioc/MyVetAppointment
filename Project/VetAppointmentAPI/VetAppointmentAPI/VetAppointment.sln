@@ -11,13 +11,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastru
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebAPI", "WebAPI", "{64283AD8-4018-41A5-B761-7B0B45DCA1EF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VetAppointment.Application", "VetAppointment.Application\VetAppointment.Application.csproj", "{8E0228A9-4372-474C-9987-7C7E0827B816}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VetAppointment.Application", "VetAppointment.Application\VetAppointment.Application.csproj", "{8E0228A9-4372-474C-9987-7C7E0827B816}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VetAppointment.Domain", "VetAppointment.Domain\VetAppointment.Domain.csproj", "{4F015077-E76E-4A5C-B455-81A7E74C95C1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VetAppointment.Domain", "VetAppointment.Domain\VetAppointment.Domain.csproj", "{4F015077-E76E-4A5C-B455-81A7E74C95C1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VetAppointment.Infrastructure", "VetAppointment.Infrastructure\VetAppointment.Infrastructure.csproj", "{D8B6463E-2AD8-49E5-B4D6-76D9BD775C6D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VetAppointment.Infrastructure", "VetAppointment.Infrastructure\VetAppointment.Infrastructure.csproj", "{D8B6463E-2AD8-49E5-B4D6-76D9BD775C6D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VetAppointment.WebAPI", "VetAppointment.WebAPI\VetAppointment.WebAPI.csproj", "{B7A8937D-C61E-4E0E-9EF3-03AEA55CA58B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VetAppointment.WebAPI", "VetAppointment.WebAPI\VetAppointment.WebAPI.csproj", "{B7A8937D-C61E-4E0E-9EF3-03AEA55CA58B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{65B3C5BA-2CC2-41DA-A351-32380858A1CD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VetAppointment.Tests", "VetAppointment.Tests\VetAppointment.Tests.csproj", "{A1820EF9-DAD5-4A14-B221-677A48E77D51}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,6 +45,10 @@ Global
 		{B7A8937D-C61E-4E0E-9EF3-03AEA55CA58B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B7A8937D-C61E-4E0E-9EF3-03AEA55CA58B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B7A8937D-C61E-4E0E-9EF3-03AEA55CA58B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A1820EF9-DAD5-4A14-B221-677A48E77D51}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1820EF9-DAD5-4A14-B221-677A48E77D51}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1820EF9-DAD5-4A14-B221-677A48E77D51}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1820EF9-DAD5-4A14-B221-677A48E77D51}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -50,6 +58,7 @@ Global
 		{4F015077-E76E-4A5C-B455-81A7E74C95C1} = {579BEDED-3573-46B4-802B-8D1CB022B1C3}
 		{D8B6463E-2AD8-49E5-B4D6-76D9BD775C6D} = {DB80975E-23EB-48DE-ABB6-14110F3CB434}
 		{B7A8937D-C61E-4E0E-9EF3-03AEA55CA58B} = {64283AD8-4018-41A5-B761-7B0B45DCA1EF}
+		{A1820EF9-DAD5-4A14-B221-677A48E77D51} = {65B3C5BA-2CC2-41DA-A351-32380858A1CD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4E31D744-DF31-4708-A8EC-8060B5F7B4FE}
