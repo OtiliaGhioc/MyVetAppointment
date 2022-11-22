@@ -1,4 +1,5 @@
-﻿using VetAppointment.Domain.Helpers;
+﻿using System.ComponentModel;
+using VetAppointment.Domain.Helpers;
 
 namespace VetAppointment.Domain.Entities
 {
@@ -14,7 +15,12 @@ namespace VetAppointment.Domain.Entities
         public Guid PrescriptionId { get; private set; }
         public IEnumerable<PrescriptionDrug> Drugs { get; private set; } = new List<PrescriptionDrug>();
         public string Description { get; private set; }
-        
+
+        public void setDescription(string description)
+        {
+            Description = description;
+        }
+
         public Result AddDrugToPrescription(PrescriptionDrug drug)
         {
             if (drug == null)
