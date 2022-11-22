@@ -23,9 +23,9 @@
         public User? Appointer { get; private set; }
         public Guid AppointeeId { get; private set; }
         public User? Appointee { get; private set; }
-        public bool isExpired { get; private set; } = false;
-        public DateTime DateTime { get; private set; }
-        public string Description { get; private set; }
-        public string Type { get; private set; }
+        public bool IsExpired { get; set; } = false;
+        public DateTime DateTime { get; set; }
+        public string Description { get; set; }
+        public string Type { get; set; }
     }
 }
