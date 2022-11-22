@@ -51,7 +51,7 @@ namespace VetAppointment.WebAPI.Properties
             return Ok(drugStocks);
         }
 
-       /* [HttpPost]
+        [HttpPost]
         public IActionResult Create([FromBody] BillingEntryDto billDto)
         {
             var bill = billingEntryRepository.Get(billDto.BillingEntryId);
@@ -59,9 +59,26 @@ namespace VetAppointment.WebAPI.Properties
             if (bill == null)
                 return NotFound($"The Bill with id: {billDto.BillingEntryId} was not found");
 
-            var Bill = new BillingEntry(bill);
+            var Bill = new BillingEntry(bill.Issuer, bill.Customer, bill.DateTime, bill.Prescription, bill.Appointment, bill.Price);
+            billingEntryRepository.Add(bill);
+            billingEntryRepository.SaveChanges();
+            return Created(nameof(GetAllBills), bill);
  
-        }*/
+        }
+
+        [HttpDelete("{billingEntryId}")]
+        public IActionResult Delete([FromRoute] Guid billingEntryId)
+        {
+            var bill = billingEntryRepository.Get(billingEntryId);
+
+            if (bill == null)
+            {
+                NotFound($"The Bill with id: {billingEntryId} was not found");
+            }
+            billingEntryRepository.Delete(bill);
+            billingEntryRepository.SaveChanges();
+            return NoContent();
+        }
 
     }
 }
