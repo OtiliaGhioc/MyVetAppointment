@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using VetAppointment.Application.Repositories.Interfaces;
 using VetAppointment.Domain.Entities;
+using VetAppointment.WebAPI.Dtos;
 
 namespace VetAppointment.WebAPI.Controllers
 {
@@ -31,9 +32,9 @@ namespace VetAppointment.WebAPI.Controllers
 
         // POST api/<UsersController>
         [HttpPost]
-        public IActionResult Post([FromBody] string name, [FromBody] string password, [FromBody] bool hasOffice)
+        public IActionResult Post([FromBody] UserDto userDto)
         {
-            User user = new User(name, password, hasOffice);
+            User user = new User(userDto.Username, userDto.Password, userDto.HasOffice);
             userRepository.Add(user);
             userRepository.SaveChanges();
 
@@ -41,9 +42,17 @@ namespace VetAppointment.WebAPI.Controllers
         }
 
         // PUT api/<UsersController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPut]
+        public IActionResult Put([FromBody] UserDto userDto)
         {
+            User? user = userRepository.Get(userDto.UserId);
+            if (user == null)
+                return NotFound();
+
+            userRepository.Update(user);
+            userRepository.SaveChanges();
+
+            return Ok(user);
         }
 
         // DELETE api/<UsersController>/5
