@@ -50,23 +50,22 @@ namespace VetAppointment.WebAPI.Controllers
             return Created(nameof(GetAllDrugs), drug);
         }
 
-        /*[HttpPut]
+        [HttpPut("{id}")]
         public IActionResult Update([FromRoute] Guid id, [FromBody] CreateDrugDto drugDto)
         {
             var drug = drugRepository.Get(id);
 
-            if(drug == null)
+            if (drug == null)
             {
-                NotFound($"Drug with id: {id} was not found");
+                return NotFound($"Drug with id: {id} was not found");
             }
 
-            drug.Price=drugDto.Price;
-            drug.Title=drugDto.Title;
-            
+            drug.UpdateNameAndPrice(drugDto.Title, drugDto.Price);
+
             drugRepository.Update(drug);
             drugRepository.SaveChanges();
             return NoContent();
-        }*/
+        }
 
         [HttpDelete("{drugId}")]
         public IActionResult Delete([FromRoute] Guid drugId)
@@ -75,7 +74,7 @@ namespace VetAppointment.WebAPI.Controllers
 
             if (drug == null)
             {
-                NotFound($"Drug with id: {drugId} was not found");
+                return NotFound($"Drug with id: {drugId} was not found");
             }
             drugRepository.Delete(drug);
             drugRepository.SaveChanges();

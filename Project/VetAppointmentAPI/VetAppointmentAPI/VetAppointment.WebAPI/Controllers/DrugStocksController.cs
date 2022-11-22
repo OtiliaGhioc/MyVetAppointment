@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System;
 using VetAppointment.Application.Repositories.Interfaces;
 using VetAppointment.Domain.Entities;
 using VetAppointment.WebAPI.DTOs;
@@ -60,23 +59,22 @@ namespace VetAppointment.WebAPI.Controllers
             return Created(nameof(GetAllDrugStocks), drugStock);
         }
 
-        /*[HttpPut]
-        public IActionResult Update([FromRoute] Guid id, [FromBody] CreateDrugDto drugDto)
+        [HttpPut("{id}")]
+        public IActionResult Update([FromRoute] Guid id, [FromBody] int quantityUpdate)
         {
-            var drug = drugRepository.Get(id);
+            var drug = drugStockRepository.Get(id);
 
-            if(drug == null)
+            if (drug == null)
             {
-                NotFound($"Drug with id: {id} was not found");
+                return NotFound($"Drug with id: {id} was not found");
             }
 
-            drug.Price=drugDto.Price;
-            drug.Title=drugDto.Title;
-            
-            drugRepository.Update(drug);
-            drugRepository.SaveChanges();
+            drug.RemoveDrugsFromPublicStock(quantityUpdate);
+
+            drugStockRepository.Update(drug);
+            drugStockRepository.SaveChanges();
             return NoContent();
-        }*/
+        }
 
         [HttpDelete("{drugStockId}")]
         public IActionResult Delete([FromRoute] Guid drugStockId)
@@ -85,7 +83,7 @@ namespace VetAppointment.WebAPI.Controllers
 
             if (drug == null)
             {
-                NotFound($"DrugStock with id: {drugStockId} was not found");
+                return NotFound($"DrugStock with id: {drugStockId} was not found");
             }
             drugStockRepository.Delete(drug);
             drugStockRepository.SaveChanges();
