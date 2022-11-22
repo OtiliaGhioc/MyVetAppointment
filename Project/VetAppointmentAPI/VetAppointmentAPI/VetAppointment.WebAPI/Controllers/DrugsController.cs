@@ -18,7 +18,10 @@ namespace VetAppointment.WebAPI.Controllers
         [HttpGet]
         public IActionResult SearchDrugs([FromQuery] string? title, [FromQuery] int? price)
         {
-            return (title != null && price != null) ? Ok(drugRepository.Find(x => x.Title == title && x.Price == price)) : Ok(drugRepository.Find(x => x.Title == title || x.Price == price));
+            if (title != null && price != null)
+                return (drugRepository.Find(x => x.Title == title && x.Price == price) != null) ? Ok(drugRepository.Find(x => x.Title == title && x.Price == price)) : NotFound();
+            else
+                return (drugRepository.Find(x => x.Title == title || x.Price == price) != null) ? Ok(drugRepository.Find(x => x.Title == title || x.Price == price)) : NotFound();
         }
 
         [HttpGet("GetAll")]
@@ -30,7 +33,7 @@ namespace VetAppointment.WebAPI.Controllers
                 Title = d.Title,
                 Price = d.Price
             });
-            return Ok(drugs);
+            return drugs!=null ? Ok(drugs) : NotFound();
         }
 
         [HttpGet("{drugId}")]

@@ -21,7 +21,10 @@ namespace VetAppointment.WebAPI.Controllers
         [HttpGet]
         public IActionResult SearchDrugStockss([FromQuery] Guid? typeId, [FromQuery] int? quantity)
         {
-            return (typeId != null && quantity != null) ? Ok(drugStockRepository.Find(x => x.TypeId == typeId && x.Quantity == quantity)) : Ok(drugStockRepository.Find(x => x.TypeId == typeId || x.Quantity == quantity));
+            if (typeId != null && quantity != null)
+                return (drugStockRepository.Find(x => x.TypeId == typeId && x.Quantity == quantity) != null) ? Ok(drugStockRepository.Find(x => x.TypeId == typeId && x.Quantity == quantity)) : NotFound();
+            else
+                return (drugStockRepository.Find(x => x.TypeId == typeId || x.Quantity == quantity) != null) ? Ok(drugStockRepository.Find(x => x.TypeId == typeId || x.Quantity == quantity)) : NotFound();
         }
 
         [HttpGet("GetAll")]
