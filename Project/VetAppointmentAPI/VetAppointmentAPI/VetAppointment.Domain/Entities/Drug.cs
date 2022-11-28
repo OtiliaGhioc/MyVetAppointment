@@ -1,6 +1,4 @@
-﻿using VetAppointment.Domain.Helpers;
-
-namespace VetAppointment.Domain.Entities
+﻿namespace VetAppointment.Domain.Entities
 {
     public class Drug
     {
