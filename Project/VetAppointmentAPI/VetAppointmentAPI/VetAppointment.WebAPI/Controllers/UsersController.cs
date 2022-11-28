@@ -34,7 +34,7 @@ namespace VetAppointment.WebAPI.Controllers
         [HttpPost]
         public IActionResult Post([FromBody] UserDto userDto)
         {
-            User user = new User(userDto.Username, userDto.Password, userDto.HasOffice);
+            User user = new User(userDto.Username, userDto.Password);
             userRepository.Add(user);
             userRepository.SaveChanges();
 
