@@ -16,7 +16,7 @@ namespace VetAppointment.Domain.Entities
         public string Password { get; private set; }
         public bool HasOffice { get; private set; } = false;
         public Guid OfficeId { get; private set; }
-        public Office? UserOffice { get; set; }
+        public Office? UserOffice { get; private set; }
 
         public Result RegisterOfficeToUser(Office office)
         {

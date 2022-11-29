@@ -7,6 +7,7 @@ import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import ProfileDocumentsContainer from './ProfileDocumentsContainer';
 import { useEffect } from 'react';
+import { useNavigate } from "react-router-dom";
 
 const profileTheme = createTheme({
     palette: {
@@ -31,7 +32,27 @@ const ProfilePage = () => {
     let isMedic = true;
     let joinedDate = 'March 2020';
 
-    useEffect(() => { document.body.style.backgroundColor = '#ebf6fc' }, [])
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        document.body.style.backgroundColor = '#ebf6fc';
+
+        const fetchData = async () => {
+            const res = await fetch('https://localhost:7116/api/User/3fa85f64-5717-4562-b3fc-2c963f66afa6', {
+                method: 'GET',
+                mode: 'cors'
+            });
+
+            // if (!res.ok) {
+            //     navigate("/not-found");
+            //     return;
+            // }
+
+            const json_data = await res.json();
+            console.log(json_data)
+        }
+        fetchData();
+    }, [navigate])
 
     return (
         <ThemeProvider theme={profileTheme}>

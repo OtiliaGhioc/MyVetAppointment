@@ -197,6 +197,7 @@ const BaseDataTable = ({ tableHeaderValues, tableRows }) => {
 
                                             <TableCell
                                                 component="th"
+                                                key={vals[0].id}
                                                 id={labelId}
                                                 scope="row"
                                                 padding='normal'
@@ -207,7 +208,7 @@ const BaseDataTable = ({ tableHeaderValues, tableRows }) => {
                                                 if (val_idx > 0) {
                                                     if (val.isButton)
                                                         return (
-                                                            <TableCell align="right">
+                                                            <TableCell key={val.id} align="right">
                                                                 <Button variant="contained" style={{ color: 'white' }}>{val.text}</Button>
                                                             </TableCell>
                                                         )

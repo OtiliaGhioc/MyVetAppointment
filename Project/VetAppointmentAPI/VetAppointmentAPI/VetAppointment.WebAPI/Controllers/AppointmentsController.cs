@@ -20,7 +20,7 @@ namespace VetAppointment.WebAPI.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            return Ok(appointmentRepository.All().ToList().Select(item => new AppointmentDetailDto(item)));
+            return Ok(appointmentRepository.All().ToList().Select(item => new AppointmentDetailDto(item)).ToList());
         }
 
         [HttpPost]
@@ -35,7 +35,8 @@ namespace VetAppointment.WebAPI.Controllers
                 return NotFound();
 
 
-            Appointment appointment = new Appointment(appointer, appointee, DateTime.Now, appointmentDto.Description, appointmentDto.Type);
+            Appointment appointment = new Appointment(appointer, appointee, DateTime.Now, appointmentDto.Title, 
+                appointmentDto.Description, appointmentDto.Type);
             appointmentRepository.Add(appointment);
             appointmentRepository.SaveChanges();
 
