@@ -5,6 +5,10 @@ namespace VetAppointment.Infrastructure.Context
 {
     public class DatabaseContext : DbContext, IDatabaseContext
     {
+        public DatabaseContext()
+        {
+            this.Database.EnsureCreated();
+        }
         public DbSet<User> Users => Set<User>();
         public DbSet<Office> Offices => Set<Office>();
         public DbSet<Appointment> Appointments => Set<Appointment>();
