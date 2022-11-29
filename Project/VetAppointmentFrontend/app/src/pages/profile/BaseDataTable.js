@@ -183,7 +183,6 @@ const BaseDataTable = ({ tableHeaderValues, tableRows }) => {
                                     const isItemSelected = isSelected(row.name);
                                     const labelId = `enhanced-table-checkbox-${index}`;
                                     const vals = Object.keys(row).map(key => row[key]);
-
                                     return (
                                         <TableRow
                                             hover
