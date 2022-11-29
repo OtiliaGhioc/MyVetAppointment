@@ -12,7 +12,7 @@ const App = () => {
         <Route exact path="/" element={<MainPage />} />
         <Route exact path="/me" element={<ProfilePage />} />
         <Route exact path="*" element={<NotFound />} />
-        <Route exact path="/medica-history" element={<MedicalHistoryPage/>}/>
+        <Route exact path="/medical-history" element={<MedicalHistoryPage/>}/>
       </Routes>
     </Router>
   );
