@@ -8,7 +8,6 @@ import { useEffect } from 'react';
 import AppointmentDataContainer from './AppointmentDataContainer';
 import { Button } from '@mui/material';
 import Container from '@mui/material/Container';
-import axios from 'axios';
 
 const profileTheme = createTheme({
     palette: {
@@ -31,29 +30,9 @@ const Item = styled(Paper)(({ theme }) => ({
 const AppointmentPage = () => {
     const [data, setData] = React.useState({ hits: [] });
     useEffect(() => { document.body.style.backgroundColor = '#ebf6fc' }, [])
-    // useEffect(() => {
-    //     const fetchData = async () => {
-    //       const result = await axios(
-    //         'https://localhost:7116/api/Appointments',
-    //       );
-    
-    //       setData(result.data);
-    //     };
-    
-    //     fetchData();
-    //   }, []);
-
-
 
     return (
         <>
-            {/* <ul>
-            {data.hits.map(item => (
-                <li key={item.objectID}>
-                <a href={item.url}>{item.title}</a>
-                </li>
-            ))}
-            </ul> */}
             <ThemeProvider theme={profileTheme}>
                 <Box sx={{ flexGrow: 1, margin: '2rem auto 0 auto' }}>
                     <Grid container spacing={2}>

@@ -1,5 +1,7 @@
 import Container from '@mui/material/Container';
 import * as React from 'react';
+import { useNavigate } from "react-router-dom";
+import { useEffect } from 'react';
 
 function createAppointmentRowEntry(title, dueDate, dueTime, appointer) {
     return {
@@ -15,6 +17,28 @@ function createAppointmentRowEntry(title, dueDate, dueTime, appointer) {
 }
 
 const AppointmentDataContainer = () => {
+
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        document.body.style.backgroundColor = '#ebf6fc';
+
+        const fetchData = async () => {
+            const res = await fetch('https://localhost:7116/api/Appointments', {
+                method: 'GET',
+                mode: 'cors'
+            });
+
+            // if (!res.ok) {
+            //     navigate("/not-found");
+            //     return;
+            // }
+
+            const json_data = await res.json();
+            console.log(json_data)
+        }
+        fetchData();
+    }, [navigate])
 
     const appointmentsData = [
         createAppointmentRowEntry('Appt. 1', '30-10-2022', '16:00', 'Dr. Smith')
