@@ -19,7 +19,7 @@ namespace VetAppointment.Tests.ITs
         public async Task WhenCreateWithUserNotFound_ThenReturnNotFound()
         {
             //Arange
-            var appoitnmentDto = new AppointmentCreateDto(Guid.NewGuid(), Guid.NewGuid(), "description", "type");
+            var appoitnmentDto = new AppointmentCreateDto(Guid.NewGuid(), Guid.NewGuid(), "title", "description", "type");
 
             //Act
 
