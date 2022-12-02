@@ -4,9 +4,8 @@ import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import * as React from 'react';
 import BaseDataTable from './BaseDataTable';
 
-function createAppointmentRowEntry(id, title, dueDate, dueTime, appointer) {
+function createAppointmentRowEntry(title, dueDate, dueTime, appointer) {
     return {
-        id, 
         title,
         dueDate,
         dueTime,
@@ -18,9 +17,8 @@ function createAppointmentRowEntry(id, title, dueDate, dueTime, appointer) {
     };
 }
 
-function createMedicalHistoryRowEntry(id, title, date, appointer) {
+function createMedicalHistoryRowEntry(title, date, appointer) {
     return {
-        id,
         title,
         date,
         appointer,
@@ -108,21 +106,21 @@ const ProfileDocumentsContainer = () => {
     ]
 
     const appointmentsData = [
-        createAppointmentRowEntry(1, 'Appt. 1', '30-10-2022', '16:00', 'Dr. Smith'),
-        createAppointmentRowEntry(2, 'Appt. 2', '30-11-2022', '12:00', 'Dr. Smith'),
-        createAppointmentRowEntry(3, 'Appt. 3', '30-12-2022', '13:30', 'Dr. Johnson'),
-        createAppointmentRowEntry(4, 'Appt. 4', '10-01-2023', '14:20', 'Dr. Smith'),
-        createAppointmentRowEntry(5, 'Appt. 5', '15-02-2023', '15:10', 'Dr. Johnson'),
-        createAppointmentRowEntry(6, 'Appt. 6', '30-03-2023', '12:10', 'Dr. Smith')
+        createAppointmentRowEntry('Appt. 1', '30-10-2022', '16:00', 'Dr. Smith'),
+        createAppointmentRowEntry('Appt. 2', '30-11-2022', '12:00', 'Dr. Smith'),
+        createAppointmentRowEntry('Appt. 3', '30-12-2022', '13:30', 'Dr. Johnson'),
+        createAppointmentRowEntry('Appt. 4', '10-01-2023', '14:20', 'Dr. Smith'),
+        createAppointmentRowEntry('Appt. 5', '15-02-2023', '15:10', 'Dr. Johnson'),
+        createAppointmentRowEntry('Appt. 6', '30-03-2023', '12:10', 'Dr. Smith')
     ]
 
     const medicalHistoryData = [
-        createMedicalHistoryRowEntry(1, 'MH. 1', '30-10-2021', 'Dr. Smith'),
-        createMedicalHistoryRowEntry(2, 'MH. 2', '30-11-2021', 'Dr. Smith'),
-        createMedicalHistoryRowEntry(3, 'MH. 3', '30-12-2020', 'Dr. Johnson'),
-        createMedicalHistoryRowEntry(4, 'MH. 4', '10-01-2020', 'Dr. Smith'),
-        createMedicalHistoryRowEntry(5, 'MH. 5', '15-02-2022', 'Dr. Johnson'),
-        createMedicalHistoryRowEntry(6, 'MH. 6', '30-03-2022', 'Dr. Smith')
+        createMedicalHistoryRowEntry('MH. 1', '30-10-2021', 'Dr. Smith'),
+        createMedicalHistoryRowEntry('MH. 2', '30-11-2021', 'Dr. Smith'),
+        createMedicalHistoryRowEntry('MH. 3', '30-12-2020', 'Dr. Johnson'),
+        createMedicalHistoryRowEntry('MH. 4', '10-01-2020', 'Dr. Smith'),
+        createMedicalHistoryRowEntry('MH. 5', '15-02-2022', 'Dr. Johnson'),
+        createMedicalHistoryRowEntry('MH. 6', '30-03-2022', 'Dr. Smith')
     ]
 
     return (

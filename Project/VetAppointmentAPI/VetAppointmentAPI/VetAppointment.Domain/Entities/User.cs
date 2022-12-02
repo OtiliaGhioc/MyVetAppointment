@@ -8,7 +8,7 @@ namespace VetAppointment.Domain.Entities
         {
             UserId = Guid.NewGuid();
             Username = username;
-            Password = CalculatePasswordHash(password);
+            Password = PasswordHasher.GetHashedPassword(password);
         }
 
         public Guid UserId { get; private set; }
@@ -38,9 +38,9 @@ namespace VetAppointment.Domain.Entities
             return Result.Success();
         }
 
-        private string CalculatePasswordHash(string password)
+        public bool IsPasswordValid(string password)
         {
-            return password;
+            return PasswordHasher.IsPasswordValid(Password, password);
         }
     }
 }
