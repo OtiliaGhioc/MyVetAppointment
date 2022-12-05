@@ -23,6 +23,22 @@ namespace VetAppointment.WebAPI.Controllers
             return Ok(appointmentRepository.All().ToList().Select(item => new AppointmentDetailDto(item)).ToList());
         }
 
+        [HttpGet("{id}")]
+        public IActionResult Get(Guid id)
+        {
+            Appointment? appointment = appointmentRepository.Get(id);
+            if (appointment == null) 
+                return NotFound();
+
+            User? appointer = userRepository.Get(appointment.AppointerId);
+            User? appointee = userRepository.Get(appointment.AppointeeId);
+
+            if (appointer == null || appointee == null)
+                return NotFound();
+
+            return Ok(new AppontmentEssentialExtendedDto(appointment, appointer, appointee));
+        }
+
         [HttpPost]
         public IActionResult Create([FromBody] AppointmentCreateDto appointmentDto)
         {
