@@ -27,9 +27,16 @@ namespace VetAppointment.WebAPI.Controllers
         public IActionResult Get(Guid id)
         {
             Appointment? appointment = appointmentRepository.Get(id);
-            if (appointment == null)
+            if (appointment == null) 
                 return NotFound();
-            return Ok(appointment);
+
+            User? appointer = userRepository.Get(appointment.AppointerId);
+            User? appointee = userRepository.Get(appointment.AppointeeId);
+
+            if (appointer == null || appointee == null)
+                return NotFound();
+
+            return Ok(new AppontmentEssentialExtendedDto(appointment, appointer, appointee));
         }
 
         [HttpPost]

@@ -15,14 +15,17 @@ const AppointmentDataContainer = () => {
         const response = await fetch(path, {
             method: 'GET',
             mode: 'cors'
-        }).then((response) => response.json())
+        })
 
-        // if (!response.ok) {
-        //     navigate("/not-found");
-        //     return;
-        // }
+        if (!response.ok) 
+        {
+            navigate("/not-found");
+            return;
+        }
+        
+        const json_data = await response.json();
 
-        setAppointment(response);
+        setAppointment(json_data);
     }
 
     useEffect(() => {
@@ -42,8 +45,9 @@ const AppointmentDataContainer = () => {
                         </Container>
 
                         <Container style={{ width: '100%', padding: '1rem', backgroundColor: "#8fc3e3" }}>
-                            <h3>Created on: {appointment.dateTime}</h3>
-                            <h3>Appointer: {appointment.appointerId}</h3>
+                            <h3>Created on: {appointment.dueDate}</h3>
+                            <h3>Created by: {appointment.appointee}</h3>
+                            <h3>Appointed to: {appointment.appointer}</h3>
                             <h3>Description: {appointment.description}</h3>
                         </Container>
                     </>

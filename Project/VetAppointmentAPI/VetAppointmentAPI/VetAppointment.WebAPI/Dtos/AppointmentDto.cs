@@ -1,4 +1,6 @@
-﻿using VetAppointment.Domain.Entities;
+﻿using Microsoft.VisualBasic;
+using System.Reflection;
+using VetAppointment.Domain.Entities;
 
 namespace VetAppointment.WebAPI.Dtos
 {
@@ -93,6 +95,26 @@ namespace VetAppointment.WebAPI.Dtos
             public string Title { get; private set; }
             public string DueDate { get; private set; }
             public string DueTime { get; private set; }
+        }
+
+        public class AppontmentEssentialExtendedDto
+        {
+            public AppontmentEssentialExtendedDto(Appointment appointment, User appointer, User appointee)
+            {
+                AppointmentId = appointment.AppointmentId;
+                Appointer = appointer.Username;
+                Appointee = appointee.Username;
+                Title = appointment.Title;
+                DueDate = appointment.DateTime.Date.ToString("dd-MM-yyyy");
+                Description = appointment.Description;
+            }
+
+            public Guid AppointmentId { get; private set; }
+            public string Appointer { get; private set; }
+            public string Appointee { get; private set; }
+            public string Title { get; private set; }
+            public string DueDate { get; private set; }
+            public string Description { get; private set; }
         }
     }
 }
