@@ -1,6 +1,4 @@
-﻿using Microsoft.VisualBasic;
-using System.Reflection;
-using VetAppointment.Domain.Entities;
+﻿using VetAppointment.Domain.Entities;
 
 namespace VetAppointment.WebAPI.Dtos
 {
@@ -8,10 +6,11 @@ namespace VetAppointment.WebAPI.Dtos
     {
         public class AppointmentCreateDto
         {
-            public AppointmentCreateDto(Guid appointerId, Guid appointeeId, string title, string description, string type)
+            public AppointmentCreateDto(Guid appointerId, Guid appointeeId, DateTime dueDate, string title, string description, string type)
             {
                 AppointerId = appointerId;
                 AppointeeId = appointeeId;
+                DueDate = dueDate;
                 Description = description;
                 Title = title;
                 Type = type;
@@ -19,6 +18,7 @@ namespace VetAppointment.WebAPI.Dtos
 
             public Guid AppointerId { get; set; }
             public Guid AppointeeId { get; set; }
+            public DateTime DueDate { get; set; }
             public string Title { get; set; }
             public string Description { get; set; }
             public string Type { get; set; }
@@ -26,29 +26,31 @@ namespace VetAppointment.WebAPI.Dtos
 
         public class AppointmentModifyDto
         {
-            public AppointmentModifyDto(DateTime? dateTime, string? description, string? title, string? type, bool? isExpired)
+            public AppointmentModifyDto(DateTime? dueDate, string? description, string? title, string? type, bool? isExpired)
             {
-                DateTime = dateTime;
+                DueDate = dueDate;
                 Description = description;
-                Title = Title;
+                Title = title;
                 Type = type;
                 IsExpired = isExpired;
             }
 
-            public DateTime? DateTime { get; set; }
-            public string Title { get; set; }
+            public DateTime? DueDate { get; set; }
+            public string? Title { get; set; }
             public string? Description { get; set; }
             public string? Type { get; set; }
             public bool? IsExpired { get; set; }
 
             public Appointment ApplyModificationsToModel(Appointment appointment)
             {
-                if (DateTime != null)
-                    appointment.DateTime = (DateTime)DateTime;
+                if (DueDate != null)
+                    appointment.DueDate = (DateTime)DueDate;
+                if (Title != null)
+                    appointment.Title = Title;
                 if (Description != null)
-                    appointment.Description = (string)Description;
+                    appointment.Description = Description;
                 if (Type != null)
-                    appointment.Type = (string)Type;
+                    appointment.Type = Type;
                 if (IsExpired != null)
                     appointment.IsExpired = (bool)IsExpired;
                 return appointment;
@@ -66,7 +68,8 @@ namespace VetAppointment.WebAPI.Dtos
                 Title = appointment.Title;
                 Type = appointment.Type;
                 IsExpired = appointment.IsExpired;
-                DateTime = appointment.DateTime;
+                CreatedAt = appointment.CreatedAt;
+                DueDate = appointment.DueDate;
             }
 
             public Guid AppointmentId { get; private set; }
@@ -76,7 +79,8 @@ namespace VetAppointment.WebAPI.Dtos
             public string Description { get; private set; }
             public string Type { get; private set; }
             public bool IsExpired { get; private set; }
-            public DateTime DateTime { get; private set; }
+            public DateTime CreatedAt { get; private set; }
+            public DateTime DueDate { get; private set; }
         }
 
         public class AppointmentEssentialOnlyDto
@@ -86,8 +90,8 @@ namespace VetAppointment.WebAPI.Dtos
                 AppointmentId = appointment.AppointmentId;
                 Appointer = appointer.Username;
                 Title = appointment.Title;
-                DueDate = appointment.DateTime.Date.ToString("dd-MM-yyyy");
-                DueTime = appointment.DateTime.TimeOfDay.ToString("HH:mm");
+                DueDate = appointment.DueDate.ToString("dd-MMM-yyyy");
+                DueTime = appointment.DueDate.ToString("HH:mm");
             }
 
             public Guid AppointmentId { get; private set; }
@@ -105,7 +109,7 @@ namespace VetAppointment.WebAPI.Dtos
                 Appointer = appointer.Username;
                 Appointee = appointee.Username;
                 Title = appointment.Title;
-                DueDate = appointment.DateTime.Date.ToString("dd-MM-yyyy");
+                DueDate = appointment.DueDate.Date.ToString("dd-MMM-yyyy");
                 Description = appointment.Description;
             }
 

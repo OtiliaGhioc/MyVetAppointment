@@ -51,7 +51,7 @@ namespace VetAppointment.WebAPI.Controllers
                 return NotFound();
 
 
-            Appointment appointment = new Appointment(appointer, appointee, DateTime.Now, appointmentDto.Title, 
+            Appointment appointment = new Appointment(appointer, appointee, appointmentDto.DueDate, appointmentDto.Title, 
                 appointmentDto.Description, appointmentDto.Type);
             appointmentRepository.Add(appointment);
             appointmentRepository.SaveChanges();

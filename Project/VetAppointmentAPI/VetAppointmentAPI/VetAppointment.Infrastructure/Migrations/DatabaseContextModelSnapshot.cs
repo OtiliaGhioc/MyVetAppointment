@@ -29,11 +29,14 @@ namespace VetAppointment.Infrastructure.Migrations
                     b.Property<Guid>("AppointerId")
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("DateTime")
+                    b.Property<DateTime>("CreatedAt")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Description")
                         .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("DueDate")
                         .HasColumnType("TEXT");
 
                     b.Property<bool>("IsExpired")
@@ -213,6 +216,12 @@ namespace VetAppointment.Infrastructure.Migrations
 
                     b.Property<bool>("HasOffice")
                         .HasColumnType("INTEGER");
+
+                    b.Property<bool>("IsMedic")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("JoinedDate")
+                        .HasColumnType("TEXT");
 
                     b.Property<Guid?>("OfficeId")
                         .HasColumnType("TEXT");

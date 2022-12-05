@@ -2,6 +2,7 @@ import Container from '@mui/material/Container';
 import * as React from 'react';
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from 'react';
+import { API_ROOT } from '../../env';
 
 
 const AppointmentDataContainer = () => {
@@ -11,7 +12,7 @@ const AppointmentDataContainer = () => {
     let { id } = useParams();
     
     const fetchDataAppointment = async () => {
-        let path = 'https://localhost:7116/api/Appointments/' + id
+        let path = `${API_ROOT}/Appointments/${id}`
         const response = await fetch(path, {
             method: 'GET',
             mode: 'cors'
@@ -46,8 +47,8 @@ const AppointmentDataContainer = () => {
 
                         <Container style={{ width: '100%', padding: '1rem', backgroundColor: "#8fc3e3" }}>
                             <h3>Created on: {appointment.dueDate}</h3>
-                            <h3>Created by: {appointment.appointee}</h3>
-                            <h3>Appointed to: {appointment.appointer}</h3>
+                            <h3>Created by: {appointment.appointer}</h3>
+                            <h3>Appointed to: {appointment.appointee}</h3>
                             <h3>Description: {appointment.description}</h3>
                         </Container>
                     </>

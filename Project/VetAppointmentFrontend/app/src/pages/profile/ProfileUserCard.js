@@ -4,9 +4,10 @@ import CardContent from '@mui/material/CardContent';
 import Typography from "@mui/material/Typography";
 import CardActions from "@mui/material/CardActions";
 import Button from "@mui/material/Button";
+import { useEffect } from 'react';
 
-const ProfileUserCard = ({ username, isMedic, joinedDate }) => {
-    let officeButton = isMedic ? 
+const ProfileUserCard = ({ username, isMedic, joinedDate, hasOffice }) => {
+    let officeButton = hasOffice ? 
         <CardActions>
             <Button style={{ margin: '0 auto', border: '2px solid' }} color="secondary" variant="outlined">
                 My Office

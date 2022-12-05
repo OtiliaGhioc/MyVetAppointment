@@ -18,8 +18,10 @@ namespace VetAppointment.WebAPI.Dtos
             {
                 UserId = user.UserId;
                 Username = user.Username;
+                IsMedic = user.IsMedic;
                 HasOffice = user.HasOffice;
                 OfficeId = user.OfficeId;
+                JoinedDate = user.JoinedDate.Date.ToString("dd-MMM-yyyy");
 
                 if (appointments.Count != appointers.Count)
                     return;
@@ -30,8 +32,10 @@ namespace VetAppointment.WebAPI.Dtos
 
             public Guid UserId { get; private set; }
             public string Username { get; private set; }
+            public bool IsMedic { get; private set; }
             public bool HasOffice { get; private set; }
             public Guid? OfficeId { get; private set; }
+            public string JoinedDate { get ; private set; }
 
             public List<AppointmentEssentialOnlyDto> Appointments { get; private set; } = new List<AppointmentEssentialOnlyDto>();
         }

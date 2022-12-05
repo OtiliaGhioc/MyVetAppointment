@@ -4,7 +4,7 @@ import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import * as React from 'react';
 import BaseDataTable from './BaseDataTable';
 
-function createAppointmentRowEntry(title, dueDate, dueTime, appointer) {
+function createAppointmentRowEntry(appointmentId, title, dueDate, dueTime, appointer) {
     return {
         title,
         dueDate,
@@ -12,24 +12,26 @@ function createAppointmentRowEntry(title, dueDate, dueTime, appointer) {
         appointer,
         button: {
             isButton: true,
+            href: `/appointment/${appointmentId}`,
             text: 'View'
         }
     };
 }
 
-function createMedicalHistoryRowEntry(title, date, appointer) {
+function createMedicalHistoryRowEntry(medicalEntryId, title, date, appointer) {
     return {
         title,
         date,
         appointer,
         button: {
             isButton: true,
+            href: `/medical=entry/${medicalEntryId}`,
             text: 'View'
         }
     };
 }
 
-const ProfileDocumentsContainer = () => {
+const ProfileDocumentsContainer = ({ appointments, medicalEntries }) => {
     const [option, setOption] = React.useState('appointments');
 
     const handleChange = (event, newOption) => {
@@ -105,23 +107,22 @@ const ProfileDocumentsContainer = () => {
         }
     ]
 
-    const appointmentsData = [
-        createAppointmentRowEntry('Appt. 1', '30-10-2022', '16:00', 'Dr. Smith'),
-        createAppointmentRowEntry('Appt. 2', '30-11-2022', '12:00', 'Dr. Smith'),
-        createAppointmentRowEntry('Appt. 3', '30-12-2022', '13:30', 'Dr. Johnson'),
-        createAppointmentRowEntry('Appt. 4', '10-01-2023', '14:20', 'Dr. Smith'),
-        createAppointmentRowEntry('Appt. 5', '15-02-2023', '15:10', 'Dr. Johnson'),
-        createAppointmentRowEntry('Appt. 6', '30-03-2023', '12:10', 'Dr. Smith')
-    ]
+    const [appointmentsData, setAppointmentsData] = React.useState([])
+    const [medicalHistoryData, setMedicalHistoryData] = React.useState([])
 
-    const medicalHistoryData = [
-        createMedicalHistoryRowEntry('MH. 1', '30-10-2021', 'Dr. Smith'),
-        createMedicalHistoryRowEntry('MH. 2', '30-11-2021', 'Dr. Smith'),
-        createMedicalHistoryRowEntry('MH. 3', '30-12-2020', 'Dr. Johnson'),
-        createMedicalHistoryRowEntry('MH. 4', '10-01-2020', 'Dr. Smith'),
-        createMedicalHistoryRowEntry('MH. 5', '15-02-2022', 'Dr. Johnson'),
-        createMedicalHistoryRowEntry('MH. 6', '30-03-2022', 'Dr. Smith')
-    ]
+    React.useEffect(() => {
+        if (typeof appointments === 'undefined') return;
+        setAppointmentsData([...appointments.map((item) => {
+            return createAppointmentRowEntry(item.appointmentId, item.title, item.dueDate, item.dueTime, item.appointer);
+        })])
+    }, [appointments])
+
+    React.useEffect(() => {
+        if (typeof medicalEntries === 'undefined') return;
+        setMedicalHistoryData([...medicalEntries.map((item) => {
+            return createMedicalHistoryRowEntry(item.medicalHistoryEntryId, item.title, item.date, item.appointer);
+        })])
+    }, [appointments])
 
     return (
         <>
