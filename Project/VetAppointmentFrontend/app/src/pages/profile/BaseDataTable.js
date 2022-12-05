@@ -208,7 +208,7 @@ const BaseDataTable = ({ tableHeaderValues, tableRows }) => {
                                                     if (val.isButton)
                                                         return (
                                                             <TableCell key={val.id} align="right">
-                                                                <Button variant="contained" style={{ color: 'white' }} href={'/appointment/' + val_idx}>{val.text}</Button>
+                                                                <Button variant="contained" style={{ color: 'white' }} href={'/appointment/' + '3b5de359-710e-42f7-9490-8940a11c1765'}>{val.text}</Button>
                                                             </TableCell>
                                                         )
                                                     else
