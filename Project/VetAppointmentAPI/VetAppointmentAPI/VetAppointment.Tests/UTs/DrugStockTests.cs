@@ -1,6 +1,4 @@
-﻿using VetAppointment.Domain.Entities;
-
-namespace VetAppointment.Tests.UTs
+﻿namespace VetAppointment.Tests.UTs
 {
     public class DrugStockTests
     {

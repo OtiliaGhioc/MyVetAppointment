@@ -1,9 +1,8 @@
 namespace VetAppointment.Tests
 {
-    [TestClass]
     public class UserTests
     {
-        [TestMethod]
+        [Fact]
         public void TestUserInfo()
         {
             User user = new User("name", "pass", true);
@@ -12,7 +11,7 @@ namespace VetAppointment.Tests
             Assert.IsTrue(user.HasOffice);
         }
 
-        [TestMethod]
+        [Fact]
         public void TestUserRepository()
         {
             DatabaseContext testDb = new DatabaseContext();

@@ -1,16 +1,15 @@
 ﻿namespace VetAppointment.Tests
 {
-    [TestClass]
     public class OfficeTests
     {
-        [TestMethod]
+        [Fact]
         public void TestOfficeInfo()
         {
             Office office = new Office("addr");
             Assert.AreEqual("addr", office.Address);
         }
 
-        [TestMethod]
+        [Fact]
         public void TestOfficeRepository()
         {
             DatabaseContext testDb = new DatabaseContext();
