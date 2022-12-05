@@ -183,7 +183,6 @@ const BaseDataTable = ({ tableHeaderValues, tableRows }) => {
                                     const isItemSelected = isSelected(row.name);
                                     const labelId = `enhanced-table-checkbox-${index}`;
                                     const vals = Object.keys(row).map(key => row[key]);
-
                                     return (
                                         <TableRow
                                             hover
@@ -197,18 +196,19 @@ const BaseDataTable = ({ tableHeaderValues, tableRows }) => {
 
                                             <TableCell
                                                 component="th"
+                                                key={vals[0].id}
                                                 id={labelId}
                                                 scope="row"
                                                 padding='normal'
                                             >
-                                                {vals[0].isButton ? <Button variant="contained" style={{ color: 'white' }}>{vals[0].text}</Button> : vals[0]}
+                                                {vals[0].isButton ? <Button variant="contained" style={{ color: 'white' }} href={vals[0].href}>{vals[0].text}</Button> : vals[0]}
                                             </TableCell>
                                             {vals.map((val, val_idx) => {
                                                 if (val_idx > 0) {
                                                     if (val.isButton)
                                                         return (
-                                                            <TableCell align="right">
-                                                                <Button variant="contained" style={{ color: 'white' }}>{val.text}</Button>
+                                                            <TableCell key={val.id} align="right">
+                                                                <Button variant="contained" style={{ color: 'white' }} href={val.href}>{val.text}</Button>
                                                             </TableCell>
                                                         )
                                                     else

@@ -4,19 +4,23 @@ namespace VetAppointment.Domain.Entities
 {
     public class User
     {
-        public User(string username, string password)
+        public User(string username, string password, bool isMedic=false)
         {
             UserId = Guid.NewGuid();
             Username = username;
-            Password = CalculatePasswordHash(password);
+            Password = PasswordHasher.GetHashedPassword(password);
+            IsMedic = isMedic;
+            JoinedDate= DateTime.Now;
         }
 
         public Guid UserId { get; private set; }
         public string Username { get; private set; }
         public string Password { get; private set; }
+        public bool IsMedic { get; private set; }
         public bool HasOffice { get; private set; } = false;
-        public Guid OfficeId { get; private set; }
-        public Office? UserOffice { get; set; }
+        public Guid? OfficeId { get; private set; }
+        public Office? UserOffice { get; private set; }
+        public DateTime JoinedDate { get; private set; }
 
         public Result RegisterOfficeToUser(Office office)
         {
@@ -38,9 +42,9 @@ namespace VetAppointment.Domain.Entities
             return Result.Success();
         }
 
-        private string CalculatePasswordHash(string password)
+        public bool IsPasswordValid(string password)
         {
-            return password;
+            return PasswordHasher.IsPasswordValid(Password, password);
         }
     }
 }

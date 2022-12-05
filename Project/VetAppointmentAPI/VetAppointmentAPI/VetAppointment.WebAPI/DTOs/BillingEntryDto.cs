@@ -1,6 +1,4 @@
-﻿using VetAppointment.Domain.Entities;
-
-namespace VetAppointment.WebAPI.DTOs
+﻿namespace VetAppointment.WebAPI.DTOs
 {
     public class BillingEntryDto
     {

@@ -1,12 +1,13 @@
-import * as React from 'react';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import ProfileUserCard from './ProfileUserCard';
-import Grid from '@mui/material/Grid';
-import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
-import ProfileDocumentsContainer from './ProfileDocumentsContainer';
+import { createTheme, styled, ThemeProvider } from '@mui/material/styles';
+import * as React from 'react';
 import { useEffect } from 'react';
+import { useNavigate } from "react-router-dom";
+import { API_ROOT } from '../../env';
+import ProfileDocumentsContainer from './ProfileDocumentsContainer';
+import ProfileUserCard from './ProfileUserCard';
 
 const profileTheme = createTheme({
     palette: {
@@ -27,11 +28,44 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 const ProfilePage = () => {
-    let username = 'Username';
-    let isMedic = true;
-    let joinedDate = 'March 2020';
+    const [username, setUsername] = React.useState('username');
+    const [isMedic, setIsMedic] = React.useState(false);
+    const [hasOffice, setHasOffice] = React.useState(false);
+    const [joinedDate, setJoinedDate] = React.useState('March 2020');
+    const [appointments, setAppointments] = React.useState([]);
+    const [medicalEntries, setMedicalEntries] = React.useState([]);
 
-    useEffect(() => { document.body.style.backgroundColor = '#ebf6fc' }, [])
+    const navigate = useNavigate();
+
+    const setPageData = (data) => {
+        setUsername(data.username);
+        setIsMedic(data.isMedic);
+        setJoinedDate(data.joinedDate);
+        setHasOffice(data.hasOffice);
+        setAppointments(data.appointments);
+    }
+
+    useEffect(() => {
+        document.body.style.backgroundColor = '#ebf6fc';
+
+        let userId = '1775a144-0134-43f1-971a-bce94639707c'; // to be taken from jwt
+
+        const fetchData = async () => {
+            const res = await fetch(`${API_ROOT}/Users/${userId}`, {
+                method: 'GET',
+                mode: 'cors'
+            });
+
+            if (!res.ok) {
+                navigate("/not-found");
+                return;
+            }
+
+            const jsonData = await res.json();
+            setPageData(jsonData);
+        }
+        fetchData();
+    }, [navigate])
 
     return (
         <ThemeProvider theme={profileTheme}>
@@ -40,12 +74,12 @@ const ProfilePage = () => {
                     <Grid item xs={1} />
                     <Grid item xs={8}>
                         <Item>
-                            <ProfileDocumentsContainer />
+                            <ProfileDocumentsContainer appointments={appointments} medicalEntries={medicalEntries}/>
                         </Item>
                     </Grid>
                     <Grid item xs={2}>
                         <Item>
-                            <ProfileUserCard username={username} isMedic={isMedic} joinedDate={joinedDate} />
+                            <ProfileUserCard username={username} isMedic={isMedic} joinedDate={joinedDate} hasOffice={hasOffice} />
                         </Item>
                     </Grid>
                     <Grid item xs={1} />

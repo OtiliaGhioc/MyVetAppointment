@@ -29,19 +29,26 @@ namespace VetAppointment.Infrastructure.Migrations
                     b.Property<Guid>("AppointerId")
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("DateTime")
+                    b.Property<DateTime>("CreatedAt")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Type")
+                    b.Property<DateTime>("DueDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("IsExpired")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<bool>("isExpired")
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.HasKey("AppointmentId");
 
@@ -210,11 +217,17 @@ namespace VetAppointment.Infrastructure.Migrations
                     b.Property<bool>("HasOffice")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Password")
-                        .IsRequired()
+                    b.Property<bool>("IsMedic")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("JoinedDate")
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid?>("UserOfficeOfficeId")
+                    b.Property<Guid?>("OfficeId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Username")
@@ -223,7 +236,7 @@ namespace VetAppointment.Infrastructure.Migrations
 
                     b.HasKey("UserId");
 
-                    b.HasIndex("UserOfficeOfficeId");
+                    b.HasIndex("OfficeId");
 
                     b.ToTable("Users");
                 });
@@ -331,7 +344,7 @@ namespace VetAppointment.Infrastructure.Migrations
                 {
                     b.HasOne("VetAppointment.Domain.Entities.Office", "UserOffice")
                         .WithMany()
-                        .HasForeignKey("UserOfficeOfficeId");
+                        .HasForeignKey("OfficeId");
 
                     b.Navigation("UserOffice");
                 });
