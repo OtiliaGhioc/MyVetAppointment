@@ -1,4 +1,6 @@
-﻿namespace VetAppointment.Tests
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace VetAppointment.Tests
 {
     public class OfficeTests
     {
@@ -12,7 +14,8 @@
         [Fact]
         public void TestOfficeRepository()
         {
-            DatabaseContext testDb = new DatabaseContext();
+            DbContextOptions<DatabaseContext> options = new DbContextOptionsBuilder<DatabaseContext>().UseSqlite("Data Source = MyTests.db").Options;
+            DatabaseContext testDb = new DatabaseContext(options);
             OfficeRepository officeRepo = new OfficeRepository(testDb);
             Office office = new Office("addr");
 

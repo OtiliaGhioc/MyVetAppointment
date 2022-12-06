@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.EntityFrameworkCore;
 using VetAppointment.Infrastructure.Context;
 using VetAppointment.WebAPI.Controllers;
 
@@ -6,7 +7,9 @@ namespace VetAppointment.Tests.ITs
 {
     public class BaseUsersIntegrationTests
     {
-
+        private DbContextOptions<DatabaseContext> options = new DbContextOptionsBuilder<DatabaseContext>()
+                .UseSqlite("Data Source = MyTests.db").Options;
+        private DatabaseContext databaseContext;
         protected HttpClient HttpClient { get; private set; }
 
         //private DatabaseContext databaseContext;
@@ -16,12 +19,12 @@ namespace VetAppointment.Tests.ITs
             var application = new WebApplicationFactory<UsersController>()
                 .WithWebHostBuilder(builder => { });
             HttpClient = application.CreateClient();
-            //databaseContext = new DatabaseContext(options);
+            databaseContext = new DatabaseContext(options);
             //CleanDatabases();
         }
         protected void CleanDatabases()
         {
-            var databaseContext = new DatabaseContext();
+            //var databaseContext = new DatabaseContext();
             databaseContext.Appointments.RemoveRange(databaseContext.Appointments.ToList());
             databaseContext.Users.RemoveRange(databaseContext.Users.ToList());
             databaseContext.Offices.RemoveRange(databaseContext.Offices.ToList());

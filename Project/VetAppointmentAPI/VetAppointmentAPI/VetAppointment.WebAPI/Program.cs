@@ -1,8 +1,13 @@
+using Microsoft.EntityFrameworkCore;
 using VetAppointment.Application.Repositories.Impl;
 using VetAppointment.Application.Repositories.Interfaces;
 using VetAppointment.Infrastructure.Context;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddDbContext<DatabaseContext>(options => options.UseSqlite(
+    builder.Configuration.GetConnectionString("VetAppointmentDb"),
+    b => b.MigrationsAssembly(typeof(DatabaseContext).Assembly.FullName)));
 
 // cors
 var CustomAllowSpecificOrigins = "_customAllowSpecificOrigins";

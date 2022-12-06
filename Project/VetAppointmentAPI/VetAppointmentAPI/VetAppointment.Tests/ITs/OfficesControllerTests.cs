@@ -35,7 +35,6 @@ namespace VetAppointment.Tests.ITs
             office.EnsureSuccessStatusCode();
             var appointments = await office.Content.ReadFromJsonAsync<List<OfficeDto>>();
             appointments.Should().NotBeNull();
-            CleanDatabases();
         }
 
         [Fact]

@@ -27,7 +27,8 @@ namespace VetAppointment.WebAPI.Controllers
         [HttpGet("{id}")]
         public IActionResult Get(Guid id)
         {
-            return Ok(officeRepository.Get(id));
+            var office = officeRepository.Get(id);
+            return Ok(office);
         }
 
         // POST api/<OfficesController>

@@ -1,14 +1,21 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using VetAppointment.Domain.Entities;
 
 namespace VetAppointment.Infrastructure.Context
 {
     public class DatabaseContext : DbContext, IDatabaseContext
     {
-        //public DatabaseContext()
-        //{
-        //    this.Database.EnsureCreated();
-        //}
+        public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
+        {
+            //this.Database.EnsureDeleted();
+            this.Database.EnsureCreated();
+        }
+        public DatabaseContext()
+        {
+            //this.Database.EnsureDeleted();
+            //this.Database.EnsureCreated();
+        }
         public DbSet<User> Users => Set<User>();
         public DbSet<Office> Offices => Set<Office>();
         public DbSet<Appointment> Appointments => Set<Appointment>();
@@ -22,11 +29,6 @@ namespace VetAppointment.Infrastructure.Context
         public void Save()
         {
             SaveChanges();
-        }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlite("Data Source = VetAppointmentMainDB.db");
         }
     }
 }
