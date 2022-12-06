@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using VetAppointment.Application.Repositories.Impl;
+using VetAppointment.Application.Repositories.Interfaces;
 using VetAppointment.Domain.Entities;
 using VetAppointment.WebAPI.Dtos.MedicalEntryDto;
 
@@ -9,12 +10,12 @@ namespace VetAppointment.WebAPI.Controllers
     [ApiController]
     public class MedicalEntriesController : ControllerBase
     {
-        private readonly MedicalHistoryEntryRepository medicalHistoryEntryRepository;
-        private readonly AppointmentRepository appointmentRepository;
-        private readonly PrescriptionRepository prescriptionRepository;
+        private readonly IMedicalHistoryEntryRepository medicalHistoryEntryRepository;
+        private readonly IAppointmentRepository appointmentRepository;
+        private readonly IPrescriptionRepository prescriptionRepository;
 
-        public MedicalEntriesController(MedicalHistoryEntryRepository medicalHistoryEntryRepository,
-            AppointmentRepository appointmentRepository, PrescriptionRepository prescriptionRepository)
+        public MedicalEntriesController(IMedicalHistoryEntryRepository medicalHistoryEntryRepository,
+            IAppointmentRepository appointmentRepository, IPrescriptionRepository prescriptionRepository)
         {
             this.medicalHistoryEntryRepository = medicalHistoryEntryRepository;
             this.appointmentRepository = appointmentRepository;
@@ -25,6 +26,18 @@ namespace VetAppointment.WebAPI.Controllers
         public IActionResult Get()
         {
             return Ok(medicalHistoryEntryRepository.All().ToList().Select(item => new MedicalEntryDetailDto(item)));
+        }
+
+        [HttpGet("{medicalEntryId:guid}")]
+        public IActionResult Get(Guid medicalEntryId)
+        {
+            MedicalHistoryEntry? medicalHistoryEntry = medicalHistoryEntryRepository.Get(medicalEntryId);
+            if (medicalHistoryEntry == null)
+                return NotFound();
+
+            MedicalEntryDetailDto medicalEntryDetailDto = new MedicalEntryDetailDto(medicalHistoryEntry);
+
+            return Ok(medicalEntryDetailDto);
         }
 
         [HttpPost]
