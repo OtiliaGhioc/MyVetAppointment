@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.VisualStudio.TestPlatform.TestHost;
-using VetAppointment.Infrastructure.Context;
 
 namespace VetAppointment.Tests.ITs
 {
@@ -20,7 +19,8 @@ namespace VetAppointment.Tests.ITs
                     services.Remove(descriptor);
                 services.AddDbContext<DatabaseContext>(options =>
                 {
-                    options.UseInMemoryDatabase("InMemoryEmployeeTest");
+                    //options.UseInMemoryDatabase("InMemoryEmployeeTest");
+                    options.UseSqlite("Data Source = Tests.db");
                 });
                 var sp = services.BuildServiceProvider();
                 using (var scope = sp.CreateScope())

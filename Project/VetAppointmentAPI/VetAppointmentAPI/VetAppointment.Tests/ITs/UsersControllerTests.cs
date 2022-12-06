@@ -1,4 +1,7 @@
-﻿namespace VetAppointment.Tests.ITs
+﻿using System.Net.Http.Json;
+using VetAppointment.WebAPI.Dtos.UserDto;
+
+namespace VetAppointment.Tests.ITs
 {
     public class UsersControllerTests : BaseUsersIntegrationTests
     {
@@ -10,11 +13,11 @@
             //Assert
             response.EnsureSuccessStatusCode();
         }
-/*
+
         [Fact]
         public async Task WhenCreateWithUserNotFound_ThenReturnNotFound()
         {
-            var userDto = new UserDto
+            var userDto = new DefaultUserDto()
             {
                 UserId = Guid.NewGuid(),
                 Username = "username",
@@ -35,6 +38,6 @@
             var appointmentResponse = await HttpClient.DeleteAsync($"api/users/{Guid.NewGuid()}");
             //Assert
             appointmentResponse.StatusCode.Should().Be(System.Net.HttpStatusCode.NotFound);
-        }*/
+        }
     }
 }

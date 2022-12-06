@@ -49,9 +49,9 @@ namespace VetAppointment.Tests.ITs
             //Arange
             var stockId = Guid.NewGuid();
             //Act
-            var officeResult = await HttpClient.GetAsync($"api/offices/{stockId}");
+            var officeResult = await HttpClient.GetAsync($"api/durgstocks/{stockId}");
             //Assert
-            officeResult.EnsureSuccessStatusCode();
+            officeResult.StatusCode.Should().Be(System.Net.HttpStatusCode.NotFound);
         }
     }
 }

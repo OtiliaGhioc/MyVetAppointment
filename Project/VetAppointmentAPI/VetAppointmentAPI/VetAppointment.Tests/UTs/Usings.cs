@@ -1,4 +1,3 @@
-global using Microsoft.VisualStudio.TestTools.UnitTesting;
 global using System.Linq.Expressions;
 global using VetAppointment.Application.Repositories.Impl;
 global using VetAppointment.Domain.Entities;

@@ -1,26 +1,26 @@
 ﻿using Microsoft.AspNetCore.Mvc.Testing;
-using VetAppointment.Infrastructure.Context;
+using Microsoft.EntityFrameworkCore;
 using VetAppointment.WebAPI.Controllers;
 
 namespace VetAppointment.Tests.ITs
 {
     public class BaseOfficesIntegrationTests
     {
+        private DbContextOptions<DatabaseContext> options = new DbContextOptionsBuilder<DatabaseContext>()
+                .UseSqlite("Data Source = MyTests.db").Options;
+        private DatabaseContext databaseContext;
         protected HttpClient HttpClient { get; private set; }
-
-        //private DatabaseContext databaseContext;
 
         protected BaseOfficesIntegrationTests()
         {
             var application = new WebApplicationFactory<OfficesController>()
                 .WithWebHostBuilder(builder => { });
             HttpClient = application.CreateClient();
-            //databaseContext = new DatabaseContext(options);
+            databaseContext = new DatabaseContext(options);
             //CleanDatabases();
         }
         protected void CleanDatabases()
         {
-            var databaseContext = new DatabaseContext();
             databaseContext.Appointments.RemoveRange(databaseContext.Appointments.ToList());
             databaseContext.Users.RemoveRange(databaseContext.Users.ToList());
             databaseContext.Offices.RemoveRange(databaseContext.Offices.ToList());

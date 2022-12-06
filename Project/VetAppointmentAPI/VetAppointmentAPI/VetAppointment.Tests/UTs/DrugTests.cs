@@ -1,14 +1,15 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace VetAppointment.Tests
+namespace VetAppointment.Tests.UTs
 {
-    public class OfficeTests
+    public class DrugTests
     {
         [Fact]
-        public void TestOfficeInfo()
+        public void TestDrugInfo()
         {
-            Office office = new Office("addr");
-            Assert.AreEqual("addr", office.Address);
+            Drug drug = new Drug("title",5);
+            Assert.AreEqual("title", drug.Title);
+            Assert.AreEqual(5, drug.Price);
         }
 
         [Fact]
@@ -16,58 +17,58 @@ namespace VetAppointment.Tests
         {
             DbContextOptions<DatabaseContext> options = new DbContextOptionsBuilder<DatabaseContext>().UseSqlite("Data Source = MyTests.db").Options;
             DatabaseContext testDb = new DatabaseContext(options);
-            OfficeRepository officeRepo = new OfficeRepository(testDb);
-            Office office = new Office("addr");
+            DrugRepository officeRepo = new DrugRepository(testDb);
+            Drug office = new Drug("title", 5);
 
             TestAdd(officeRepo, office);
             TestGet(officeRepo, office);
             TestAll(officeRepo, office);
 
-            Expression<Func<Office, bool>> predicate = u => u.Address.Equals(office.Address);
+            Expression<Func<Drug, bool>> predicate = u => u.Title.Equals(office.Title);
             TestFind(officeRepo, office, predicate);
 
             TestDelete(officeRepo, office);
         }
 
-        private void TestAdd(OfficeRepository officeRepo, Office office)
+        private void TestAdd(DrugRepository officeRepo, Drug office)
         {
-            Office added = officeRepo.Add(office);
+            Drug added = officeRepo.Add(office);
             officeRepo.SaveChanges();
             Assert.AreEqual(office, added);
         }
 
-        private void TestGet(OfficeRepository officeRepo, Office office)
+        private void TestGet(DrugRepository officeRepo, Drug office)
         {
-            Assert.AreEqual(office, officeRepo.Get(office.OfficeId));
+            Assert.AreEqual(office, officeRepo.Get(office.DrugId));
         }
 
-        private void TestAll(OfficeRepository officeRepo, Office office)
+        private void TestAll(DrugRepository officeRepo, Drug office)
         {
             var allOffices = officeRepo.All();
             bool check = false;
 
-            if (allOffices.Contains<Office>(office))
+            if (allOffices.Contains<Drug>(office))
                 check = true;
 
             Assert.IsTrue(check);
         }
 
-        private void TestFind(OfficeRepository officeRepo, Office office, Expression<Func<Office, bool>> predicate)
+        private void TestFind(DrugRepository officeRepo, Drug office, Expression<Func<Drug, bool>> predicate)
         {
             var foundOffices = officeRepo.Find(predicate);
             bool check = false;
 
-            if (foundOffices.Contains<Office>(office))
+            if (foundOffices.Contains<Drug>(office))
                 check = true;
 
             Assert.IsTrue(check);
         }
 
-        private void TestDelete(OfficeRepository officeRepo, Office office)
+        private void TestDelete(DrugRepository officeRepo, Drug office)
         {
             officeRepo.Delete(office);
             officeRepo.SaveChanges();
-            Assert.IsNull(officeRepo.Get(office.OfficeId));
+            Assert.IsNull(officeRepo.Get(office.DrugId));
         }
     }
 }
