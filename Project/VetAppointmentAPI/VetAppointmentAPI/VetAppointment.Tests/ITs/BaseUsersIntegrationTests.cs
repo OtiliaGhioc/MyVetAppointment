@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
-using VetAppointment.Infrastructure.Context;
 using VetAppointment.WebAPI.Controllers;
 
 namespace VetAppointment.Tests.ITs

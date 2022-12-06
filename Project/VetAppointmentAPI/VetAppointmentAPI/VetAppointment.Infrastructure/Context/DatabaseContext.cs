@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 using VetAppointment.Domain.Entities;
 
 namespace VetAppointment.Infrastructure.Context

@@ -1,8 +1,4 @@
-﻿using Moq;
-using System.Net.Http.Json;
-using VetAppointment.Application.Repositories.Interfaces;
-using VetAppointment.WebAPI.Controllers;
-using VetAppointment.WebAPI.Dtos;
+﻿using System.Net.Http.Json;
 using VetAppointment.WebAPI.Dtos.AppointmentDtos;
 
 namespace VetAppointment.Tests.ITs
