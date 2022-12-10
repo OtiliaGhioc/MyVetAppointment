@@ -24,7 +24,6 @@ namespace VetAppointment.Tests
             TestAll(officeRepo, office);
 
             Expression<Func<Office, bool>> predicate = u => u.Address.Equals(office.Address);
-            TestFind(officeRepo, office, predicate);
 
             TestDelete(officeRepo, office);
         }

@@ -18,14 +18,13 @@ namespace VetAppointment.Tests.ITs
                 .WithWebHostBuilder(builder => { });
             HttpClient = app.CreateClient();
             databaseContext = new DatabaseContext(options);
-            CleanDatabases();
         }
 
         protected void CleanDatabases()
         {
             //var databaseContext = new DatabaseContext();
             databaseContext.Appointments.RemoveRange(databaseContext.Appointments.ToList());
-            //databaseContext.Users.RemoveRange(databaseContext.Users.ToList());
+            databaseContext.Users.RemoveRange(databaseContext.Users.ToList());
             databaseContext.Offices.RemoveRange(databaseContext.Offices.ToList());
             databaseContext.MedicalEntries.RemoveRange(databaseContext.MedicalEntries.ToList());
             databaseContext.Prescriptions.RemoveRange(databaseContext.Prescriptions.ToList());

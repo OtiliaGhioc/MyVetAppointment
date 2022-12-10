@@ -42,16 +42,5 @@ namespace VetAppointment.Tests.ITs
             //Assert
             dsResult.StatusCode.Should().Be(System.Net.HttpStatusCode.NotFound);
         }
-
-        [Fact]
-        public async Task WhenGetByUnknownIdStock_ThenReturnNotFound()
-        {
-            //Arange
-            var stockId = Guid.NewGuid();
-            //Act
-            var officeResult = await HttpClient.GetAsync($"api/durgstocks/{stockId}");
-            //Assert
-            officeResult.StatusCode.Should().Be(System.Net.HttpStatusCode.NotFound);
-        }
     }
 }
