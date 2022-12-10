@@ -3,6 +3,7 @@ import * as React from 'react';
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from 'react';
 import { API_ROOT } from '../../env';
+import { Button } from '@mui/material';
 
 
 const AppointmentDataContainer = () => {
@@ -10,7 +11,7 @@ const AppointmentDataContainer = () => {
     const navigate = useNavigate();
     const [appointment, setAppointment] = useState();
     let { id } = useParams();
-    
+
     const fetchDataAppointment = async () => {
         let path = `${API_ROOT}/Appointments/${id}`
         const response = await fetch(path, {
@@ -18,24 +19,35 @@ const AppointmentDataContainer = () => {
             mode: 'cors'
         })
 
-        if (!response.ok) 
-        {
+        if (!response.ok) {
             navigate("/not-found");
             return;
         }
-        
+
         const json_data = await response.json();
 
         setAppointment(json_data);
     }
 
+    const cancelAppointment = async () => {
+        const res = await fetch(`${API_ROOT}/Appointments/${appointment.appointmentId}`, {
+            method: 'DELETE',
+            mode: 'cors'
+        });
+
+        if (res.ok) {
+            navigate("/me");
+            return;
+        }
+    }
+
     useEffect(() => {
-        document.body.style.backgroundColor = '#ebf6fc';        
+        document.body.style.backgroundColor = '#ebf6fc';
 
         fetchDataAppointment();
 
-    }, [navigate])  
-    
+    }, [navigate])
+
     if (appointment)
         return (
             <div>
@@ -50,6 +62,7 @@ const AppointmentDataContainer = () => {
                             <h3>Created by: {appointment.appointer}</h3>
                             <h3>Appointed to: {appointment.appointee}</h3>
                             <h3>Description: {appointment.description}</h3>
+                            <Button variant="contained" style={{ margin: '0 auto 0 1rem', border: '2px solid', color: 'red' }} onClick={cancelAppointment}>Cancel</Button>
                         </Container>
                     </>
                 }

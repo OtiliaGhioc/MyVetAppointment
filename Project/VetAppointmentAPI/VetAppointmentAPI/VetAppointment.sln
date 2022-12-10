@@ -20,6 +20,9 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VetAppointment.WebAPI", "VetAppointment.WebAPI\VetAppointment.WebAPI.csproj", "{B7A8937D-C61E-4E0E-9EF3-03AEA55CA58B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{9F50EC12-D8A4-4FF2-914E-FD9DAB3B42C1}"
+	ProjectSection(SolutionItems) = preProject
+		coverlet.runsettings = coverlet.runsettings
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VetAppointment.Tests", "VetAppointment.Tests\VetAppointment.Tests.csproj", "{C7823BE3-E1C3-40E7-813E-FCF12D4BDF1D}"
 EndProject
