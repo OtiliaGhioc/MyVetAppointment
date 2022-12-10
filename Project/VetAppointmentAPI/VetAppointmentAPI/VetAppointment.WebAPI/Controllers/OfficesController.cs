@@ -57,7 +57,7 @@ namespace VetAppointment.WebAPI.Controllers
             officeRepository.Update(office);
             officeRepository.SaveChanges();
 
-            return Ok(office);
+            return NoContent();
         }
 
         // DELETE api/<OfficesController>/5

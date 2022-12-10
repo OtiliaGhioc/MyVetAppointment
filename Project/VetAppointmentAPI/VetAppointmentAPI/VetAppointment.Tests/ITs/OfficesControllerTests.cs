@@ -1,15 +1,33 @@
-﻿using System.Net.Http.Json;
+﻿using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.DependencyInjection;
+using System.Net.Http.Json;
+using VetAppointment.Application.Repositories.Interfaces;
 using VetAppointment.WebAPI.Dtos;
 
 namespace VetAppointment.Tests.ITs
 {
-    public class OfficesControllerTests : BaseOfficesIntegrationTests
+    public class OfficesControllerTests : IClassFixture<TestingWebAppFactory<Program>>
     {
+        private readonly HttpClient httpClient;
+        private readonly TestingWebAppFactory<Program> factory;
+        public OfficesControllerTests(TestingWebAppFactory<Program> factory)
+        {
+            this.factory = factory;
+            httpClient = factory.WithWebHostBuilder(builder =>
+            {
+                builder.ConfigureTestServices(services =>
+                {
+                    services.AddScoped<IOfficeRepository, OfficeRepository>();
+                });
+            })
+        .CreateClient();
+        }
+
         [Fact]
         public async Task Get_WhenCalled_ReturnsOk()
         {
             //Act
-            var response = await HttpClient.GetAsync("api/offices");
+            var response = await httpClient.GetAsync("api/offices");
             //Assert
             response.EnsureSuccessStatusCode();
         }
@@ -26,8 +44,8 @@ namespace VetAppointment.Tests.ITs
 
             //Act
 
-            var officeResponse = await HttpClient.PostAsJsonAsync("api/offices", officeDto);
-            var office = await HttpClient.GetAsync("api/offices");
+            var officeResponse = await httpClient.PostAsJsonAsync("api/offices", officeDto);
+            var office = await httpClient.GetAsync("api/offices");
             //Assert
             officeResponse.EnsureSuccessStatusCode();
             officeResponse.StatusCode.Should().Be(System.Net.HttpStatusCode.Created);
@@ -47,10 +65,31 @@ namespace VetAppointment.Tests.ITs
                 Address = "aadress"
             };
 
-            var officeResponse = await HttpClient.PostAsJsonAsync("api/offices", officeDto);
+            var officeResponse = await httpClient.PostAsJsonAsync("api/offices", officeDto);
             var office = await officeResponse.Content.ReadFromJsonAsync<OfficeDto>();
             //Act
-            var officeResult = await HttpClient.DeleteAsync($"api/offices/{office.OfficeId}");
+            var officeResult = await httpClient.DeleteAsync($"api/offices/{office.OfficeId}");
+            //Assert
+            officeResult.StatusCode.Should().Be(System.Net.HttpStatusCode.NoContent);
+        }
+
+        [Fact]
+        public async Task WhenUpdateOffice_ThenReturnNoContent()
+        {
+            //Arange
+            var officeDto = new OfficeDto
+            {
+                OfficeId = Guid.NewGuid(),
+                Address = "aadress"
+            };
+
+            
+
+            var officeResponse = await httpClient.PostAsJsonAsync("api/offices", officeDto);
+            var office = await officeResponse.Content.ReadFromJsonAsync<OfficeDto>();
+            office.Address = "change";
+            //Act
+            var officeResult = await httpClient.PutAsJsonAsync($"api/offices", office);
             //Assert
             officeResult.StatusCode.Should().Be(System.Net.HttpStatusCode.NoContent);
         }
@@ -65,10 +104,10 @@ namespace VetAppointment.Tests.ITs
                 Address = "aadress"
             };
 
-            var officeResponse = await HttpClient.PostAsJsonAsync("api/offices", officeDto);
+            var officeResponse = await httpClient.PostAsJsonAsync("api/offices", officeDto);
             var office = await officeResponse.Content.ReadFromJsonAsync<OfficeDto>();
             //Act
-            var officeResult = await HttpClient.GetAsync($"api/offices/{office.OfficeId}");
+            var officeResult = await httpClient.GetAsync($"api/offices/{office.OfficeId}");
             //Assert
             officeResult.EnsureSuccessStatusCode();
         }

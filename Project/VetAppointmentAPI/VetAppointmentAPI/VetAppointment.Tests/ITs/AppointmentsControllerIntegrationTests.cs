@@ -1,16 +1,34 @@
-﻿using System.Net.Http.Json;
+﻿using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.DependencyInjection;
+using System.Net.Http.Json;
+using VetAppointment.Application.Repositories.Interfaces;
 using VetAppointment.WebAPI.Dtos.AppointmentDtos;
+using VetAppointment.WebAPI.Dtos.UserDto;
 
 namespace VetAppointment.Tests.ITs
 {
-    public class AppointmentsControllerIntegrationTests : BaseAppointmentsIntegrationTests
+    public class AppointmentsControllerIntegrationTests : IClassFixture<TestingWebAppFactory<Program>>
     {
+        private readonly HttpClient httpClient;
+        private readonly TestingWebAppFactory<Program> factory;
+        public AppointmentsControllerIntegrationTests(TestingWebAppFactory<Program> factory)
+        {
+            this.factory = factory;
+            httpClient = factory.WithWebHostBuilder(builder =>
+            {
+                builder.ConfigureTestServices(services =>
+                {
+                    services.AddScoped<IAppointmentRepository, AppointmentRepository>();
+                });
+            })
+        .CreateClient();
+        }
 
         [Fact]
         public async Task Get_WhenCalled_ReturnsOk()
         {
             //Act
-            var response = await HttpClient.GetAsync("api/appointments");
+            var response = await httpClient.GetAsync("api/appointments");
             //Assert
             response.EnsureSuccessStatusCode();
         }
@@ -23,7 +41,7 @@ namespace VetAppointment.Tests.ITs
 
             //Act
 
-            var appointmentResponse = await HttpClient.PostAsJsonAsync("api/appointments", appoitnmentDto);
+            var appointmentResponse = await httpClient.PostAsJsonAsync("api/appointments", appoitnmentDto);
             //Assert
             appointmentResponse.StatusCode.Should().Be(System.Net.HttpStatusCode.NotFound);
         }
@@ -31,14 +49,29 @@ namespace VetAppointment.Tests.ITs
         [Fact]
         public async Task WhenCreateValid_ThenReturnCreated()
         {
-            var idUser1 = "aa77ea8d-6051-4fc4-b4ff-0c6da523be37";
-            var idUser2 = "770d2748-5c3b-492c-be15-61f98eb100ce";
             //Arange
-            var appoitnmentDto = new AppointmentCreateDto(Guid.Parse(idUser1), Guid.Parse(idUser2), DateTime.Now, "title", "description", "type");
+            var userDto1 = new DefaultUserDto()
+            {
+                UserId = Guid.NewGuid(),
+                Username = "username",
+                Password = "pass"
+            };
+            var userResponse = await httpClient.PostAsJsonAsync("api/users", userDto1);
+            var userDto2 = new DefaultUserDto()
+            {
+                UserId = Guid.NewGuid(),
+                Username = "username",
+                Password = "pass"
+            };
+            var userResponse2 = await httpClient.PostAsJsonAsync("api/users", userDto2);
+            var user1 = await userResponse.Content.ReadFromJsonAsync<DefaultUserDto>();
+            var user2 = await userResponse2.Content.ReadFromJsonAsync<DefaultUserDto>();
+            
+            var appoitnmentDto = new AppointmentCreateDto(user1.UserId, user2.UserId, DateTime.Now, "title", "description", "type");
 
             //Act
 
-            var appointmentResponse = await HttpClient.PostAsJsonAsync("api/appointments", appoitnmentDto);
+            var appointmentResponse = await httpClient.PostAsJsonAsync("api/appointments", appoitnmentDto);
             //Assert
             appointmentResponse.StatusCode.Should().Be(System.Net.HttpStatusCode.Created);
         }
@@ -48,19 +81,19 @@ namespace VetAppointment.Tests.ITs
         public async Task WhenDeleteNonExistingAppointment_ThenReturnNotFound()
         {
             //Act
-            var appointmentResponse = await HttpClient.DeleteAsync($"api/appointments/{Guid.NewGuid()}");
+            var appointmentResponse = await httpClient.DeleteAsync($"api/appointments/{Guid.NewGuid()}");
             //Assert
             appointmentResponse.StatusCode.Should().Be(System.Net.HttpStatusCode.NotFound);
         }
 
         [Fact]
-        public async Task WhenGetByNonExistingId_ThenReturnOk()
+        public async Task WhenGetByNonExistingId_ThenReturnNotFound()
         {
-            var existingAppointment = "f75c2263-19ff-4489-9793-2ebfde3c1845";
+            var nonEexistingAppointment = Guid.NewGuid();
             //Act
-            var appointmentResponse = await HttpClient.GetAsync($"api/appointments/{Guid.Parse(existingAppointment)}");
+            var appointmentResponse = await httpClient.GetAsync($"api/appointments/{nonEexistingAppointment}");
             //Assert
-            appointmentResponse.StatusCode.Should().Be(System.Net.HttpStatusCode.OK);
+            appointmentResponse.StatusCode.Should().Be(System.Net.HttpStatusCode.NotFound);
         }
 
     }

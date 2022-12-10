@@ -1,11 +1,30 @@
 ﻿using System.Net.Http.Json;
 using VetAppointment.WebAPI.DTOs;
+using Microsoft.AspNetCore.TestHost;
+using VetAppointment.Application.Repositories.Interfaces;
+using Microsoft.Extensions.DependencyInjection;
+using VetAppointment.WebAPI.Dtos;
 
 namespace VetAppointment.Tests.ITs
 {
-    public class DrugsControllerTests : BaseDrugsIntegrationTests
+    public class DrugsControllerTests : IClassFixture<TestingWebAppFactory<Program>>
     {
+        private readonly HttpClient httpClient;
+        private readonly TestingWebAppFactory<Program> factory;
         private const string ApiUrl = "api/drugs";
+
+        public DrugsControllerTests(TestingWebAppFactory<Program> factory)
+        {
+            this.factory = factory;
+            httpClient = factory.WithWebHostBuilder(builder =>
+            {
+                builder.ConfigureTestServices(services =>
+                {
+                    ServiceCollectionServiceExtensions.AddScoped<IDrugRepository, DrugRepository>(services);
+                });
+            })
+        .CreateClient();
+        }
 
         [Fact]
         public async void WhenCreateDrug_ThenShouldReturnOk()
@@ -18,8 +37,8 @@ namespace VetAppointment.Tests.ITs
             };
 
             //Act
-            var drugResponse = await HttpClient.PostAsJsonAsync(ApiUrl, drugDto);
-            var getDrugResult = await HttpClient.GetAsync(ApiUrl);
+            var drugResponse = await httpClient.PostAsJsonAsync(ApiUrl, drugDto);
+            var getDrugResult = await httpClient.GetAsync(ApiUrl);
 
             //Assert
             drugResponse.EnsureSuccessStatusCode();
@@ -31,10 +50,10 @@ namespace VetAppointment.Tests.ITs
         }
 
         [Fact]
-        public async Task Get_WhenCalled_ReturnsOk()
+        public async Task Get_WhenCalledAll_ReturnsOk()
         {
             //Act
-            var response = await HttpClient.GetAsync(ApiUrl);
+            var response = await httpClient.GetAsync(ApiUrl);
             //Assert
             response.EnsureSuccessStatusCode();
         }

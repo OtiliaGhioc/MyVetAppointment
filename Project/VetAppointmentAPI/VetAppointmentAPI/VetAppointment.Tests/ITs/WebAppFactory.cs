@@ -1,8 +1,9 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.VisualStudio.TestPlatform.TestHost;
+using System.Data.Common;
 
 namespace VetAppointment.Tests.ITs
 {
@@ -17,10 +18,23 @@ namespace VetAppointment.Tests.ITs
                         typeof(DbContextOptions<DatabaseContext>));
                 if (descriptor != null)
                     services.Remove(descriptor);
-                services.AddDbContext<DatabaseContext>(options =>
+                var dbConnectionDescriptor = services.SingleOrDefault(
+                d => d.ServiceType ==
+                    typeof(DbConnection));
+                if (dbConnectionDescriptor != null)
+                    services.Remove(dbConnectionDescriptor);
+                services.AddSingleton<DbConnection>(container =>
+                {
+                    var connection = new SqliteConnection("DataSource=:memory:");
+                    connection.Open();
+
+                    return connection;
+                });
+                services.AddDbContext<DatabaseContext>((container, options) =>
                 {
                     //options.UseInMemoryDatabase("InMemoryEmployeeTest");
-                    options.UseSqlite("Data Source = Tests.db");
+                    var connection = container.GetRequiredService<DbConnection>();
+                    options.UseSqlite(connection);
                 });
                 var sp = services.BuildServiceProvider();
                 using (var scope = sp.CreateScope())

@@ -71,7 +71,7 @@ namespace VetAppointment.WebAPI.Controllers
             userRepository.Update(user);
             userRepository.SaveChanges();
 
-            return Ok(user);
+            return NoContent();
         }
 
         // DELETE api/<UsersController>/5
@@ -79,6 +79,8 @@ namespace VetAppointment.WebAPI.Controllers
         public IActionResult Delete(Guid id)
         {
             User user = userRepository.Get(id);
+            if(user == null)
+                return NotFound();
             userRepository.Delete(user);
             userRepository.SaveChanges();
 

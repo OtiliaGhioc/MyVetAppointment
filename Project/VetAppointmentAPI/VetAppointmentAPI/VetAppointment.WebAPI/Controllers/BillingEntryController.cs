@@ -3,7 +3,7 @@ using VetAppointment.Application.Repositories.Interfaces;
 using VetAppointment.Domain.Entities;
 using VetAppointment.WebAPI.DTOs;
 
-namespace VetAppointment.WebAPI.Properties
+namespace VetAppointment.WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -45,7 +45,7 @@ namespace VetAppointment.WebAPI.Properties
                 AppointmentId = bill.AppointmentId,
                 PrescriptionId = bill.PrescriptionId,
                 Price = bill.Price
-            }) ;
+            });
             return Ok(drugStocks);
         }
 
@@ -61,7 +61,7 @@ namespace VetAppointment.WebAPI.Properties
             billingEntryRepository.Add(bill);
             billingEntryRepository.SaveChanges();
             return Created(nameof(GetAllBills), bill);
- 
+
         }
 
         [HttpDelete("{billingEntryId}")]
