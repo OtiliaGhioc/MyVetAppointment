@@ -20,7 +20,6 @@ namespace VetAppointment.Tests.ITs
                 .WithWebHostBuilder(builder => { });
             HttpClient = application.CreateClient();
             databaseContext = new DatabaseContext(options);
-            CleanDatabases();
         }
         protected void CleanDatabases()
         {
@@ -30,7 +29,7 @@ namespace VetAppointment.Tests.ITs
             databaseContext.Offices.RemoveRange(databaseContext.Offices.ToList());
             databaseContext.MedicalEntries.RemoveRange(databaseContext.MedicalEntries.ToList());
             databaseContext.Prescriptions.RemoveRange(databaseContext.Prescriptions.ToList());
-            //databaseContext.Drugs.RemoveRange(databaseContext.Drugs.ToList());
+            databaseContext.Drugs.RemoveRange(databaseContext.Drugs.ToList());
             databaseContext.DrugStocks.RemoveRange(databaseContext.DrugStocks.ToList());
             databaseContext.BillingEntries.RemoveRange(databaseContext.BillingEntries.ToList());
             databaseContext.PrescriptionDrugs.RemoveRange(databaseContext.PrescriptionDrugs.ToList());

@@ -44,8 +44,8 @@ const AppointmentPage = () => {
                         </Grid>
                         <Grid item xs={2}>
                             <Item>
-                                <Container style={{ width: '100%', height: '4rem', padding: '1rem', backgroundColor: "#8fc3e3" }}>
-                                    <Button variant="contained" style={{margin: '0 auto', border: '2px solid', color: 'white' }} href='/me'>Back</Button>
+                                <Container style={{ width: '100%', height: 'fit-content', padding: '1rem', backgroundColor: "#8fc3e3" }}>
+                                    <Button variant="contained" style={{ margin: '0 auto', border: '2px solid', color: 'white' }} href='/me'>Back</Button>
                                 </Container>
                             </Item>
                         </Grid>

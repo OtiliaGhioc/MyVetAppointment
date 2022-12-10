@@ -13,41 +13,41 @@ namespace VetAppointment.Tests.UTs
         }
 
         [Fact]
-        public void TestOfficeRepository()
+        public void TestDrugsRepository()
         {
             DbContextOptions<DatabaseContext> options = new DbContextOptionsBuilder<DatabaseContext>().UseSqlite("Data Source = MyTests.db").Options;
             DatabaseContext testDb = new DatabaseContext(options);
-            DrugRepository officeRepo = new DrugRepository(testDb);
-            Drug office = new Drug("title", 5);
+            DrugRepository drugRepo = new DrugRepository(testDb);
+            Drug drug = new Drug("title", 5);
 
-            TestAdd(officeRepo, office);
-            TestGet(officeRepo, office);
-            TestAll(officeRepo, office);
+            TestAdd(drugRepo, drug);
+            TestGet(drugRepo, drug);
+            TestAll(drugRepo, drug);
 
-            Expression<Func<Drug, bool>> predicate = u => u.Title.Equals(office.Title);
-            TestFind(officeRepo, office, predicate);
+            Expression<Func<Drug, bool>> predicate = u => u.Title.Equals(drug.Title);
+            TestFind(drugRepo, drug, predicate);
 
-            TestDelete(officeRepo, office);
+            TestDelete(drugRepo, drug);
         }
 
-        private void TestAdd(DrugRepository officeRepo, Drug office)
+        private void TestAdd(DrugRepository drugRepo, Drug drug)
         {
-            Drug added = officeRepo.Add(office);
-            officeRepo.SaveChanges();
-            Assert.AreEqual(office, added);
+            Drug added = drugRepo.Add(drug);
+            drugRepo.SaveChanges();
+            Assert.AreEqual(drug, added);
         }
 
-        private void TestGet(DrugRepository officeRepo, Drug office)
+        private void TestGet(DrugRepository drugRepo, Drug drug)
         {
-            Assert.AreEqual(office, officeRepo.Get(office.DrugId));
+            Assert.AreEqual(drug, drugRepo.Get(drug.DrugId));
         }
 
-        private void TestAll(DrugRepository officeRepo, Drug office)
+        private void TestAll(DrugRepository drugRepo, Drug drug)
         {
-            var allOffices = officeRepo.All();
+            var allDrugs = drugRepo.All();
             bool check = false;
 
-            if (allOffices.Contains<Drug>(office))
+            if (allDrugs.Contains<Drug>(drug))
                 check = true;
 
             Assert.IsTrue(check);
