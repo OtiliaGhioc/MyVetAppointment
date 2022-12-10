@@ -1,40 +1,65 @@
 import Container from '@mui/material/Container';
 import * as React from 'react';
 import ToggleButton from '@mui/material/ToggleButton';
+import { useNavigate, useParams } from "react-router-dom";
+import { useEffect, useState } from 'react';
+import { API_ROOT } from '../../env';
 
-function createMedicalHistoryEntry(title, date, appointer_name, customer_name) {
-    return {
-        title,
-        date,
-        appointer_name,
-        customer_name,
-    };
-}
 
 const MedicalHistoryDataContainer = () => {
 
-    const medicalHistoryData = [
-        createMedicalHistoryEntry('MH. 1', '30-10-2022','Dr. Smith', 'Naruto Uzumaki')
-    ]
+    const navigate = useNavigate();
+    const [medicalHistory, setMedicalHistory] = useState();
+    let { medicalEntryId } = useParams();
+    
+    const fetchDataMedicalHistory = async () => {
+        let path = `${API_ROOT}/MedicalEntries/${medicalEntryId}`
+        const response = await fetch(path, {
+            method: 'GET',
+            mode: 'cors'
+        })
 
-    return (
-        <>
-            <Container style={{ width: '100%', height: '5rem', padding: '1rem', backgroundColor: "#8fc3e3" }}>
-                <h1>{medicalHistoryData[0].title}</h1>
-            </Container>
+        if (!response.ok) 
+        {
+            navigate("/not-found");
+            return;
+        }
+        
+        const json_data = await response.json();
 
-            <Container style={{ width: '100%', padding: '1rem', backgroundColor: "#8fc3e3" }}>
-                <h3>Date: {medicalHistoryData[0].date}</h3>
-                <h3>Appointer: {medicalHistoryData[0].appointer_name}</h3>
-                <h3>Customer: {medicalHistoryData[0].customer_name}</h3> 
-               
-                <ToggleButton color="secondary" value="appointment" style={{marginRight: 10}}>Appointment</ToggleButton>
-                <ToggleButton color="secondary" value="prescription">Prescription</ToggleButton>
-                
-            </Container>
+        setMedicalHistory(json_data);
+    }
+
+    useEffect(() => {
+        document.body.style.backgroundColor = '#ebf6fc';        
+
+        fetchDataMedicalHistory();
+
+    }, [navigate])  
+    
+    if (medicalHistory)
+        return (
+            <div>
+                {
+                       <>
+                       <Container style={{ width: '100%', height: '5rem', padding: '1rem', backgroundColor: "#8fc3e3" }}>
+                           <h1>{medicalEntryId}</h1>
+                       </Container>
            
-        </>
-    )
+                       <Container style={{ width: '100%', padding: '1rem', backgroundColor: "#8fc3e3" }}>
+                           {/* <h3>Date: {medicalHistoryData[0].date}</h3>
+                           <h3>Appointer: {medicalHistoryData[0].appointer_name}</h3>
+                           <h3>Customer: {medicalHistoryData[0].customer_name}</h3>  */}
+                          
+                           <ToggleButton color="secondary" value="appointment" style={{marginRight: 10} }  onClick={ () => navigate(`/appointment/${medicalHistory.appointmentId}`) } >Appointment</ToggleButton>
+                           {/* <ToggleButton color="secondary" value="prescription" onClick={ () => navigate(`/prescription/${medicalHistory.prescriptionId}`) }>Prescription</ToggleButton> */}
+                           
+                       </Container>
+                      
+                   </>
+                }
+            </div>
+        )
 }
 
 export default MedicalHistoryDataContainer;
