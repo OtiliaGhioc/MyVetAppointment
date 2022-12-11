@@ -4,12 +4,12 @@ namespace VetAppointment.Application.Repositories.Base
 {
     public interface IBaseRepository<T>
     {
-        T Add(T entity);
-        T Update(T entity);
-        void Delete(T entity);
-        T? Get(Guid id);
-        IEnumerable<T> All();
-        IEnumerable<T> Find(Expression<Func<T, bool>> predicate);
-        void SaveChanges();
+        Task<T> Add(T entity);
+        Task Update(T entity);
+        Task Delete(T entity);
+        Task<T?> Get(Guid id);
+        Task<IEnumerable<T>> All();
+        Task<IEnumerable<T>> Find(Expression<Func<T, bool>> predicate);
+        Task SaveChanges();
     }
 }

@@ -23,20 +23,20 @@ namespace VetAppointment.WebAPI.Controllers
         }
 
         [HttpGet]
-        public IActionResult Get()
+        public async Task<IActionResult> Get()
         {
-            return Ok(appointmentRepository.All().ToList().Select(item => new AppointmentDetailDto(item)).ToList());
+            return Ok(await appointmentRepository.All());
         }
 
         [HttpGet("{id}")]
-        public IActionResult Get(Guid id)
+        public async Task<IActionResult> Get(Guid id)
         {
-            Appointment? appointment = appointmentRepository.Get(id);
+            Appointment? appointment = await appointmentRepository.Get(id);
             if (appointment == null) 
                 return NotFound();
 
-            User? appointer = userRepository.Get(appointment.AppointerId);
-            User? appointee = userRepository.Get(appointment.AppointeeId);
+            User? appointer = await userRepository.Get(appointment.AppointerId);
+            User? appointee = await userRepository.Get(appointment.AppointeeId);
 
             if (appointer == null || appointee == null)
                 return NotFound();
@@ -45,49 +45,49 @@ namespace VetAppointment.WebAPI.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create([FromBody] AppointmentCreateDto appointmentDto)
+        public async Task<IActionResult> Create([FromBody] AppointmentCreateDto appointmentDto)
         {
             var validation = appoinmentValidator.Validate(appointmentDto);
             if (!validation.IsValid)
                 return StatusCode(400, validation.Errors.First().ErrorMessage);
-            User? appointee = userRepository.Get(appointmentDto.AppointeeId);
+            User? appointee = await userRepository.Get(appointmentDto.AppointeeId);
             if (appointee == null)
                 return NotFound();
 
-            User? appointer = userRepository.Get(appointmentDto.AppointerId);
+            User? appointer = await userRepository.Get(appointmentDto.AppointerId);
             if (appointer == null)
                 return NotFound();
 
 
             Appointment appointment = new Appointment(appointer, appointee, appointmentDto.DueDate, appointmentDto.Title, 
                 appointmentDto.Description, appointmentDto.Type);
-            appointmentRepository.Add(appointment);
-            appointmentRepository.SaveChanges();
+            await appointmentRepository.Add(appointment);
+            await appointmentRepository.SaveChanges();
 
             AppointmentDetailDto appointmentDetail = new AppointmentDetailDto(appointment);
             return Created(nameof(Get), appointmentDetail);
         }
 
         [HttpPut("{appointmentId:guid}")]
-        public IActionResult Update(Guid appointmentId, [FromBody] AppointmentModifyDto appointmentDto)
+        public async Task<IActionResult> Update(Guid appointmentId, [FromBody] AppointmentModifyDto appointmentDto)
         {
-            Appointment? appointment = appointmentRepository.Get(appointmentId);
+            Appointment? appointment = await appointmentRepository.Get(appointmentId);
             if (appointment == null)
                 return NotFound();
             appointment = appointmentDto.ApplyModificationsToModel(appointment);
-            appointmentRepository.Update(appointment);
-            appointmentRepository.SaveChanges();
+            await appointmentRepository.Update(appointment);
+            await appointmentRepository.SaveChanges();
             return Ok(new AppointmentDetailDto(appointment));
         }
 
         [HttpDelete("{appointmentId:guid}")]
-        public IActionResult Delete(Guid appointmentId)
+        public async Task<IActionResult> Delete(Guid appointmentId)
         {
-            Appointment? appointment = appointmentRepository.Get(appointmentId);
+            Appointment? appointment = await appointmentRepository.Get(appointmentId);
             if (appointment == null)
                 return NotFound();
-            appointmentRepository.Delete(appointment);
-            appointmentRepository.SaveChanges();
+            await appointmentRepository.Delete(appointment);
+            await appointmentRepository.SaveChanges();
             return NoContent();
         }
     }

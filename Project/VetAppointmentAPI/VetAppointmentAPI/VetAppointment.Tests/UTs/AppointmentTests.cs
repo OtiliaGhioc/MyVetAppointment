@@ -35,21 +35,21 @@ namespace VetAppointment.Tests.UTs
             TestDelete(officeRepo, office);
         }
 
-        private void TestAdd(AppointmentRepository officeRepo, Appointment office)
+        private async void TestAdd(AppointmentRepository officeRepo, Appointment office)
         {
-            Appointment added = officeRepo.Add(office);
-            officeRepo.SaveChanges();
+            Appointment added = await officeRepo.Add(office);
+            await officeRepo.SaveChanges();
             Assert.AreEqual(office, added);
         }
 
-        private void TestGet(AppointmentRepository officeRepo, Appointment office)
+        private async void TestGet(AppointmentRepository officeRepo, Appointment office)
         {
-            Assert.AreEqual(office, officeRepo.Get(office.AppointmentId));
+            Assert.AreEqual(office, await officeRepo.Get(office.AppointmentId));
         }
 
-        private void TestAll(AppointmentRepository officeRepo, Appointment office)
+        private async void TestAll(AppointmentRepository officeRepo, Appointment office)
         {
-            var allOffices = officeRepo.All();
+            var allOffices = await officeRepo.All();
             bool check = false;
 
             if (allOffices.Contains<Appointment>(office))
@@ -58,9 +58,9 @@ namespace VetAppointment.Tests.UTs
             Assert.IsTrue(check);
         }
 
-        private void TestFind(AppointmentRepository officeRepo, Appointment office, Expression<Func<Appointment, bool>> predicate)
+        private async void TestFind(AppointmentRepository officeRepo, Appointment office, Expression<Func<Appointment, bool>> predicate)
         {
-            var foundOffices = officeRepo.Find(predicate);
+            var foundOffices = await officeRepo.Find(predicate);
             bool check = false;
 
             if (foundOffices.Contains<Appointment>(office))
@@ -69,10 +69,10 @@ namespace VetAppointment.Tests.UTs
             Assert.IsTrue(check);
         }
 
-        private void TestDelete(AppointmentRepository officeRepo, Appointment office)
+        private async void TestDelete(AppointmentRepository officeRepo, Appointment office)
         {
-            officeRepo.Delete(office);
-            officeRepo.SaveChanges();
+            await officeRepo.Delete(office);
+            await officeRepo.SaveChanges();
             Assert.IsNull(officeRepo.Get(office.AppointmentId));
         }
     }

@@ -14,7 +14,7 @@ namespace VetAppointment.Infrastructure.Context
         DbSet<Drug> Drugs { get; }
         DbSet<DrugStock> DrugStocks { get; }
         DbSet<BillingEntry> BillingEntries { get; }
-        void Save();
+        Task Save();
 
         Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry<TEntity> Add<TEntity>(TEntity entity) where TEntity : class;
 
@@ -25,7 +25,5 @@ namespace VetAppointment.Infrastructure.Context
         Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry Update(object entity);
 
         Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry Remove(object entity);
-
-        int SaveChanges();
     }
 }

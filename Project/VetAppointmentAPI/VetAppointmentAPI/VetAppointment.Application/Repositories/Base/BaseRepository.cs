@@ -1,4 +1,7 @@
-﻿using System.Linq.Expressions;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
+using System;
+using System.Linq.Expressions;
 using VetAppointment.Infrastructure.Context;
 
 namespace VetAppointment.Application.Repositories.Base
@@ -12,44 +15,44 @@ namespace VetAppointment.Application.Repositories.Base
             this.context = context;
         }
 
-        public virtual T Add(T entity)
+        public virtual async Task<T> Add(T entity)
         {
-            return context
-                .Add(entity)
-                .Entity;
+            await context.Set<T>().AddAsync(entity);
+            return entity;
         }
 
-        public virtual void Delete(T entity)
+        public virtual async Task Delete(T entity)
         {
-            context.Remove(entity);
+            EntityEntry entry = context.Set<T>().Entry(entity);
+            entry.State = EntityState.Deleted;
         }
-        public virtual IEnumerable<T> Find(Expression<Func<T, bool>> predicate)
+        public virtual async Task<IEnumerable<T>> Find(Expression<Func<T, bool>> predicate)
         {
-            return context.Set<T>()
+            return await context.Set<T>()
                 .AsQueryable()
-                .Where(predicate).ToList();
+                .Where(predicate).ToListAsync();
         }
 
-        public virtual T? Get(Guid id)
+        public virtual async Task<T?> Get(Guid id)
         {
-            return context.Find<T>(id);
+            return await context.Set<T>().FindAsync(id);
         }
 
-        public virtual IEnumerable<T> All()
+        public virtual async Task<IEnumerable<T>> All()
         {
-            return context.Set<T>()
-                .ToList();
+            return await context.Set<T>()
+                .ToListAsync();
         }
 
-        public virtual T Update(T entity)
+        public virtual async Task Update(T entity)
         {
-            return (T)context.Update(entity)
-                .Entity;
+            EntityEntry entry = context.Set<T>().Entry(entity);
+            entry.State = EntityState.Modified;
         }
 
-        public void SaveChanges()
+        public async Task SaveChanges()
         {
-            context.SaveChanges();
+            await context.Save();
         }
     }
 }

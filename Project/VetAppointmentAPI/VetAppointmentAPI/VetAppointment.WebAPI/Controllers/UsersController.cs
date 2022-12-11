@@ -25,26 +25,26 @@ namespace VetAppointment.WebAPI.Controllers
 
         // GET: api/<UsersController>
         [HttpGet]
-        public IActionResult Get()
+        public async Task<IActionResult> Get()
         {
-            return Ok(userRepository.All());
+            return Ok(await userRepository.All());
         }
 
         // GET api/<UsersController>/5
         [HttpGet("{id}")]
-        public IActionResult Get(Guid id)
+        public async Task<IActionResult> Get(Guid id)
         {
-            User? user = userRepository.Get(id);
+            User? user = await userRepository.Get(id);
             if (user == null)
                 return NotFound();
 
-            List<Appointment> userAppointments = 
-                appointmentRepository.Find(item => !item.IsExpired && item.AppointeeId == user.UserId).ToList();
+            List<Appointment> userAppointments =
+                (await appointmentRepository.Find(item => !item.IsExpired && item.AppointeeId == user.UserId)).ToList();
 
             List<User> appointers = new List<User>();
             foreach(Appointment appointment in userAppointments)
             {
-                User? appointer = userRepository.Get(appointment.AppointerId);
+                User? appointer = await userRepository.Get(appointment.AppointerId);
                 if(appointer == null)
                     userAppointments.Remove(appointment);
                 else
@@ -56,44 +56,44 @@ namespace VetAppointment.WebAPI.Controllers
 
         // POST api/<UsersController>
         [HttpPost]
-        public IActionResult Post([FromBody] DefaultUserDto userDto)
+        public async Task<IActionResult> Post([FromBody] DefaultUserDto userDto)
         {
             var validation = userValidator.Validate(userDto);
             if (!validation.IsValid)
                 return StatusCode(400, validation.Errors.First().ErrorMessage);
             User user = new User(userDto.Username, userDto.Password);
-            userRepository.Add(user);
-            userRepository.SaveChanges();
+            await userRepository.Add(user);
+            await userRepository.SaveChanges();
 
             return Created(nameof(User), user);
         }
 
         // PUT api/<UsersController>/5
         [HttpPut]
-        public IActionResult Put([FromBody] DefaultUserDto userDto)
+        public async Task<IActionResult> Put([FromBody] DefaultUserDto userDto)
         {
             var validation = userValidator.Validate(userDto);
             if (!validation.IsValid)
                 return StatusCode(400, validation.Errors.First().ErrorMessage);
-            User? user = userRepository.Get(userDto.UserId);
+            User? user = await userRepository.Get(userDto.UserId);
             if (user == null)
                 return NotFound();
 
-            userRepository.Update(user);
-            userRepository.SaveChanges();
+            await userRepository.Update(user);
+            await userRepository.SaveChanges();
 
             return NoContent();
         }
 
         // DELETE api/<UsersController>/5
         [HttpDelete("{id}")]
-        public IActionResult Delete(Guid id)
+        public async Task<IActionResult> Delete(Guid id)
         {
-            User user = userRepository.Get(id);
+            User? user = await userRepository.Get(id);
             if(user == null)
                 return NotFound();
-            userRepository.Delete(user);
-            userRepository.SaveChanges();
+            await userRepository.Delete(user);
+            await userRepository.SaveChanges();
 
             return NoContent();
         }
