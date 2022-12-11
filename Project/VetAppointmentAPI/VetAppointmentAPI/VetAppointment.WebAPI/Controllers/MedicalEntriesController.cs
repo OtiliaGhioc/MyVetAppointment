@@ -1,7 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using FluentValidation;
+using Microsoft.AspNetCore.Mvc;
 using VetAppointment.Application.Repositories.Interfaces;
 using VetAppointment.Domain.Entities;
+using VetAppointment.WebAPI.Dtos.AppointmentDtos;
 using VetAppointment.WebAPI.Dtos.MedicalEntryDto;
+using VetAppointment.WebAPI.Validators;
 
 namespace VetAppointment.WebAPI.Controllers
 {
@@ -12,13 +15,15 @@ namespace VetAppointment.WebAPI.Controllers
         private readonly IMedicalHistoryEntryRepository medicalHistoryEntryRepository;
         private readonly IAppointmentRepository appointmentRepository;
         private readonly IPrescriptionRepository prescriptionRepository;
+        private readonly IValidator<MedicalEntryCreateDto> medicalEntryValidator;
 
         public MedicalEntriesController(IMedicalHistoryEntryRepository medicalHistoryEntryRepository,
-            IAppointmentRepository appointmentRepository, IPrescriptionRepository prescriptionRepository)
+            IAppointmentRepository appointmentRepository, IPrescriptionRepository prescriptionRepository, IValidator<MedicalEntryCreateDto> medicalEntryValidator)
         {
             this.medicalHistoryEntryRepository = medicalHistoryEntryRepository;
             this.appointmentRepository = appointmentRepository;
             this.prescriptionRepository = prescriptionRepository;
+            this.medicalEntryValidator = medicalEntryValidator;
         }
 
         [HttpGet]
@@ -42,6 +47,9 @@ namespace VetAppointment.WebAPI.Controllers
         [HttpPost]
         public IActionResult Create([FromBody] MedicalEntryCreateDto medicalEntryDto)
         {
+            var validation = medicalEntryValidator.Validate(medicalEntryDto);
+            if (!validation.IsValid)
+                return StatusCode(400, validation.Errors.First().ErrorMessage);
             Appointment? appointment = appointmentRepository.Get(medicalEntryDto.AppointmentId);
             if (appointment == null)
                 return NotFound();

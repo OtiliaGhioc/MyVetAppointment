@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using FluentValidation;
+using Microsoft.AspNetCore.Mvc;
 using VetAppointment.Application.Repositories.Interfaces;
+using VetAppointment.WebAPI.Validators;
 using VetAppointment.Domain.Entities;
 using VetAppointment.WebAPI.DTOs;
 
@@ -11,11 +13,13 @@ namespace VetAppointment.WebAPI.Controllers
     {
         private readonly IDrugStockRepository drugStockRepository;
         private readonly IDrugRepository drugRepository;
+        private readonly IValidator<CreateDrugStockDto> drugValidator;
 
-        public DrugStocksController(IDrugStockRepository drugStockRepository, IDrugRepository drugRepository)
+        public DrugStocksController(IDrugStockRepository drugStockRepository, IDrugRepository drugRepository, IValidator<CreateDrugStockDto> validator)
         {
             this.drugStockRepository = drugStockRepository;
             this.drugRepository = drugRepository;
+            this.drugValidator = validator;
         }
 
         [HttpGet]
@@ -51,6 +55,10 @@ namespace VetAppointment.WebAPI.Controllers
         [HttpPost]
         public IActionResult Create([FromBody] CreateDrugStockDto drugDto)
         {
+            var validation = drugValidator.Validate(drugDto);
+            if (!validation.IsValid)
+                return StatusCode(400, validation.Errors.First().ErrorMessage);
+
             var drug = drugRepository.Get(drugDto.TypeId);
 
             if (drug == null)

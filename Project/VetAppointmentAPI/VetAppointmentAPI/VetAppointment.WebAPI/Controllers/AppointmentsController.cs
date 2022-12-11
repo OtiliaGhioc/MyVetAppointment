@@ -1,7 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using FluentValidation;
+using Microsoft.AspNetCore.Mvc;
 using VetAppointment.Application.Repositories.Interfaces;
 using VetAppointment.Domain.Entities;
+using VetAppointment.WebAPI.Dtos;
 using VetAppointment.WebAPI.Dtos.AppointmentDtos;
+using VetAppointment.WebAPI.Validators;
 
 namespace VetAppointment.WebAPI.Controllers
 {
@@ -11,10 +14,12 @@ namespace VetAppointment.WebAPI.Controllers
     {
         private readonly IAppointmentRepository appointmentRepository;
         private readonly IUserRepository userRepository;
-        public AppointmentsController(IAppointmentRepository appointmentRepository, IUserRepository userRepository)
+        private readonly IValidator<AppointmentCreateDto> appoinmentValidator;
+        public AppointmentsController(IAppointmentRepository appointmentRepository, IUserRepository userRepository, IValidator<AppointmentCreateDto> validator)
         {
             this.appointmentRepository = appointmentRepository;
             this.userRepository = userRepository;
+            this.appoinmentValidator= validator;
         }
 
         [HttpGet]
@@ -42,6 +47,9 @@ namespace VetAppointment.WebAPI.Controllers
         [HttpPost]
         public IActionResult Create([FromBody] AppointmentCreateDto appointmentDto)
         {
+            var validation = appoinmentValidator.Validate(appointmentDto);
+            if (!validation.IsValid)
+                return StatusCode(400, validation.Errors.First().ErrorMessage);
             User? appointee = userRepository.Get(appointmentDto.AppointeeId);
             if (appointee == null)
                 return NotFound();

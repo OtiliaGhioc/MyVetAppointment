@@ -1,7 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using FluentValidation;
+using Microsoft.AspNetCore.Mvc;
 using VetAppointment.Application.Repositories.Interfaces;
 using VetAppointment.Domain.Entities;
 using VetAppointment.WebAPI.Dtos;
+using VetAppointment.WebAPI.DTOs;
+using VetAppointment.WebAPI.Validators;
 
 namespace VetAppointment.WebAPI.Controllers
 {
@@ -10,10 +13,12 @@ namespace VetAppointment.WebAPI.Controllers
     public class OfficesController : ControllerBase
     {
         private readonly IOfficeRepository officeRepository;
+        private readonly IValidator<OfficeDto> officeValidator;
 
-        public OfficesController(IOfficeRepository officeRepository)
+        public OfficesController(IOfficeRepository officeRepository, IValidator<OfficeDto> validator)
         {
             this.officeRepository = officeRepository;
+            this.officeValidator = validator;
         }
 
         // GET: api/<OfficesController>
@@ -39,6 +44,9 @@ namespace VetAppointment.WebAPI.Controllers
         [HttpPost]
         public IActionResult Post([FromBody] OfficeDto officeDto)
         {
+            var validation = officeValidator.Validate(officeDto);
+            if (!validation.IsValid)
+                return StatusCode(400, validation.Errors.First().ErrorMessage);
             Office office = new Office(officeDto.Address);
             officeRepository.Add(office);
             officeRepository.SaveChanges();
@@ -50,6 +58,9 @@ namespace VetAppointment.WebAPI.Controllers
         [HttpPut]
         public IActionResult Put([FromBody] OfficeDto officeDto)
         {
+            var validation = officeValidator.Validate(officeDto);
+            if (!validation.IsValid)
+                return StatusCode(400, validation.Errors.First().ErrorMessage);
             Office? office = officeRepository.Get(officeDto.OfficeId);
             if (office == null)
                 return NotFound();

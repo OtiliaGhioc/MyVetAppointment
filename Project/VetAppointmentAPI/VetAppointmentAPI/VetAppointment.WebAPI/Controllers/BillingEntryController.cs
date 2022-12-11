@@ -1,7 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using FluentValidation;
+using Microsoft.AspNetCore.Mvc;
 using VetAppointment.Application.Repositories.Interfaces;
 using VetAppointment.Domain.Entities;
+using VetAppointment.WebAPI.Dtos.MedicalEntryDto;
 using VetAppointment.WebAPI.DTOs;
+using VetAppointment.WebAPI.Validators;
 
 namespace VetAppointment.WebAPI.Controllers
 {
@@ -10,18 +13,20 @@ namespace VetAppointment.WebAPI.Controllers
     public class BillingEntryController : ControllerBase
     {
         private readonly IBillingEntryRepository billingEntryRepository;
-        private readonly IUserRepository userRepository;
-        private readonly IOfficeRepository officeRepository;
+        private readonly IUserRepository issuerRepository;
+        private readonly IUserRepository customerRepository;
         private readonly IAppointmentRepository appointmentRepository;
         private readonly IPrescriptionRepository prescriptionRepository;
+        private readonly IValidator<BillingEntryDto> billEntryValidator;
 
-        public BillingEntryController(IBillingEntryRepository billingEntryRepository, IUserRepository userRepository, IOfficeRepository officeRepository, IAppointmentRepository appointmentRepository, IPrescriptionRepository prescriptionRepository)
+        public BillingEntryController(IBillingEntryRepository billingEntryRepository, IUserRepository userRepository, IUserRepository officeRepository, IAppointmentRepository appointmentRepository, IPrescriptionRepository prescriptionRepository, IValidator<BillingEntryDto> validator)
         {
             this.billingEntryRepository = billingEntryRepository;
-            this.userRepository = userRepository;
-            this.officeRepository = officeRepository;
+            this.issuerRepository = userRepository;
+            this.customerRepository = officeRepository;
             this.appointmentRepository = appointmentRepository;
             this.prescriptionRepository = prescriptionRepository;
+            this.billEntryValidator = validator;
         }
 
 
@@ -52,12 +57,27 @@ namespace VetAppointment.WebAPI.Controllers
         [HttpPost]
         public IActionResult Create([FromBody] BillingEntryDto billDto)
         {
-            var bill = billingEntryRepository.Get(billDto.BillingEntryId);
+            var validation = billEntryValidator.Validate(billDto);
+            if (!validation.IsValid)
+                return StatusCode(400, validation.Errors.First().ErrorMessage);
 
-            if (bill == null)
-                return NotFound($"The Bill with id: {billDto.BillingEntryId} was not found");
+            var customer = customerRepository.Get(billDto.CustomerId);
+            if (customer == null)
+                return NotFound($"The Customer with id: {billDto.CustomerId} was not found");
 
-            var Bill = new BillingEntry(bill.Issuer, bill.Customer, bill.DateTime, bill.Prescription, bill.Appointment, bill.Price);
+            var issuer = issuerRepository.Get(billDto.IssuerId);
+            if (issuer == null)
+                return NotFound($"The Issuer with id: {billDto.IssuerId} was not found");
+
+            var appointment = appointmentRepository.Get(billDto.AppointmentId);
+            if (appointment == null)
+                return NotFound($"The Appoinment with id: {billDto.AppointmentId} was not found");
+
+            var prescription = prescriptionRepository.Get(billDto.PrescriptionId);
+            if (prescription == null)
+                return NotFound($"The Prescription with id: {billDto.PrescriptionId} was not found");
+
+            var bill = new BillingEntry(issuer, customer, billDto.DateTime, prescription, appointment, billDto.Price);
             billingEntryRepository.Add(bill);
             billingEntryRepository.SaveChanges();
             return Created(nameof(GetAllBills), bill);

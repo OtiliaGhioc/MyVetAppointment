@@ -1,7 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using FluentValidation;
+using Microsoft.AspNetCore.Mvc;
 using VetAppointment.Application.Repositories.Interfaces;
 using VetAppointment.Domain.Entities;
+using VetAppointment.WebAPI.Dtos;
 using VetAppointment.WebAPI.Dtos.UserDto;
+using VetAppointment.WebAPI.Validators;
 
 namespace VetAppointment.WebAPI.Controllers
 {
@@ -11,11 +14,13 @@ namespace VetAppointment.WebAPI.Controllers
     {
         private readonly IUserRepository userRepository;
         private readonly IAppointmentRepository appointmentRepository;
+        private readonly IValidator<DefaultUserDto> userValidator;
 
-        public UsersController(IUserRepository userRepository, IAppointmentRepository appointmentRepository)
+        public UsersController(IUserRepository userRepository, IAppointmentRepository appointmentRepository, IValidator<DefaultUserDto> validator)
         {
             this.userRepository = userRepository;
             this.appointmentRepository = appointmentRepository;
+            this.userValidator= validator;
         }
 
         // GET: api/<UsersController>
@@ -53,6 +58,9 @@ namespace VetAppointment.WebAPI.Controllers
         [HttpPost]
         public IActionResult Post([FromBody] DefaultUserDto userDto)
         {
+            var validation = userValidator.Validate(userDto);
+            if (!validation.IsValid)
+                return StatusCode(400, validation.Errors.First().ErrorMessage);
             User user = new User(userDto.Username, userDto.Password);
             userRepository.Add(user);
             userRepository.SaveChanges();
@@ -64,6 +72,9 @@ namespace VetAppointment.WebAPI.Controllers
         [HttpPut]
         public IActionResult Put([FromBody] DefaultUserDto userDto)
         {
+            var validation = userValidator.Validate(userDto);
+            if (!validation.IsValid)
+                return StatusCode(400, validation.Errors.First().ErrorMessage);
             User? user = userRepository.Get(userDto.UserId);
             if (user == null)
                 return NotFound();

@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using FluentValidation;
+using Microsoft.AspNetCore.Mvc;
 using VetAppointment.Application.Repositories.Interfaces;
+using VetAppointment.WebAPI.Validators;
 using VetAppointment.Domain.Entities;
 using VetAppointment.WebAPI.DTOs;
 
@@ -10,9 +12,11 @@ namespace VetAppointment.WebAPI.Controllers
     public class DrugsController : ControllerBase
     {
         private readonly IDrugRepository drugRepository;
-        public DrugsController(IDrugRepository drugRepository)
+        private readonly IValidator<CreateDrugDto> drugValidator;
+        public DrugsController(IDrugRepository drugRepository, IValidator<CreateDrugDto> validator)
         {
             this.drugRepository = drugRepository;
+            this.drugValidator = validator;
         }
 
         [HttpGet]
@@ -33,7 +37,7 @@ namespace VetAppointment.WebAPI.Controllers
                 Title = d.Title,
                 Price = d.Price
             });
-            return drugs!=null ? Ok(drugs) : NotFound();
+            return drugs != null ? Ok(drugs) : NotFound();
         }
 
         [HttpGet("{drugId}")]
@@ -47,6 +51,9 @@ namespace VetAppointment.WebAPI.Controllers
         [HttpPost]
         public IActionResult Create([FromBody] CreateDrugDto drugDto)
         {
+            var validation = drugValidator.Validate(drugDto);
+            if (!validation.IsValid)
+                return StatusCode(400, validation.Errors.First().ErrorMessage);
             var drug = new Drug(drugDto.Title, drugDto.Price);
             drugRepository.Add(drug);
             drugRepository.SaveChanges();
@@ -56,6 +63,10 @@ namespace VetAppointment.WebAPI.Controllers
         [HttpPut("{id}")]
         public IActionResult Update([FromRoute] Guid id, [FromBody] CreateDrugDto drugDto)
         {
+            var validation = drugValidator.Validate(drugDto);
+            if (!validation.IsValid)
+                return StatusCode(400, validation.Errors.First().ErrorMessage);
+
             var drug = drugRepository.Get(id);
 
             if (drug == null)
