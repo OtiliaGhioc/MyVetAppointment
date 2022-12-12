@@ -42,7 +42,7 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         shell: powershell
         run: |
-          .\.sonar\scanner\dotnet-sonarscanner begin /k:"OtiliaGhioc_MyVetAppointment" /o:"keyforsonar" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
+          .\.sonar\scanner\dotnet-sonarscanner begin /k:"OtiliaGhioc_MyVetAppointment" /o:"keyforsonar" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.opencover.reportsPaths=Project\VetAppointmentAPI\VetAppointmentAPI\VetAppointment.Tests\TestResults\415ab932-0df0-4ee5-8ee5-99f2ced71109\coverage.cobertura.xml
           dotnet build Project/VetAppointmentAPI/VetAppointmentAPI/ --no-incremental
-          dotnet test --collect:"XPlat Code Coverage" /p:ExcludeByFile="**/Migrations/*.cs"
+          coverlet Project\VetAppointmentAPI\VetAppointmentAPI\VetAppointment.Tests\bin\Debug\net7.0\VetAppointment.Tests.dll --target "dotnet" --targetargs "test --no-build" -f=opencover -o="coverage.cobertura.xml"
           .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
