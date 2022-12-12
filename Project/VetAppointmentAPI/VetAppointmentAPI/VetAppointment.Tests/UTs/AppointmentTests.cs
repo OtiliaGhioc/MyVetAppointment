@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-
-namespace VetAppointment.Tests.UTs
+﻿namespace VetAppointment.Tests.UTs
 {
     public class AppointmentTests
     {
@@ -21,9 +19,9 @@ namespace VetAppointment.Tests.UTs
             DbContextOptions<DatabaseContext> options = new DbContextOptionsBuilder<DatabaseContext>().UseSqlite("Data Source = MyTests.db").Options;
             DatabaseContext testDb = new DatabaseContext(options);
             AppointmentRepository appointmentRepo = new AppointmentRepository(testDb);
-            User user = new User("name", "password");
-            User user2 = new User("name", "password");
-            Appointment appointment = new Appointment(user, user2, DateTime.Today.AddDays(1), "title", "description", "type");
+            User user = new User("name", "pass", true);
+            User user2 = new User("name", "pass", true);
+            Appointment appointment = new Appointment(user, user2, DateTime.Now, "title", "descr", "type");
 
             TestAdd(appointmentRepo, appointment);
             TestGet(appointmentRepo, appointment);
@@ -35,21 +33,21 @@ namespace VetAppointment.Tests.UTs
             TestDelete(appointmentRepo, appointment);
         }
 
-        private async void TestAdd(AppointmentRepository appointmentRepo, Appointment appointment)
+        private void TestAdd(AppointmentRepository officeRepo, Appointment office)
         {
-            Appointment added = await appointmentRepo.Add(appointment);
-            await appointmentRepo.SaveChanges();
-            Assert.AreEqual(appointment, added);
+            Appointment added = officeRepo.Add(office);
+            officeRepo.SaveChanges();
+            Assert.AreEqual(office, added);
         }
 
-        private async void TestGet(AppointmentRepository appointmentRepo, Appointment appointment)
+        private void TestGet(AppointmentRepository officeRepo, Appointment office)
         {
-            Assert.AreEqual(appointment, await appointmentRepo.Get(appointment.AppointmentId));
+            Assert.AreEqual(office, officeRepo.Get(office.AppointmentId));
         }
 
-        private async void TestAll(AppointmentRepository appointmentRepo, Appointment appointment)
+        private void TestAll(AppointmentRepository officeRepo, Appointment office)
         {
-            var allOffices = await appointmentRepo.All();
+            var allOffices = officeRepo.All();
             bool check = false;
 
             if (allOffices.Contains<Appointment>(appointment))
@@ -58,9 +56,9 @@ namespace VetAppointment.Tests.UTs
             Assert.IsTrue(check);
         }
 
-        private async void TestFind(AppointmentRepository appointmentRepo, Appointment appointment, Expression<Func<Appointment, bool>> predicate)
+        private void TestFind(AppointmentRepository officeRepo, Appointment office, Expression<Func<Appointment, bool>> predicate)
         {
-            var foundOffices = await appointmentRepo.Find(predicate);
+            var foundOffices = officeRepo.Find(predicate);
             bool check = false;
 
             if (foundOffices.Contains<Appointment>(appointment))
@@ -69,11 +67,11 @@ namespace VetAppointment.Tests.UTs
             Assert.IsTrue(check);
         }
 
-        private async void TestDelete(AppointmentRepository appointmentRepo, Appointment appointment)
+        private void TestDelete(AppointmentRepository officeRepo, Appointment office)
         {
-            await appointmentRepo.Delete(appointment);
-            await appointmentRepo.SaveChanges();
-            Assert.IsNotNull(appointmentRepo.Get(appointment.AppointmentId));
+            officeRepo.Delete(office);
+            officeRepo.SaveChanges();
+            Assert.IsNull(officeRepo.Get(office.AppointmentId));
         }
     }
 }

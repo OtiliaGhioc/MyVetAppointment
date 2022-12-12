@@ -1,5 +1,3 @@
-using Microsoft.EntityFrameworkCore;
-
 namespace VetAppointment.Tests
 {
     public class UserTests

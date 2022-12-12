@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-
-namespace VetAppointment.Tests
+﻿namespace VetAppointment.Tests
 {
     public class OfficeTests
     {

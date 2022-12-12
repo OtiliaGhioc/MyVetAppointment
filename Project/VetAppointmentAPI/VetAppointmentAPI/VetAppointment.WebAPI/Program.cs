@@ -1,7 +1,5 @@
 using Microsoft.AspNetCore.Hosting;
-using FluentValidation;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using VetAppointment.Application.Repositories.Impl;
 using VetAppointment.Application.Repositories.Interfaces;
 using VetAppointment.Domain.Entities;
@@ -77,9 +75,8 @@ app.MapControllers();
 
 app.Run();
 
-public partial class Program { }
 // PS > dotnet test /p:CollectCoverage=true -s.\coverlet.runsettings
 
-// PS > dotnet C:\Users\{YourUser}\.nuget\packages\reportgenerator\5.1.12\tools\net7.0\ReportGenerator.dll -reports:.\VetAppointment.Tests\TestResults\{CoverageFolderName}\coverage.cobertura.xml -targetdir:.\VetAppointment.Tests\TestResults\{CoverageFolderName}\report
+// PS > dotnet C:\Users\{YourUser}\.nuget\packages\reportgenerator\5.1.12\tools\net7 .0\ReportGenerator.dll - reports:.\VetAppointment.Tests\TestResults\{CoverageFolderName}\coverage.cobertura.xml - targetdir:.\VetAppointment.Tests\TestResults\{CoverageFolderName}\report
 
 // Open either index.html in report folder

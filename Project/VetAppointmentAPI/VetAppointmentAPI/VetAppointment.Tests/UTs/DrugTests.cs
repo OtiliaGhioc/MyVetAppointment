@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-
-namespace VetAppointment.Tests.UTs
+﻿namespace VetAppointment.Tests.UTs
 {
     public class DrugTests
     {
