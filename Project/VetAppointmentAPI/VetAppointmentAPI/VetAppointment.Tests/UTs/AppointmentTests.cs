@@ -33,21 +33,21 @@
             TestDelete(appointmentRepo, appointment);
         }
 
-        private void TestAdd(AppointmentRepository officeRepo, Appointment office)
+        private async void TestAdd(AppointmentRepository appointmentRepo, Appointment appointment)
         {
-            Appointment added = officeRepo.Add(office);
-            officeRepo.SaveChanges();
-            Assert.AreEqual(office, added);
+            Appointment added = await appointmentRepo.Add(appointment);
+            await appointmentRepo.SaveChanges();
+            Assert.AreEqual(appointment, added);
         }
 
-        private void TestGet(AppointmentRepository officeRepo, Appointment office)
+        private async void TestGet(AppointmentRepository appointmentRepo, Appointment appointment)
         {
-            Assert.AreEqual(office, officeRepo.Get(office.AppointmentId));
+            Assert.AreEqual<Appointment>(appointment, await appointmentRepo.Get(appointment.AppointmentId));
         }
 
-        private void TestAll(AppointmentRepository officeRepo, Appointment office)
+        private async void TestAll(AppointmentRepository appointmentRepo, Appointment appointment)
         {
-            var allOffices = officeRepo.All();
+            var allOffices = await appointmentRepo.All();
             bool check = false;
 
             if (allOffices.Contains<Appointment>(appointment))
@@ -56,22 +56,22 @@
             Assert.IsTrue(check);
         }
 
-        private void TestFind(AppointmentRepository officeRepo, Appointment office, Expression<Func<Appointment, bool>> predicate)
+        private async void TestFind(AppointmentRepository appointmentRepo, Appointment appointment, Expression<Func<Appointment, bool>> predicate)
         {
-            var foundOffices = officeRepo.Find(predicate);
+            var foundAppointments = await appointmentRepo.Find(predicate);
             bool check = false;
 
-            if (foundOffices.Contains<Appointment>(appointment))
+            if (foundAppointments.Contains<Appointment>(appointment))
                 check = true;
 
             Assert.IsTrue(check);
         }
 
-        private void TestDelete(AppointmentRepository officeRepo, Appointment office)
+        private async void TestDelete(AppointmentRepository appointmentRepo, Appointment appointment)
         {
-            officeRepo.Delete(office);
-            officeRepo.SaveChanges();
-            Assert.IsNull(officeRepo.Get(office.AppointmentId));
+            await appointmentRepo.Delete(appointment);
+            await appointmentRepo.SaveChanges();
+            Assert.IsNull(await appointmentRepo.Get(appointment.AppointmentId));
         }
     }
 }

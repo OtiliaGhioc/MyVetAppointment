@@ -39,45 +39,45 @@
             TestDelete(medHistRepo, medicalHistoryEntry);
         }
 
-        private void TestAdd(MedicalHistoryEntryRepository medHistRepo, MedicalHistoryEntry medicalHistoryEntry)
+        private async void TestAdd(MedicalHistoryEntryRepository medHistRepo, MedicalHistoryEntry medicalHistoryEntry)
         {
-            MedicalHistoryEntry added = medHistRepo.Add(medicalHistoryEntry);
-            medHistRepo.SaveChanges();
+            var added = await medHistRepo.Add(medicalHistoryEntry);
+            await medHistRepo.SaveChanges();
             Assert.AreEqual(medicalHistoryEntry, added);
         }
 
-        private void TestGet(MedicalHistoryEntryRepository medHistRepo, MedicalHistoryEntry medicalHistoryEntry)
+        private async void TestGet(MedicalHistoryEntryRepository medHistRepo, MedicalHistoryEntry medicalHistoryEntry)
         {
-            Assert.AreEqual(medicalHistoryEntry, medHistRepo.Get(medicalHistoryEntry.MedicalHistoryEntryId));
+            Assert.AreEqual<MedicalHistoryEntry>(medicalHistoryEntry, await medHistRepo.Get(medicalHistoryEntry.MedicalHistoryEntryId));
         }
 
-        private void TestAll(MedicalHistoryEntryRepository medHistRepo, MedicalHistoryEntry medicalHistoryEntry)
+        private async void TestAll(MedicalHistoryEntryRepository medHistRepo, MedicalHistoryEntry medicalHistoryEntry)
         {
-            var allPrescriptions = medHistRepo.All();
+            var allMedHistEntries = await medHistRepo.All();
             bool check = false;
 
-            if (allPrescriptions.Contains(medicalHistoryEntry))
+            if (allMedHistEntries.Contains<MedicalHistoryEntry>(medicalHistoryEntry))
                 check = true;
 
             Assert.IsTrue(check);
         }
 
-        private void TestFind(MedicalHistoryEntryRepository medHistRepo, MedicalHistoryEntry medicalHistoryEntry, Expression<Func<MedicalHistoryEntry, bool>> predicate)
+        private async void TestFind(MedicalHistoryEntryRepository medHistRepo, MedicalHistoryEntry medicalHistoryEntry, Expression<Func<MedicalHistoryEntry, bool>> predicate)
         {
-            var foundOffices = medHistRepo.Find(predicate);
+            var foundMedHistEntries = await medHistRepo.Find(predicate);
             bool check = false;
 
-            if (foundOffices.Contains(medicalHistoryEntry))
+            if (foundMedHistEntries.Contains<MedicalHistoryEntry>(medicalHistoryEntry))
                 check = true;
 
             Assert.IsTrue(check);
         }
 
-        private void TestDelete(MedicalHistoryEntryRepository medHistRepo, MedicalHistoryEntry medicalHistoryEntry)
+        private async void TestDelete(MedicalHistoryEntryRepository medHistRepo, MedicalHistoryEntry medicalHistoryEntry)
         {
-            medHistRepo.Delete(medicalHistoryEntry);
-            medHistRepo.SaveChanges();
-            Assert.IsNull(medHistRepo.Get(medicalHistoryEntry.MedicalHistoryEntryId));
+            await medHistRepo.Delete(medicalHistoryEntry);
+            await medHistRepo.SaveChanges();
+            Assert.IsNull(await medHistRepo.Get(medicalHistoryEntry.MedicalHistoryEntryId));
         }
     }
 }

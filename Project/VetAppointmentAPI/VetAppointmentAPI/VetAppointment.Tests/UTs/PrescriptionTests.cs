@@ -38,21 +38,21 @@ namespace VetAppointment.Tests.UTs
             TestDelete(prescriptionRepo, prescription);
         }
 
-        private void TestAdd(PrescriptionRepository prescriptionRepo, Prescription prescription)
+        private async void TestAdd(PrescriptionRepository prescriptionRepo, Prescription prescription)
         {
-            Prescription added = prescriptionRepo.Add(prescription);
-            prescriptionRepo.SaveChanges();
+            Prescription added = await prescriptionRepo.Add(prescription);
+            await prescriptionRepo.SaveChanges();
             Assert.AreEqual(prescription, added);
         }
 
-        private void TestGet(PrescriptionRepository prescriptionRepo, Prescription prescription)
+        private async void TestGet(PrescriptionRepository prescriptionRepo, Prescription prescription)
         {
-            Assert.AreEqual(prescription, prescriptionRepo.Get(prescription.PrescriptionId));
+            Assert.AreEqual(prescription, await prescriptionRepo.Get(prescription.PrescriptionId));
         }
 
-        private void TestAll(PrescriptionRepository prescriptionRepo, Prescription prescription)
+        private async void TestAll(PrescriptionRepository prescriptionRepo, Prescription prescription)
         {
-            var allPrescriptions = prescriptionRepo.All();
+            var allPrescriptions = await prescriptionRepo.All();
             bool check = false;
 
             if (allPrescriptions.Contains<Prescription>(prescription))
@@ -61,9 +61,9 @@ namespace VetAppointment.Tests.UTs
             Assert.IsTrue(check);
         }
 
-        private void TestFind(PrescriptionRepository prescriptionRepo, Prescription prescription, Expression<Func<Prescription, bool>> predicate)
+        private async void TestFind(PrescriptionRepository prescriptionRepo, Prescription prescription, Expression<Func<Prescription, bool>> predicate)
         {
-            var foundOffices = prescriptionRepo.Find(predicate);
+            var foundOffices = await prescriptionRepo.Find(predicate);
             bool check = false;
 
             if (foundOffices.Contains<Prescription>(prescription))
@@ -72,11 +72,11 @@ namespace VetAppointment.Tests.UTs
             Assert.IsTrue(check);
         }
 
-        private void TestDelete(PrescriptionRepository prescriptionRepo, Prescription prescription)
+        private async void TestDelete(PrescriptionRepository prescriptionRepo, Prescription prescription)
         {
-            prescriptionRepo.Delete(prescription);
-            prescriptionRepo.SaveChanges();
-            Assert.IsNull(prescriptionRepo.Get(prescription.PrescriptionId));
+            await prescriptionRepo.Delete(prescription);
+            await prescriptionRepo.SaveChanges();
+            Assert.IsNull(await prescriptionRepo.Get(prescription.PrescriptionId));
         }
     }
 }
