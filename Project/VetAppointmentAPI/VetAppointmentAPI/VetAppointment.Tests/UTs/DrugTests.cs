@@ -8,6 +8,10 @@
             Drug drug = new Drug("title",5);
             Assert.AreEqual("title", drug.Title);
             Assert.AreEqual(5, drug.Price);
+
+            drug.UpdateNameAndPrice("name", 1);
+            Assert.AreEqual("name", drug.Title);
+            Assert.AreEqual(1, drug.Price);
         }
 
         [Fact]

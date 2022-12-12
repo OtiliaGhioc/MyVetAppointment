@@ -52,7 +52,7 @@
 
         private async void TestGet(BillingEntryRepository billEntRepo, BillingEntry billingEntry)
         {
-            Assert.AreEqual<BillingEntry>(billingEntry, await billEntRepo.Get(billingEntry.AppointmentId));
+            Assert.AreEqual<BillingEntry>(billingEntry, await billEntRepo.Get(billingEntry.BillingEntryId));
         }
 
         private async void TestAll(BillingEntryRepository billEntRepo, BillingEntry billingEntry)

@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<coverage line-rate="0.5974" branch-rate="0.25" version="1.9" timestamp="1670858495" lines-covered="558" lines-valid="934" branches-covered="30" branches-valid="120">
+<coverage line-rate="0.7001999999999999" branch-rate="0.35" version="1.9" timestamp="1670867018" lines-covered="654" lines-valid="934" branches-covered="42" branches-valid="120">
   <sources>
     <source>C:\_personale\Github\MyVetAppointment\Project\VetAppointmentAPI\VetAppointmentAPI\</source>
   </sources>
@@ -246,61 +246,61 @@
         </class>
       </classes>
     </package>
-    <package name="VetAppointment.Domain" line-rate="0.8408" branch-rate="0.5" complexity="96">
+    <package name="VetAppointment.Domain" line-rate="0.9795" branch-rate="0.6428" complexity="96">
       <classes>
-        <class name="VetAppointment.Domain.Helpers.PasswordHasher" filename="VetAppointment.Domain\Helpers\PasswordHasher.cs" line-rate="0.5588000000000001" branch-rate="0" complexity="6">
+        <class name="VetAppointment.Domain.Helpers.PasswordHasher" filename="VetAppointment.Domain\Helpers\PasswordHasher.cs" line-rate="0.9704999999999999" branch-rate="0.5" complexity="6">
           <methods>
             <method name="GetSalt" signature="(System.Int32)" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="11" hits="62" branch="False" />
-                <line number="12" hits="62" branch="False" />
-                <line number="13" hits="62" branch="False" />
+                <line number="11" hits="124" branch="False" />
+                <line number="12" hits="124" branch="False" />
+                <line number="13" hits="124" branch="False" />
               </lines>
             </method>
             <method name="GetSalt" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="15" hits="62" branch="False" />
-                <line number="16" hits="62" branch="False" />
-                <line number="17" hits="62" branch="False" />
+                <line number="15" hits="124" branch="False" />
+                <line number="16" hits="124" branch="False" />
+                <line number="17" hits="124" branch="False" />
               </lines>
             </method>
             <method name="GetHashedPassword" signature="(System.String)" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="20" hits="62" branch="False" />
-                <line number="21" hits="62" branch="False" />
-                <line number="22" hits="62" branch="False" />
-                <line number="24" hits="62" branch="False" />
-                <line number="26" hits="62" branch="False" />
-                <line number="27" hits="62" branch="False" />
-                <line number="28" hits="62" branch="False" />
-                <line number="29" hits="62" branch="False" />
-                <line number="31" hits="62" branch="False" />
-                <line number="32" hits="62" branch="False" />
-                <line number="33" hits="62" branch="False" />
-                <line number="34" hits="62" branch="False" />
+                <line number="20" hits="124" branch="False" />
+                <line number="21" hits="124" branch="False" />
+                <line number="22" hits="124" branch="False" />
+                <line number="24" hits="124" branch="False" />
+                <line number="26" hits="124" branch="False" />
+                <line number="27" hits="124" branch="False" />
+                <line number="28" hits="124" branch="False" />
+                <line number="29" hits="124" branch="False" />
+                <line number="31" hits="124" branch="False" />
+                <line number="32" hits="124" branch="False" />
+                <line number="33" hits="124" branch="False" />
+                <line number="34" hits="124" branch="False" />
               </lines>
             </method>
-            <method name="IsPasswordValid" signature="(System.String,System.String)" line-rate="0" branch-rate="0" complexity="2">
+            <method name="IsPasswordValid" signature="(System.String,System.String)" line-rate="0.9333" branch-rate="0.5" complexity="2">
               <lines>
-                <line number="37" hits="0" branch="False" />
-                <line number="38" hits="0" branch="False" />
-                <line number="39" hits="0" branch="True" condition-coverage="0% (0/2)">
+                <line number="37" hits="1" branch="False" />
+                <line number="38" hits="1" branch="False" />
+                <line number="39" hits="1" branch="True" condition-coverage="50% (1/2)">
                   <conditions>
-                    <condition number="30" type="jump" coverage="0%" />
+                    <condition number="30" type="jump" coverage="50%" />
                   </conditions>
                 </line>
                 <line number="40" hits="0" branch="False" />
-                <line number="42" hits="0" branch="False" />
-                <line number="44" hits="0" branch="False" />
-                <line number="46" hits="0" branch="False" />
-                <line number="48" hits="0" branch="False" />
-                <line number="50" hits="0" branch="False" />
-                <line number="51" hits="0" branch="False" />
-                <line number="52" hits="0" branch="False" />
-                <line number="53" hits="0" branch="False" />
-                <line number="55" hits="0" branch="False" />
-                <line number="57" hits="0" branch="False" />
-                <line number="58" hits="0" branch="False" />
+                <line number="42" hits="1" branch="False" />
+                <line number="44" hits="1" branch="False" />
+                <line number="46" hits="1" branch="False" />
+                <line number="48" hits="1" branch="False" />
+                <line number="50" hits="1" branch="False" />
+                <line number="51" hits="1" branch="False" />
+                <line number="52" hits="1" branch="False" />
+                <line number="53" hits="1" branch="False" />
+                <line number="55" hits="1" branch="False" />
+                <line number="57" hits="1" branch="False" />
+                <line number="58" hits="1" branch="False" />
               </lines>
             </method>
             <method name=".cctor" signature="()" line-rate="1" branch-rate="1" complexity="1">
@@ -310,43 +310,43 @@
             </method>
           </methods>
           <lines>
-            <line number="11" hits="62" branch="False" />
-            <line number="12" hits="62" branch="False" />
-            <line number="13" hits="62" branch="False" />
-            <line number="15" hits="62" branch="False" />
-            <line number="16" hits="62" branch="False" />
-            <line number="17" hits="62" branch="False" />
-            <line number="20" hits="62" branch="False" />
-            <line number="21" hits="62" branch="False" />
-            <line number="22" hits="62" branch="False" />
-            <line number="24" hits="62" branch="False" />
-            <line number="26" hits="62" branch="False" />
-            <line number="27" hits="62" branch="False" />
-            <line number="28" hits="62" branch="False" />
-            <line number="29" hits="62" branch="False" />
-            <line number="31" hits="62" branch="False" />
-            <line number="32" hits="62" branch="False" />
-            <line number="33" hits="62" branch="False" />
-            <line number="34" hits="62" branch="False" />
-            <line number="37" hits="0" branch="False" />
-            <line number="38" hits="0" branch="False" />
-            <line number="39" hits="0" branch="True" condition-coverage="0% (0/2)">
+            <line number="11" hits="124" branch="False" />
+            <line number="12" hits="124" branch="False" />
+            <line number="13" hits="124" branch="False" />
+            <line number="15" hits="124" branch="False" />
+            <line number="16" hits="124" branch="False" />
+            <line number="17" hits="124" branch="False" />
+            <line number="20" hits="124" branch="False" />
+            <line number="21" hits="124" branch="False" />
+            <line number="22" hits="124" branch="False" />
+            <line number="24" hits="124" branch="False" />
+            <line number="26" hits="124" branch="False" />
+            <line number="27" hits="124" branch="False" />
+            <line number="28" hits="124" branch="False" />
+            <line number="29" hits="124" branch="False" />
+            <line number="31" hits="124" branch="False" />
+            <line number="32" hits="124" branch="False" />
+            <line number="33" hits="124" branch="False" />
+            <line number="34" hits="124" branch="False" />
+            <line number="37" hits="1" branch="False" />
+            <line number="38" hits="1" branch="False" />
+            <line number="39" hits="1" branch="True" condition-coverage="50% (1/2)">
               <conditions>
-                <condition number="30" type="jump" coverage="0%" />
+                <condition number="30" type="jump" coverage="50%" />
               </conditions>
             </line>
             <line number="40" hits="0" branch="False" />
-            <line number="42" hits="0" branch="False" />
-            <line number="44" hits="0" branch="False" />
-            <line number="46" hits="0" branch="False" />
-            <line number="48" hits="0" branch="False" />
-            <line number="50" hits="0" branch="False" />
-            <line number="51" hits="0" branch="False" />
-            <line number="52" hits="0" branch="False" />
-            <line number="53" hits="0" branch="False" />
-            <line number="55" hits="0" branch="False" />
-            <line number="57" hits="0" branch="False" />
-            <line number="58" hits="0" branch="False" />
+            <line number="42" hits="1" branch="False" />
+            <line number="44" hits="1" branch="False" />
+            <line number="46" hits="1" branch="False" />
+            <line number="48" hits="1" branch="False" />
+            <line number="50" hits="1" branch="False" />
+            <line number="51" hits="1" branch="False" />
+            <line number="52" hits="1" branch="False" />
+            <line number="53" hits="1" branch="False" />
+            <line number="55" hits="1" branch="False" />
+            <line number="57" hits="1" branch="False" />
+            <line number="58" hits="1" branch="False" />
             <line number="9" hits="1" branch="False" />
           </lines>
         </class>
@@ -359,19 +359,19 @@
             </method>
             <method name="get_IsSuccess" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="6" hits="9" branch="False" />
+                <line number="6" hits="14" branch="False" />
               </lines>
             </method>
             <method name="get_IsFailure" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="8" hits="7" branch="False" />
+                <line number="8" hits="8" branch="False" />
               </lines>
             </method>
             <method name="Success" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="11" hits="5" branch="False" />
-                <line number="12" hits="5" branch="False" />
-                <line number="13" hits="5" branch="False" />
+                <line number="11" hits="8" branch="False" />
+                <line number="12" hits="8" branch="False" />
+                <line number="13" hits="8" branch="False" />
               </lines>
             </method>
             <method name="Failure" signature="(System.String)" line-rate="1" branch-rate="1" complexity="1">
@@ -388,11 +388,11 @@
           </methods>
           <lines>
             <line number="5" hits="6" branch="False" />
-            <line number="6" hits="9" branch="False" />
-            <line number="8" hits="7" branch="False" />
-            <line number="11" hits="5" branch="False" />
-            <line number="12" hits="5" branch="False" />
-            <line number="13" hits="5" branch="False" />
+            <line number="6" hits="14" branch="False" />
+            <line number="8" hits="8" branch="False" />
+            <line number="11" hits="8" branch="False" />
+            <line number="12" hits="8" branch="False" />
+            <line number="13" hits="8" branch="False" />
             <line number="16" hits="3" branch="False" />
             <line number="17" hits="3" branch="False" />
             <line number="18" hits="3" branch="False" />
@@ -406,29 +406,29 @@
           <methods>
             <method name="get_Entity" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="5" hits="2" branch="False" />
+                <line number="5" hits="8" branch="False" />
               </lines>
             </method>
             <method name="get_Error" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="7" hits="1" branch="False" />
+                <line number="7" hits="2" branch="False" />
               </lines>
             </method>
             <method name="get_IsSuccess" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="8" hits="2" branch="False" />
+                <line number="8" hits="5" branch="False" />
               </lines>
             </method>
             <method name="get_IsFailure" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="10" hits="1" branch="False" />
+                <line number="10" hits="2" branch="False" />
               </lines>
             </method>
             <method name="Success" signature="(TEntity)" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="13" hits="1" branch="False" />
-                <line number="14" hits="1" branch="False" />
-                <line number="15" hits="1" branch="False" />
+                <line number="13" hits="3" branch="False" />
+                <line number="14" hits="3" branch="False" />
+                <line number="15" hits="3" branch="False" />
               </lines>
             </method>
             <method name="Failure" signature="(System.String)" line-rate="1" branch-rate="1" complexity="1">
@@ -444,13 +444,13 @@
             </method>
           </methods>
           <lines>
-            <line number="5" hits="2" branch="False" />
-            <line number="7" hits="1" branch="False" />
-            <line number="8" hits="2" branch="False" />
-            <line number="10" hits="1" branch="False" />
-            <line number="13" hits="1" branch="False" />
-            <line number="14" hits="1" branch="False" />
-            <line number="15" hits="1" branch="False" />
+            <line number="5" hits="8" branch="False" />
+            <line number="7" hits="2" branch="False" />
+            <line number="8" hits="5" branch="False" />
+            <line number="10" hits="2" branch="False" />
+            <line number="13" hits="3" branch="False" />
+            <line number="14" hits="3" branch="False" />
+            <line number="15" hits="3" branch="False" />
             <line number="18" hits="1" branch="False" />
             <line number="19" hits="1" branch="False" />
             <line number="20" hits="1" branch="False" />
@@ -464,119 +464,119 @@
           <methods>
             <method name="get_AppointmentId" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="23" hits="26" branch="False" />
+                <line number="23" hits="50" branch="False" />
               </lines>
             </method>
             <method name="get_AppointerId" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="24" hits="19" branch="False" />
+                <line number="24" hits="41" branch="False" />
               </lines>
             </method>
             <method name="get_Appointer" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="25" hits="7" branch="False" />
+                <line number="25" hits="10" branch="False" />
               </lines>
             </method>
             <method name="get_AppointeeId" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="26" hits="19" branch="False" />
+                <line number="26" hits="41" branch="False" />
               </lines>
             </method>
             <method name="get_Appointee" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="27" hits="7" branch="False" />
+                <line number="27" hits="10" branch="False" />
               </lines>
             </method>
             <method name="get_IsExpired" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="28" hits="19" branch="False" />
+                <line number="28" hits="43" branch="False" />
               </lines>
             </method>
             <method name="get_CreatedAt" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="29" hits="19" branch="False" />
+                <line number="29" hits="41" branch="False" />
               </lines>
             </method>
             <method name="get_DueDate" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="30" hits="19" branch="False" />
+                <line number="30" hits="49" branch="False" />
               </lines>
             </method>
             <method name="get_Description" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="31" hits="21" branch="False" />
+                <line number="31" hits="47" branch="False" />
               </lines>
             </method>
             <method name="get_Title" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="32" hits="20" branch="False" />
+                <line number="32" hits="48" branch="False" />
               </lines>
             </method>
             <method name="get_Type" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="33" hits="20" branch="False" />
+                <line number="33" hits="44" branch="False" />
               </lines>
             </method>
             <method name=".ctor" signature="(VetAppointment.Domain.Entities.User,VetAppointment.Domain.Entities.User,System.DateTime,System.String,System.String,System.String)" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="6" hits="7" branch="False" />
-                <line number="7" hits="7" branch="False" />
-                <line number="8" hits="7" branch="False" />
-                <line number="9" hits="7" branch="False" />
-                <line number="10" hits="7" branch="False" />
+                <line number="6" hits="10" branch="False" />
+                <line number="7" hits="10" branch="False" />
+                <line number="8" hits="10" branch="False" />
+                <line number="9" hits="10" branch="False" />
+                <line number="10" hits="10" branch="False" />
               </lines>
             </method>
             <method name=".ctor" signature="(System.Guid,System.Guid,System.DateTime,System.String,System.String,System.String)" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="12" hits="18" branch="False" />
-                <line number="13" hits="18" branch="False" />
-                <line number="14" hits="18" branch="False" />
-                <line number="15" hits="18" branch="False" />
-                <line number="16" hits="18" branch="False" />
-                <line number="17" hits="18" branch="False" />
-                <line number="18" hits="18" branch="False" />
-                <line number="19" hits="18" branch="False" />
-                <line number="20" hits="18" branch="False" />
-                <line number="21" hits="18" branch="False" />
-                <line number="22" hits="18" branch="False" />
+                <line number="12" hits="40" branch="False" />
+                <line number="13" hits="40" branch="False" />
+                <line number="14" hits="40" branch="False" />
+                <line number="15" hits="40" branch="False" />
+                <line number="16" hits="40" branch="False" />
+                <line number="17" hits="40" branch="False" />
+                <line number="18" hits="40" branch="False" />
+                <line number="19" hits="40" branch="False" />
+                <line number="20" hits="40" branch="False" />
+                <line number="21" hits="40" branch="False" />
+                <line number="22" hits="40" branch="False" />
               </lines>
             </method>
           </methods>
           <lines>
-            <line number="23" hits="26" branch="False" />
-            <line number="24" hits="19" branch="False" />
-            <line number="25" hits="7" branch="False" />
-            <line number="26" hits="19" branch="False" />
-            <line number="27" hits="7" branch="False" />
-            <line number="28" hits="19" branch="False" />
-            <line number="29" hits="19" branch="False" />
-            <line number="30" hits="19" branch="False" />
-            <line number="31" hits="21" branch="False" />
-            <line number="32" hits="20" branch="False" />
-            <line number="33" hits="20" branch="False" />
-            <line number="6" hits="7" branch="False" />
-            <line number="7" hits="7" branch="False" />
-            <line number="8" hits="7" branch="False" />
-            <line number="9" hits="7" branch="False" />
-            <line number="10" hits="7" branch="False" />
-            <line number="12" hits="18" branch="False" />
-            <line number="13" hits="18" branch="False" />
-            <line number="14" hits="18" branch="False" />
-            <line number="15" hits="18" branch="False" />
-            <line number="16" hits="18" branch="False" />
-            <line number="17" hits="18" branch="False" />
-            <line number="18" hits="18" branch="False" />
-            <line number="19" hits="18" branch="False" />
-            <line number="20" hits="18" branch="False" />
-            <line number="21" hits="18" branch="False" />
-            <line number="22" hits="18" branch="False" />
+            <line number="23" hits="50" branch="False" />
+            <line number="24" hits="41" branch="False" />
+            <line number="25" hits="10" branch="False" />
+            <line number="26" hits="41" branch="False" />
+            <line number="27" hits="10" branch="False" />
+            <line number="28" hits="43" branch="False" />
+            <line number="29" hits="41" branch="False" />
+            <line number="30" hits="49" branch="False" />
+            <line number="31" hits="47" branch="False" />
+            <line number="32" hits="48" branch="False" />
+            <line number="33" hits="44" branch="False" />
+            <line number="6" hits="10" branch="False" />
+            <line number="7" hits="10" branch="False" />
+            <line number="8" hits="10" branch="False" />
+            <line number="9" hits="10" branch="False" />
+            <line number="10" hits="10" branch="False" />
+            <line number="12" hits="40" branch="False" />
+            <line number="13" hits="40" branch="False" />
+            <line number="14" hits="40" branch="False" />
+            <line number="15" hits="40" branch="False" />
+            <line number="16" hits="40" branch="False" />
+            <line number="17" hits="40" branch="False" />
+            <line number="18" hits="40" branch="False" />
+            <line number="19" hits="40" branch="False" />
+            <line number="20" hits="40" branch="False" />
+            <line number="21" hits="40" branch="False" />
+            <line number="22" hits="40" branch="False" />
           </lines>
         </class>
         <class name="VetAppointment.Domain.Entities.BillingEntry" filename="VetAppointment.Domain\Entities\BillingEntry.cs" line-rate="1" branch-rate="1" complexity="13">
           <methods>
             <method name="get_BillingEntryId" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="25" hits="2" branch="False" />
+                <line number="25" hits="3" branch="False" />
               </lines>
             </method>
             <method name="get_IssuerId" signature="()" line-rate="1" branch-rate="1" complexity="1">
@@ -616,7 +616,7 @@
             </method>
             <method name="get_AppointmentId" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="33" hits="6" branch="False" />
+                <line number="33" hits="5" branch="False" />
               </lines>
             </method>
             <method name="get_Appointment" signature="()" line-rate="1" branch-rate="1" complexity="1">
@@ -656,7 +656,7 @@
             </method>
           </methods>
           <lines>
-            <line number="25" hits="2" branch="False" />
+            <line number="25" hits="3" branch="False" />
             <line number="26" hits="3" branch="False" />
             <line number="27" hits="2" branch="False" />
             <line number="28" hits="3" branch="False" />
@@ -664,7 +664,7 @@
             <line number="30" hits="3" branch="False" />
             <line number="31" hits="3" branch="False" />
             <line number="32" hits="2" branch="False" />
-            <line number="33" hits="6" branch="False" />
+            <line number="33" hits="5" branch="False" />
             <line number="34" hits="2" branch="False" />
             <line number="35" hits="4" branch="False" />
             <line number="6" hits="2" branch="False" />
@@ -686,63 +686,63 @@
             <line number="23" hits="2" branch="False" />
           </lines>
         </class>
-        <class name="VetAppointment.Domain.Entities.Drug" filename="VetAppointment.Domain\Entities\Drug.cs" line-rate="0.6923" branch-rate="1" complexity="5">
+        <class name="VetAppointment.Domain.Entities.Drug" filename="VetAppointment.Domain\Entities\Drug.cs" line-rate="1" branch-rate="1" complexity="5">
           <methods>
             <method name="get_DrugId" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="12" hits="16" branch="False" />
+                <line number="12" hits="21" branch="False" />
               </lines>
             </method>
             <method name="get_Title" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="13" hits="11" branch="False" />
+                <line number="13" hits="14" branch="False" />
               </lines>
             </method>
             <method name="get_Price" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="14" hits="10" branch="False" />
+                <line number="14" hits="13" branch="False" />
               </lines>
             </method>
-            <method name="UpdateNameAndPrice" signature="(System.String,System.Int32)" line-rate="0" branch-rate="1" complexity="1">
+            <method name="UpdateNameAndPrice" signature="(System.String,System.Int32)" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="17" hits="0" branch="False" />
-                <line number="18" hits="0" branch="False" />
-                <line number="19" hits="0" branch="False" />
-                <line number="20" hits="0" branch="False" />
+                <line number="17" hits="1" branch="False" />
+                <line number="18" hits="1" branch="False" />
+                <line number="19" hits="1" branch="False" />
+                <line number="20" hits="1" branch="False" />
               </lines>
             </method>
             <method name=".ctor" signature="(System.String,System.Int32)" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="5" hits="8" branch="False" />
-                <line number="6" hits="8" branch="False" />
-                <line number="7" hits="8" branch="False" />
-                <line number="8" hits="8" branch="False" />
-                <line number="9" hits="8" branch="False" />
-                <line number="10" hits="8" branch="False" />
+                <line number="5" hits="9" branch="False" />
+                <line number="6" hits="9" branch="False" />
+                <line number="7" hits="9" branch="False" />
+                <line number="8" hits="9" branch="False" />
+                <line number="9" hits="9" branch="False" />
+                <line number="10" hits="9" branch="False" />
               </lines>
             </method>
           </methods>
           <lines>
-            <line number="12" hits="16" branch="False" />
-            <line number="13" hits="11" branch="False" />
-            <line number="14" hits="10" branch="False" />
-            <line number="17" hits="0" branch="False" />
-            <line number="18" hits="0" branch="False" />
-            <line number="19" hits="0" branch="False" />
-            <line number="20" hits="0" branch="False" />
-            <line number="5" hits="8" branch="False" />
-            <line number="6" hits="8" branch="False" />
-            <line number="7" hits="8" branch="False" />
-            <line number="8" hits="8" branch="False" />
-            <line number="9" hits="8" branch="False" />
-            <line number="10" hits="8" branch="False" />
+            <line number="12" hits="21" branch="False" />
+            <line number="13" hits="14" branch="False" />
+            <line number="14" hits="13" branch="False" />
+            <line number="17" hits="1" branch="False" />
+            <line number="18" hits="1" branch="False" />
+            <line number="19" hits="1" branch="False" />
+            <line number="20" hits="1" branch="False" />
+            <line number="5" hits="9" branch="False" />
+            <line number="6" hits="9" branch="False" />
+            <line number="7" hits="9" branch="False" />
+            <line number="8" hits="9" branch="False" />
+            <line number="9" hits="9" branch="False" />
+            <line number="10" hits="9" branch="False" />
           </lines>
         </class>
         <class name="VetAppointment.Domain.Entities.DrugStock" filename="VetAppointment.Domain\Entities\DrugStock.cs" line-rate="1" branch-rate="1" complexity="10">
           <methods>
             <method name="get_DrugStockId" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="19" hits="6" branch="False" />
+                <line number="19" hits="9" branch="False" />
               </lines>
             </method>
             <method name="get_TypeId" signature="()" line-rate="1" branch-rate="1" complexity="1">
@@ -752,12 +752,12 @@
             </method>
             <method name="get_Type" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="21" hits="5" branch="False" />
+                <line number="21" hits="6" branch="False" />
               </lines>
             </method>
             <method name="get_Quantity" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="22" hits="14" branch="False" />
+                <line number="22" hits="16" branch="False" />
               </lines>
             </method>
             <method name="RemoveDrugsFromPublicStock" signature="(System.Int32)" line-rate="1" branch-rate="1" complexity="4">
@@ -768,15 +768,15 @@
                     <condition number="12" type="jump" coverage="100%" />
                   </conditions>
                 </line>
-                <line number="27" hits="2" branch="False" />
-                <line number="28" hits="3" branch="True" condition-coverage="100% (2/2)">
+                <line number="27" hits="1" branch="False" />
+                <line number="28" hits="4" branch="True" condition-coverage="100% (2/2)">
                   <conditions>
                     <condition number="33" type="jump" coverage="100%" />
                   </conditions>
                 </line>
                 <line number="29" hits="1" branch="False" />
-                <line number="30" hits="2" branch="False" />
-                <line number="31" hits="2" branch="False" />
+                <line number="30" hits="3" branch="False" />
+                <line number="31" hits="3" branch="False" />
                 <line number="32" hits="5" branch="False" />
               </lines>
             </method>
@@ -800,25 +800,25 @@
             </method>
           </methods>
           <lines>
-            <line number="19" hits="6" branch="False" />
+            <line number="19" hits="9" branch="False" />
             <line number="20" hits="5" branch="False" />
-            <line number="21" hits="5" branch="False" />
-            <line number="22" hits="14" branch="False" />
+            <line number="21" hits="6" branch="False" />
+            <line number="22" hits="16" branch="False" />
             <line number="25" hits="5" branch="False" />
             <line number="26" hits="5" branch="True" condition-coverage="100% (2/2)">
               <conditions>
                 <condition number="12" type="jump" coverage="100%" />
               </conditions>
             </line>
-            <line number="27" hits="2" branch="False" />
-            <line number="28" hits="3" branch="True" condition-coverage="100% (2/2)">
+            <line number="27" hits="1" branch="False" />
+            <line number="28" hits="4" branch="True" condition-coverage="100% (2/2)">
               <conditions>
                 <condition number="33" type="jump" coverage="100%" />
               </conditions>
             </line>
             <line number="29" hits="1" branch="False" />
-            <line number="30" hits="2" branch="False" />
-            <line number="31" hits="2" branch="False" />
+            <line number="30" hits="3" branch="False" />
+            <line number="31" hits="3" branch="False" />
             <line number="32" hits="5" branch="False" />
             <line number="7" hits="5" branch="False" />
             <line number="8" hits="5" branch="False" />
@@ -902,49 +902,49 @@
           <methods>
             <method name="get_OfficeId" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="10" hits="18" branch="False" />
+                <line number="10" hits="20" branch="False" />
               </lines>
             </method>
             <method name="get_Address" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="11" hits="17" branch="False" />
+                <line number="11" hits="18" branch="False" />
               </lines>
             </method>
             <method name=".ctor" signature="(System.String)" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="5" hits="10" branch="False" />
-                <line number="6" hits="10" branch="False" />
-                <line number="7" hits="10" branch="False" />
-                <line number="8" hits="10" branch="False" />
-                <line number="9" hits="10" branch="False" />
+                <line number="5" hits="11" branch="False" />
+                <line number="6" hits="11" branch="False" />
+                <line number="7" hits="11" branch="False" />
+                <line number="8" hits="11" branch="False" />
+                <line number="9" hits="11" branch="False" />
               </lines>
             </method>
           </methods>
           <lines>
-            <line number="10" hits="18" branch="False" />
-            <line number="11" hits="17" branch="False" />
-            <line number="5" hits="10" branch="False" />
-            <line number="6" hits="10" branch="False" />
-            <line number="7" hits="10" branch="False" />
-            <line number="8" hits="10" branch="False" />
-            <line number="9" hits="10" branch="False" />
+            <line number="10" hits="20" branch="False" />
+            <line number="11" hits="18" branch="False" />
+            <line number="5" hits="11" branch="False" />
+            <line number="6" hits="11" branch="False" />
+            <line number="7" hits="11" branch="False" />
+            <line number="8" hits="11" branch="False" />
+            <line number="9" hits="11" branch="False" />
           </lines>
         </class>
         <class name="VetAppointment.Domain.Entities.Prescription" filename="VetAppointment.Domain\Entities\Prescription.cs" line-rate="0.9333" branch-rate="0.5" complexity="6">
           <methods>
             <method name="get_PrescriptionId" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="14" hits="24" branch="False" />
+                <line number="14" hits="43" branch="False" />
               </lines>
             </method>
             <method name="get_Drugs" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="15" hits="33" branch="False" />
+                <line number="15" hits="71" branch="False" />
               </lines>
             </method>
             <method name="get_Description" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="16" hits="18" branch="False" />
+                <line number="16" hits="37" branch="False" />
               </lines>
             </method>
             <method name="AddDrugToPrescription" signature="(VetAppointment.Domain.Entities.PrescriptionDrug)" line-rate="0.8332999999999999" branch-rate="0.5" complexity="2">
@@ -963,19 +963,19 @@
             </method>
             <method name=".ctor" signature="(System.String)" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="7" hits="16" branch="False" />
-                <line number="8" hits="16" branch="False" />
-                <line number="9" hits="16" branch="False" />
-                <line number="10" hits="16" branch="False" />
-                <line number="11" hits="16" branch="False" />
-                <line number="12" hits="16" branch="False" />
+                <line number="7" hits="35" branch="False" />
+                <line number="8" hits="35" branch="False" />
+                <line number="9" hits="35" branch="False" />
+                <line number="10" hits="35" branch="False" />
+                <line number="11" hits="35" branch="False" />
+                <line number="12" hits="35" branch="False" />
               </lines>
             </method>
           </methods>
           <lines>
-            <line number="14" hits="24" branch="False" />
-            <line number="15" hits="33" branch="False" />
-            <line number="16" hits="18" branch="False" />
+            <line number="14" hits="43" branch="False" />
+            <line number="15" hits="71" branch="False" />
+            <line number="16" hits="37" branch="False" />
             <line number="19" hits="1" branch="False" />
             <line number="20" hits="1" branch="True" condition-coverage="50% (1/2)">
               <conditions>
@@ -986,236 +986,236 @@
             <line number="22" hits="1" branch="False" />
             <line number="23" hits="1" branch="False" />
             <line number="24" hits="1" branch="False" />
-            <line number="7" hits="16" branch="False" />
-            <line number="8" hits="16" branch="False" />
-            <line number="9" hits="16" branch="False" />
-            <line number="10" hits="16" branch="False" />
-            <line number="11" hits="16" branch="False" />
-            <line number="12" hits="16" branch="False" />
+            <line number="7" hits="35" branch="False" />
+            <line number="8" hits="35" branch="False" />
+            <line number="9" hits="35" branch="False" />
+            <line number="10" hits="35" branch="False" />
+            <line number="11" hits="35" branch="False" />
+            <line number="12" hits="35" branch="False" />
           </lines>
         </class>
-        <class name="VetAppointment.Domain.Entities.PrescriptionDrug" filename="VetAppointment.Domain\Entities\PrescriptionDrug.cs" line-rate="1" branch-rate="1" complexity="8">
+        <class name="VetAppointment.Domain.Entities.PrescriptionDrug" filename="VetAppointment.Domain\Entities\PrescriptionDrug.cs" line-rate="0.9523" branch-rate="0.5" complexity="8">
           <methods>
             <method name="get_PrescriptionDrugId" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="19" hits="1" branch="False" />
+                <line number="19" hits="2" branch="False" />
               </lines>
             </method>
             <method name="get_StockId" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="20" hits="1" branch="False" />
+                <line number="20" hits="2" branch="False" />
               </lines>
             </method>
             <method name="get_Stock" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="21" hits="1" branch="False" />
+                <line number="21" hits="4" branch="False" />
               </lines>
             </method>
             <method name="get_Quantity" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="22" hits="1" branch="False" />
+                <line number="22" hits="3" branch="False" />
               </lines>
             </method>
-            <method name="CreatePrescriptionDrug" signature="(VetAppointment.Domain.Entities.DrugStock,System.Int32)" line-rate="1" branch-rate="1" complexity="2">
+            <method name="CreatePrescriptionDrug" signature="(VetAppointment.Domain.Entities.DrugStock,System.Int32)" line-rate="0.8571" branch-rate="0.5" complexity="2">
               <lines>
                 <line number="25" hits="2" branch="False" />
                 <line number="26" hits="2" branch="False" />
-                <line number="27" hits="2" branch="True" condition-coverage="100% (2/2)">
+                <line number="27" hits="2" branch="True" condition-coverage="50% (1/2)">
                   <conditions>
-                    <condition number="17" type="jump" coverage="100%" />
+                    <condition number="17" type="jump" coverage="50%" />
                   </conditions>
                 </line>
-                <line number="28" hits="1" branch="False" />
-                <line number="30" hits="1" branch="False" />
-                <line number="31" hits="1" branch="False" />
+                <line number="28" hits="0" branch="False" />
+                <line number="30" hits="2" branch="False" />
+                <line number="31" hits="2" branch="False" />
                 <line number="32" hits="2" branch="False" />
               </lines>
             </method>
             <method name=".ctor" signature="(VetAppointment.Domain.Entities.DrugStock,System.Int32)" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="7" hits="1" branch="False" />
-                <line number="8" hits="1" branch="False" />
-                <line number="9" hits="1" branch="False" />
-                <line number="10" hits="1" branch="False" />
+                <line number="7" hits="2" branch="False" />
+                <line number="8" hits="2" branch="False" />
+                <line number="9" hits="2" branch="False" />
+                <line number="10" hits="2" branch="False" />
               </lines>
             </method>
             <method name=".ctor" signature="(System.Guid,System.Int32)" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="12" hits="1" branch="False" />
-                <line number="13" hits="1" branch="False" />
-                <line number="14" hits="1" branch="False" />
-                <line number="15" hits="1" branch="False" />
-                <line number="16" hits="1" branch="False" />
-                <line number="17" hits="1" branch="False" />
+                <line number="12" hits="2" branch="False" />
+                <line number="13" hits="2" branch="False" />
+                <line number="14" hits="2" branch="False" />
+                <line number="15" hits="2" branch="False" />
+                <line number="16" hits="2" branch="False" />
+                <line number="17" hits="2" branch="False" />
               </lines>
             </method>
           </methods>
           <lines>
-            <line number="19" hits="1" branch="False" />
-            <line number="20" hits="1" branch="False" />
-            <line number="21" hits="1" branch="False" />
-            <line number="22" hits="1" branch="False" />
+            <line number="19" hits="2" branch="False" />
+            <line number="20" hits="2" branch="False" />
+            <line number="21" hits="4" branch="False" />
+            <line number="22" hits="3" branch="False" />
             <line number="25" hits="2" branch="False" />
             <line number="26" hits="2" branch="False" />
-            <line number="27" hits="2" branch="True" condition-coverage="100% (2/2)">
+            <line number="27" hits="2" branch="True" condition-coverage="50% (1/2)">
               <conditions>
-                <condition number="17" type="jump" coverage="100%" />
+                <condition number="17" type="jump" coverage="50%" />
               </conditions>
             </line>
-            <line number="28" hits="1" branch="False" />
-            <line number="30" hits="1" branch="False" />
-            <line number="31" hits="1" branch="False" />
+            <line number="28" hits="0" branch="False" />
+            <line number="30" hits="2" branch="False" />
+            <line number="31" hits="2" branch="False" />
             <line number="32" hits="2" branch="False" />
-            <line number="7" hits="1" branch="False" />
-            <line number="8" hits="1" branch="False" />
-            <line number="9" hits="1" branch="False" />
-            <line number="10" hits="1" branch="False" />
-            <line number="12" hits="1" branch="False" />
-            <line number="13" hits="1" branch="False" />
-            <line number="14" hits="1" branch="False" />
-            <line number="15" hits="1" branch="False" />
-            <line number="16" hits="1" branch="False" />
-            <line number="17" hits="1" branch="False" />
+            <line number="7" hits="2" branch="False" />
+            <line number="8" hits="2" branch="False" />
+            <line number="9" hits="2" branch="False" />
+            <line number="10" hits="2" branch="False" />
+            <line number="12" hits="2" branch="False" />
+            <line number="13" hits="2" branch="False" />
+            <line number="14" hits="2" branch="False" />
+            <line number="15" hits="2" branch="False" />
+            <line number="16" hits="2" branch="False" />
+            <line number="17" hits="2" branch="False" />
           </lines>
         </class>
-        <class name="VetAppointment.Domain.Entities.User" filename="VetAppointment.Domain\Entities\User.cs" line-rate="0.4571" branch-rate="0" complexity="14">
+        <class name="VetAppointment.Domain.Entities.User" filename="VetAppointment.Domain\Entities\User.cs" line-rate="0.9428" branch-rate="0.5" complexity="14">
           <methods>
             <method name="get_UserId" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="16" hits="88" branch="False" />
+                <line number="16" hits="156" branch="False" />
               </lines>
             </method>
             <method name="get_Username" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="17" hits="68" branch="False" />
+                <line number="17" hits="136" branch="False" />
               </lines>
             </method>
             <method name="get_Password" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="18" hits="66" branch="False" />
+                <line number="18" hits="129" branch="False" />
               </lines>
             </method>
             <method name="get_IsMedic" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="19" hits="66" branch="False" />
+                <line number="19" hits="128" branch="False" />
               </lines>
             </method>
             <method name="get_HasOffice" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="20" hits="67" branch="False" />
+                <line number="20" hits="131" branch="False" />
               </lines>
             </method>
             <method name="get_OfficeId" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="21" hits="4" branch="False" />
+                <line number="21" hits="6" branch="False" />
               </lines>
             </method>
             <method name="get_UserOffice" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="22" hits="4" branch="False" />
+                <line number="22" hits="7" branch="False" />
               </lines>
             </method>
             <method name="get_JoinedDate" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="23" hits="66" branch="False" />
+                <line number="23" hits="128" branch="False" />
               </lines>
             </method>
-            <method name="RegisterOfficeToUser" signature="(VetAppointment.Domain.Entities.Office)" line-rate="0" branch-rate="0" complexity="2">
+            <method name="RegisterOfficeToUser" signature="(VetAppointment.Domain.Entities.Office)" line-rate="0.875" branch-rate="0.5" complexity="2">
               <lines>
-                <line number="26" hits="0" branch="False" />
-                <line number="27" hits="0" branch="True" condition-coverage="0% (0/2)">
+                <line number="26" hits="1" branch="False" />
+                <line number="27" hits="1" branch="True" condition-coverage="50% (1/2)">
                   <conditions>
-                    <condition number="7" type="jump" coverage="0%" />
+                    <condition number="7" type="jump" coverage="50%" />
                   </conditions>
                 </line>
                 <line number="28" hits="0" branch="False" />
-                <line number="29" hits="0" branch="False" />
-                <line number="30" hits="0" branch="False" />
-                <line number="31" hits="0" branch="False" />
-                <line number="32" hits="0" branch="False" />
-                <line number="33" hits="0" branch="False" />
+                <line number="29" hits="1" branch="False" />
+                <line number="30" hits="1" branch="False" />
+                <line number="31" hits="1" branch="False" />
+                <line number="32" hits="1" branch="False" />
+                <line number="33" hits="1" branch="False" />
               </lines>
             </method>
-            <method name="UnregisterOfficeFromUser" signature="()" line-rate="0" branch-rate="0" complexity="2">
+            <method name="UnregisterOfficeFromUser" signature="()" line-rate="0.875" branch-rate="0.5" complexity="2">
               <lines>
-                <line number="36" hits="0" branch="False" />
-                <line number="37" hits="0" branch="True" condition-coverage="0% (0/2)">
+                <line number="36" hits="1" branch="False" />
+                <line number="37" hits="1" branch="True" condition-coverage="50% (1/2)">
                   <conditions>
-                    <condition number="12" type="jump" coverage="0%" />
+                    <condition number="12" type="jump" coverage="50%" />
                   </conditions>
                 </line>
                 <line number="38" hits="0" branch="False" />
-                <line number="39" hits="0" branch="False" />
-                <line number="40" hits="0" branch="False" />
-                <line number="41" hits="0" branch="False" />
-                <line number="42" hits="0" branch="False" />
-                <line number="43" hits="0" branch="False" />
+                <line number="39" hits="1" branch="False" />
+                <line number="40" hits="1" branch="False" />
+                <line number="41" hits="1" branch="False" />
+                <line number="42" hits="1" branch="False" />
+                <line number="43" hits="1" branch="False" />
               </lines>
             </method>
-            <method name="IsPasswordValid" signature="(System.String)" line-rate="0" branch-rate="1" complexity="1">
+            <method name="IsPasswordValid" signature="(System.String)" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="46" hits="0" branch="False" />
-                <line number="47" hits="0" branch="False" />
-                <line number="48" hits="0" branch="False" />
+                <line number="46" hits="1" branch="False" />
+                <line number="47" hits="1" branch="False" />
+                <line number="48" hits="1" branch="False" />
               </lines>
             </method>
             <method name=".ctor" signature="(System.String,System.String,System.Boolean)" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="7" hits="62" branch="False" />
-                <line number="8" hits="62" branch="False" />
-                <line number="9" hits="62" branch="False" />
-                <line number="10" hits="62" branch="False" />
-                <line number="11" hits="62" branch="False" />
-                <line number="12" hits="62" branch="False" />
-                <line number="13" hits="62" branch="False" />
-                <line number="14" hits="62" branch="False" />
+                <line number="7" hits="124" branch="False" />
+                <line number="8" hits="124" branch="False" />
+                <line number="9" hits="124" branch="False" />
+                <line number="10" hits="124" branch="False" />
+                <line number="11" hits="124" branch="False" />
+                <line number="12" hits="124" branch="False" />
+                <line number="13" hits="124" branch="False" />
+                <line number="14" hits="124" branch="False" />
               </lines>
             </method>
           </methods>
           <lines>
-            <line number="16" hits="88" branch="False" />
-            <line number="17" hits="68" branch="False" />
-            <line number="18" hits="66" branch="False" />
-            <line number="19" hits="66" branch="False" />
-            <line number="20" hits="67" branch="False" />
-            <line number="21" hits="4" branch="False" />
-            <line number="22" hits="4" branch="False" />
-            <line number="23" hits="66" branch="False" />
-            <line number="26" hits="0" branch="False" />
-            <line number="27" hits="0" branch="True" condition-coverage="0% (0/2)">
+            <line number="16" hits="156" branch="False" />
+            <line number="17" hits="136" branch="False" />
+            <line number="18" hits="129" branch="False" />
+            <line number="19" hits="128" branch="False" />
+            <line number="20" hits="131" branch="False" />
+            <line number="21" hits="6" branch="False" />
+            <line number="22" hits="7" branch="False" />
+            <line number="23" hits="128" branch="False" />
+            <line number="26" hits="1" branch="False" />
+            <line number="27" hits="1" branch="True" condition-coverage="50% (1/2)">
               <conditions>
-                <condition number="7" type="jump" coverage="0%" />
+                <condition number="7" type="jump" coverage="50%" />
               </conditions>
             </line>
             <line number="28" hits="0" branch="False" />
-            <line number="29" hits="0" branch="False" />
-            <line number="30" hits="0" branch="False" />
-            <line number="31" hits="0" branch="False" />
-            <line number="32" hits="0" branch="False" />
-            <line number="33" hits="0" branch="False" />
-            <line number="36" hits="0" branch="False" />
-            <line number="37" hits="0" branch="True" condition-coverage="0% (0/2)">
+            <line number="29" hits="1" branch="False" />
+            <line number="30" hits="1" branch="False" />
+            <line number="31" hits="1" branch="False" />
+            <line number="32" hits="1" branch="False" />
+            <line number="33" hits="1" branch="False" />
+            <line number="36" hits="1" branch="False" />
+            <line number="37" hits="1" branch="True" condition-coverage="50% (1/2)">
               <conditions>
-                <condition number="12" type="jump" coverage="0%" />
+                <condition number="12" type="jump" coverage="50%" />
               </conditions>
             </line>
             <line number="38" hits="0" branch="False" />
-            <line number="39" hits="0" branch="False" />
-            <line number="40" hits="0" branch="False" />
-            <line number="41" hits="0" branch="False" />
-            <line number="42" hits="0" branch="False" />
-            <line number="43" hits="0" branch="False" />
-            <line number="46" hits="0" branch="False" />
-            <line number="47" hits="0" branch="False" />
-            <line number="48" hits="0" branch="False" />
-            <line number="7" hits="62" branch="False" />
-            <line number="8" hits="62" branch="False" />
-            <line number="9" hits="62" branch="False" />
-            <line number="10" hits="62" branch="False" />
-            <line number="11" hits="62" branch="False" />
-            <line number="12" hits="62" branch="False" />
-            <line number="13" hits="62" branch="False" />
-            <line number="14" hits="62" branch="False" />
+            <line number="39" hits="1" branch="False" />
+            <line number="40" hits="1" branch="False" />
+            <line number="41" hits="1" branch="False" />
+            <line number="42" hits="1" branch="False" />
+            <line number="43" hits="1" branch="False" />
+            <line number="46" hits="1" branch="False" />
+            <line number="47" hits="1" branch="False" />
+            <line number="48" hits="1" branch="False" />
+            <line number="7" hits="124" branch="False" />
+            <line number="8" hits="124" branch="False" />
+            <line number="9" hits="124" branch="False" />
+            <line number="10" hits="124" branch="False" />
+            <line number="11" hits="124" branch="False" />
+            <line number="12" hits="124" branch="False" />
+            <line number="13" hits="124" branch="False" />
+            <line number="14" hits="124" branch="False" />
           </lines>
         </class>
       </classes>
@@ -1320,7 +1320,7 @@
         </class>
       </classes>
     </package>
-    <package name="VetAppointment.WebAPI" line-rate="0.4841" branch-rate="0.2169" complexity="194">
+    <package name="VetAppointment.WebAPI" line-rate="0.5821999999999999" branch-rate="0.31129999999999997" complexity="194">
       <classes>
         <class name="Program" filename="VetAppointment.WebAPI\Program.cs" line-rate="1" branch-rate="1" complexity="2">
           <methods>
@@ -1708,52 +1708,52 @@
             <line number="20" hits="7" branch="False" />
           </lines>
         </class>
-        <class name="VetAppointment.WebAPI.DTOs.BillingEntryDto" filename="VetAppointment.WebAPI\Dtos\BillingEntryDto.cs" line-rate="0" branch-rate="1" complexity="7">
+        <class name="VetAppointment.WebAPI.DTOs.BillingEntryDto" filename="VetAppointment.WebAPI\Dtos\BillingEntryDto.cs" line-rate="1" branch-rate="1" complexity="7">
           <methods>
-            <method name="get_BillingEntryId" signature="()" line-rate="0" branch-rate="1" complexity="1">
+            <method name="get_BillingEntryId" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="5" hits="0" branch="False" />
+                <line number="5" hits="2" branch="False" />
               </lines>
             </method>
-            <method name="get_IssuerId" signature="()" line-rate="0" branch-rate="1" complexity="1">
+            <method name="get_IssuerId" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="6" hits="0" branch="False" />
+                <line number="6" hits="2" branch="False" />
               </lines>
             </method>
-            <method name="get_CustomerId" signature="()" line-rate="0" branch-rate="1" complexity="1">
+            <method name="get_CustomerId" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="7" hits="0" branch="False" />
+                <line number="7" hits="2" branch="False" />
               </lines>
             </method>
-            <method name="get_DateTime" signature="()" line-rate="0" branch-rate="1" complexity="1">
+            <method name="get_DateTime" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="8" hits="0" branch="False" />
+                <line number="8" hits="2" branch="False" />
               </lines>
             </method>
-            <method name="get_PrescriptionId" signature="()" line-rate="0" branch-rate="1" complexity="1">
+            <method name="get_PrescriptionId" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="9" hits="0" branch="False" />
+                <line number="9" hits="2" branch="False" />
               </lines>
             </method>
-            <method name="get_AppointmentId" signature="()" line-rate="0" branch-rate="1" complexity="1">
+            <method name="get_AppointmentId" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="10" hits="0" branch="False" />
+                <line number="10" hits="2" branch="False" />
               </lines>
             </method>
-            <method name="get_Price" signature="()" line-rate="0" branch-rate="1" complexity="1">
+            <method name="get_Price" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="11" hits="0" branch="False" />
+                <line number="11" hits="2" branch="False" />
               </lines>
             </method>
           </methods>
           <lines>
-            <line number="5" hits="0" branch="False" />
-            <line number="6" hits="0" branch="False" />
-            <line number="7" hits="0" branch="False" />
-            <line number="8" hits="0" branch="False" />
-            <line number="9" hits="0" branch="False" />
-            <line number="10" hits="0" branch="False" />
-            <line number="11" hits="0" branch="False" />
+            <line number="5" hits="2" branch="False" />
+            <line number="6" hits="2" branch="False" />
+            <line number="7" hits="2" branch="False" />
+            <line number="8" hits="2" branch="False" />
+            <line number="9" hits="2" branch="False" />
+            <line number="10" hits="2" branch="False" />
+            <line number="11" hits="2" branch="False" />
           </lines>
         </class>
         <class name="VetAppointment.WebAPI.DTOs.CreateDrugDto" filename="VetAppointment.WebAPI\Dtos\CreateDrugDto.cs" line-rate="1" branch-rate="1" complexity="2">
@@ -1792,16 +1792,16 @@
             <line number="6" hits="5" branch="False" />
           </lines>
         </class>
-        <class name="VetAppointment.WebAPI.DTOs.DrugDto" filename="VetAppointment.WebAPI\Dtos\DrugDto.cs" line-rate="0" branch-rate="1" complexity="1">
+        <class name="VetAppointment.WebAPI.DTOs.DrugDto" filename="VetAppointment.WebAPI\Dtos\DrugDto.cs" line-rate="1" branch-rate="1" complexity="1">
           <methods>
-            <method name="get_Id" signature="()" line-rate="0" branch-rate="1" complexity="1">
+            <method name="get_Id" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="5" hits="0" branch="False" />
+                <line number="5" hits="2" branch="False" />
               </lines>
             </method>
           </methods>
           <lines>
-            <line number="5" hits="0" branch="False" />
+            <line number="5" hits="2" branch="False" />
           </lines>
         </class>
         <class name="VetAppointment.WebAPI.DTOs.DrugStockDto" filename="VetAppointment.WebAPI\Dtos\DrugStockDto.cs" line-rate="0" branch-rate="1" complexity="2">
@@ -2086,130 +2086,130 @@
             <line number="17" hits="4" branch="False" />
           </lines>
         </class>
-        <class name="VetAppointment.WebAPI.Dtos.AppointmentDtos.AppointmentModifyDto" filename="VetAppointment.WebAPI\Dtos\AppointmentDto.cs" line-rate="0" branch-rate="0" complexity="16">
+        <class name="VetAppointment.WebAPI.Dtos.AppointmentDtos.AppointmentModifyDto" filename="VetAppointment.WebAPI\Dtos\AppointmentDto.cs" line-rate="1" branch-rate="1" complexity="16">
           <methods>
-            <method name="get_DueDate" signature="()" line-rate="0" branch-rate="1" complexity="1">
+            <method name="get_DueDate" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="38" hits="0" branch="False" />
+                <line number="38" hits="5" branch="False" />
               </lines>
             </method>
-            <method name="get_Title" signature="()" line-rate="0" branch-rate="1" complexity="1">
+            <method name="get_Title" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="39" hits="0" branch="False" />
+                <line number="39" hits="5" branch="False" />
               </lines>
             </method>
-            <method name="get_Description" signature="()" line-rate="0" branch-rate="1" complexity="1">
+            <method name="get_Description" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="40" hits="0" branch="False" />
+                <line number="40" hits="5" branch="False" />
               </lines>
             </method>
-            <method name="get_Type" signature="()" line-rate="0" branch-rate="1" complexity="1">
+            <method name="get_Type" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="41" hits="0" branch="False" />
+                <line number="41" hits="5" branch="False" />
               </lines>
             </method>
-            <method name="get_IsExpired" signature="()" line-rate="0" branch-rate="1" complexity="1">
+            <method name="get_IsExpired" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="42" hits="0" branch="False" />
+                <line number="42" hits="4" branch="False" />
               </lines>
             </method>
-            <method name="ApplyModificationsToModel" signature="(VetAppointment.Domain.Entities.Appointment)" line-rate="0" branch-rate="0" complexity="10">
+            <method name="ApplyModificationsToModel" signature="(VetAppointment.Domain.Entities.Appointment)" line-rate="1" branch-rate="1" complexity="10">
               <lines>
-                <line number="45" hits="0" branch="False" />
-                <line number="46" hits="0" branch="True" condition-coverage="0% (0/2)">
+                <line number="45" hits="1" branch="False" />
+                <line number="46" hits="1" branch="True" condition-coverage="100% (2/2)">
                   <conditions>
-                    <condition number="17" type="jump" coverage="0%" />
+                    <condition number="17" type="jump" coverage="100%" />
                   </conditions>
                 </line>
-                <line number="47" hits="0" branch="False" />
-                <line number="48" hits="0" branch="True" condition-coverage="0% (0/2)">
+                <line number="47" hits="1" branch="False" />
+                <line number="48" hits="1" branch="True" condition-coverage="100% (2/2)">
                   <conditions>
-                    <condition number="51" type="jump" coverage="0%" />
+                    <condition number="51" type="jump" coverage="100%" />
                   </conditions>
                 </line>
-                <line number="49" hits="0" branch="False" />
-                <line number="50" hits="0" branch="True" condition-coverage="0% (0/2)">
+                <line number="49" hits="1" branch="False" />
+                <line number="50" hits="1" branch="True" condition-coverage="100% (2/2)">
                   <conditions>
-                    <condition number="77" type="jump" coverage="0%" />
+                    <condition number="77" type="jump" coverage="100%" />
                   </conditions>
                 </line>
-                <line number="51" hits="0" branch="False" />
-                <line number="52" hits="0" branch="True" condition-coverage="0% (0/2)">
+                <line number="51" hits="1" branch="False" />
+                <line number="52" hits="1" branch="True" condition-coverage="100% (2/2)">
                   <conditions>
-                    <condition number="105" type="jump" coverage="0%" />
+                    <condition number="105" type="jump" coverage="100%" />
                   </conditions>
                 </line>
-                <line number="53" hits="0" branch="False" />
-                <line number="54" hits="0" branch="True" condition-coverage="0% (0/2)">
+                <line number="53" hits="1" branch="False" />
+                <line number="54" hits="1" branch="True" condition-coverage="100% (2/2)">
                   <conditions>
-                    <condition number="139" type="jump" coverage="0%" />
+                    <condition number="139" type="jump" coverage="100%" />
                   </conditions>
                 </line>
-                <line number="55" hits="0" branch="False" />
-                <line number="56" hits="0" branch="False" />
-                <line number="57" hits="0" branch="False" />
+                <line number="55" hits="1" branch="False" />
+                <line number="56" hits="1" branch="False" />
+                <line number="57" hits="1" branch="False" />
               </lines>
             </method>
-            <method name=".ctor" signature="(System.Nullable`1&lt;System.DateTime&gt;,System.String,System.String,System.String,System.Nullable`1&lt;System.Boolean&gt;)" line-rate="0" branch-rate="1" complexity="1">
+            <method name=".ctor" signature="(System.Nullable`1&lt;System.DateTime&gt;,System.String,System.String,System.String,System.Nullable`1&lt;System.Boolean&gt;)" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="29" hits="0" branch="False" />
-                <line number="30" hits="0" branch="False" />
-                <line number="31" hits="0" branch="False" />
-                <line number="32" hits="0" branch="False" />
-                <line number="33" hits="0" branch="False" />
-                <line number="34" hits="0" branch="False" />
-                <line number="35" hits="0" branch="False" />
-                <line number="36" hits="0" branch="False" />
+                <line number="29" hits="1" branch="False" />
+                <line number="30" hits="1" branch="False" />
+                <line number="31" hits="1" branch="False" />
+                <line number="32" hits="1" branch="False" />
+                <line number="33" hits="1" branch="False" />
+                <line number="34" hits="1" branch="False" />
+                <line number="35" hits="1" branch="False" />
+                <line number="36" hits="1" branch="False" />
               </lines>
             </method>
           </methods>
           <lines>
-            <line number="38" hits="0" branch="False" />
-            <line number="39" hits="0" branch="False" />
-            <line number="40" hits="0" branch="False" />
-            <line number="41" hits="0" branch="False" />
-            <line number="42" hits="0" branch="False" />
-            <line number="45" hits="0" branch="False" />
-            <line number="46" hits="0" branch="True" condition-coverage="0% (0/2)">
+            <line number="38" hits="5" branch="False" />
+            <line number="39" hits="5" branch="False" />
+            <line number="40" hits="5" branch="False" />
+            <line number="41" hits="5" branch="False" />
+            <line number="42" hits="4" branch="False" />
+            <line number="45" hits="1" branch="False" />
+            <line number="46" hits="1" branch="True" condition-coverage="100% (2/2)">
               <conditions>
-                <condition number="17" type="jump" coverage="0%" />
+                <condition number="17" type="jump" coverage="100%" />
               </conditions>
             </line>
-            <line number="47" hits="0" branch="False" />
-            <line number="48" hits="0" branch="True" condition-coverage="0% (0/2)">
+            <line number="47" hits="1" branch="False" />
+            <line number="48" hits="1" branch="True" condition-coverage="100% (2/2)">
               <conditions>
-                <condition number="51" type="jump" coverage="0%" />
+                <condition number="51" type="jump" coverage="100%" />
               </conditions>
             </line>
-            <line number="49" hits="0" branch="False" />
-            <line number="50" hits="0" branch="True" condition-coverage="0% (0/2)">
+            <line number="49" hits="1" branch="False" />
+            <line number="50" hits="1" branch="True" condition-coverage="100% (2/2)">
               <conditions>
-                <condition number="77" type="jump" coverage="0%" />
+                <condition number="77" type="jump" coverage="100%" />
               </conditions>
             </line>
-            <line number="51" hits="0" branch="False" />
-            <line number="52" hits="0" branch="True" condition-coverage="0% (0/2)">
+            <line number="51" hits="1" branch="False" />
+            <line number="52" hits="1" branch="True" condition-coverage="100% (2/2)">
               <conditions>
-                <condition number="105" type="jump" coverage="0%" />
+                <condition number="105" type="jump" coverage="100%" />
               </conditions>
             </line>
-            <line number="53" hits="0" branch="False" />
-            <line number="54" hits="0" branch="True" condition-coverage="0% (0/2)">
+            <line number="53" hits="1" branch="False" />
+            <line number="54" hits="1" branch="True" condition-coverage="100% (2/2)">
               <conditions>
-                <condition number="139" type="jump" coverage="0%" />
+                <condition number="139" type="jump" coverage="100%" />
               </conditions>
             </line>
-            <line number="55" hits="0" branch="False" />
-            <line number="56" hits="0" branch="False" />
-            <line number="57" hits="0" branch="False" />
-            <line number="29" hits="0" branch="False" />
-            <line number="30" hits="0" branch="False" />
-            <line number="31" hits="0" branch="False" />
-            <line number="32" hits="0" branch="False" />
-            <line number="33" hits="0" branch="False" />
-            <line number="34" hits="0" branch="False" />
-            <line number="35" hits="0" branch="False" />
-            <line number="36" hits="0" branch="False" />
+            <line number="55" hits="1" branch="False" />
+            <line number="56" hits="1" branch="False" />
+            <line number="57" hits="1" branch="False" />
+            <line number="29" hits="1" branch="False" />
+            <line number="30" hits="1" branch="False" />
+            <line number="31" hits="1" branch="False" />
+            <line number="32" hits="1" branch="False" />
+            <line number="33" hits="1" branch="False" />
+            <line number="34" hits="1" branch="False" />
+            <line number="35" hits="1" branch="False" />
+            <line number="36" hits="1" branch="False" />
           </lines>
         </class>
         <class name="VetAppointment.WebAPI.Dtos.AppointmentDtos.AppointmentDetailDto" filename="VetAppointment.WebAPI\Dtos\AppointmentDto.cs" line-rate="1" branch-rate="1" complexity="10">
@@ -2300,124 +2300,124 @@
             <line number="73" hits="1" branch="False" />
           </lines>
         </class>
-        <class name="VetAppointment.WebAPI.Dtos.AppointmentDtos.AppointmentEssentialOnlyDto" filename="VetAppointment.WebAPI\Dtos\AppointmentDto.cs" line-rate="0" branch-rate="1" complexity="6">
+        <class name="VetAppointment.WebAPI.Dtos.AppointmentDtos.AppointmentEssentialOnlyDto" filename="VetAppointment.WebAPI\Dtos\AppointmentDto.cs" line-rate="1" branch-rate="1" complexity="6">
           <methods>
-            <method name="get_AppointmentId" signature="()" line-rate="0" branch-rate="1" complexity="1">
+            <method name="get_AppointmentId" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="97" hits="0" branch="False" />
+                <line number="97" hits="1" branch="False" />
               </lines>
             </method>
-            <method name="get_Appointer" signature="()" line-rate="0" branch-rate="1" complexity="1">
+            <method name="get_Appointer" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="98" hits="0" branch="False" />
+                <line number="98" hits="2" branch="False" />
               </lines>
             </method>
-            <method name="get_Title" signature="()" line-rate="0" branch-rate="1" complexity="1">
+            <method name="get_Title" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="99" hits="0" branch="False" />
+                <line number="99" hits="2" branch="False" />
               </lines>
             </method>
-            <method name="get_DueDate" signature="()" line-rate="0" branch-rate="1" complexity="1">
+            <method name="get_DueDate" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="100" hits="0" branch="False" />
+                <line number="100" hits="2" branch="False" />
               </lines>
             </method>
-            <method name="get_DueTime" signature="()" line-rate="0" branch-rate="1" complexity="1">
+            <method name="get_DueTime" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="101" hits="0" branch="False" />
+                <line number="101" hits="2" branch="False" />
               </lines>
             </method>
-            <method name=".ctor" signature="(VetAppointment.Domain.Entities.Appointment,VetAppointment.Domain.Entities.User)" line-rate="0" branch-rate="1" complexity="1">
+            <method name=".ctor" signature="(VetAppointment.Domain.Entities.Appointment,VetAppointment.Domain.Entities.User)" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="88" hits="0" branch="False" />
-                <line number="89" hits="0" branch="False" />
-                <line number="90" hits="0" branch="False" />
-                <line number="91" hits="0" branch="False" />
-                <line number="92" hits="0" branch="False" />
-                <line number="93" hits="0" branch="False" />
-                <line number="94" hits="0" branch="False" />
-                <line number="95" hits="0" branch="False" />
+                <line number="88" hits="1" branch="False" />
+                <line number="89" hits="1" branch="False" />
+                <line number="90" hits="1" branch="False" />
+                <line number="91" hits="1" branch="False" />
+                <line number="92" hits="1" branch="False" />
+                <line number="93" hits="1" branch="False" />
+                <line number="94" hits="1" branch="False" />
+                <line number="95" hits="1" branch="False" />
               </lines>
             </method>
           </methods>
           <lines>
-            <line number="97" hits="0" branch="False" />
-            <line number="98" hits="0" branch="False" />
-            <line number="99" hits="0" branch="False" />
-            <line number="100" hits="0" branch="False" />
-            <line number="101" hits="0" branch="False" />
-            <line number="88" hits="0" branch="False" />
-            <line number="89" hits="0" branch="False" />
-            <line number="90" hits="0" branch="False" />
-            <line number="91" hits="0" branch="False" />
-            <line number="92" hits="0" branch="False" />
-            <line number="93" hits="0" branch="False" />
-            <line number="94" hits="0" branch="False" />
-            <line number="95" hits="0" branch="False" />
+            <line number="97" hits="1" branch="False" />
+            <line number="98" hits="2" branch="False" />
+            <line number="99" hits="2" branch="False" />
+            <line number="100" hits="2" branch="False" />
+            <line number="101" hits="2" branch="False" />
+            <line number="88" hits="1" branch="False" />
+            <line number="89" hits="1" branch="False" />
+            <line number="90" hits="1" branch="False" />
+            <line number="91" hits="1" branch="False" />
+            <line number="92" hits="1" branch="False" />
+            <line number="93" hits="1" branch="False" />
+            <line number="94" hits="1" branch="False" />
+            <line number="95" hits="1" branch="False" />
           </lines>
         </class>
-        <class name="VetAppointment.WebAPI.Dtos.AppointmentDtos.AppontmentEssentialExtendedDto" filename="VetAppointment.WebAPI\Dtos\AppointmentDto.cs" line-rate="0" branch-rate="1" complexity="7">
+        <class name="VetAppointment.WebAPI.Dtos.AppointmentDtos.AppontmentEssentialExtendedDto" filename="VetAppointment.WebAPI\Dtos\AppointmentDto.cs" line-rate="1" branch-rate="1" complexity="7">
           <methods>
-            <method name="get_AppointmentId" signature="()" line-rate="0" branch-rate="1" complexity="1">
+            <method name="get_AppointmentId" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="116" hits="0" branch="False" />
+                <line number="116" hits="1" branch="False" />
               </lines>
             </method>
-            <method name="get_Appointer" signature="()" line-rate="0" branch-rate="1" complexity="1">
+            <method name="get_Appointer" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="117" hits="0" branch="False" />
+                <line number="117" hits="2" branch="False" />
               </lines>
             </method>
-            <method name="get_Appointee" signature="()" line-rate="0" branch-rate="1" complexity="1">
+            <method name="get_Appointee" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="118" hits="0" branch="False" />
+                <line number="118" hits="2" branch="False" />
               </lines>
             </method>
-            <method name="get_Title" signature="()" line-rate="0" branch-rate="1" complexity="1">
+            <method name="get_Title" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="119" hits="0" branch="False" />
+                <line number="119" hits="2" branch="False" />
               </lines>
             </method>
-            <method name="get_DueDate" signature="()" line-rate="0" branch-rate="1" complexity="1">
+            <method name="get_DueDate" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="120" hits="0" branch="False" />
+                <line number="120" hits="2" branch="False" />
               </lines>
             </method>
-            <method name="get_Description" signature="()" line-rate="0" branch-rate="1" complexity="1">
+            <method name="get_Description" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="121" hits="0" branch="False" />
+                <line number="121" hits="2" branch="False" />
               </lines>
             </method>
-            <method name=".ctor" signature="(VetAppointment.Domain.Entities.Appointment,VetAppointment.Domain.Entities.User,VetAppointment.Domain.Entities.User)" line-rate="0" branch-rate="1" complexity="1">
+            <method name=".ctor" signature="(VetAppointment.Domain.Entities.Appointment,VetAppointment.Domain.Entities.User,VetAppointment.Domain.Entities.User)" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="106" hits="0" branch="False" />
-                <line number="107" hits="0" branch="False" />
-                <line number="108" hits="0" branch="False" />
-                <line number="109" hits="0" branch="False" />
-                <line number="110" hits="0" branch="False" />
-                <line number="111" hits="0" branch="False" />
-                <line number="112" hits="0" branch="False" />
-                <line number="113" hits="0" branch="False" />
-                <line number="114" hits="0" branch="False" />
+                <line number="106" hits="1" branch="False" />
+                <line number="107" hits="1" branch="False" />
+                <line number="108" hits="1" branch="False" />
+                <line number="109" hits="1" branch="False" />
+                <line number="110" hits="1" branch="False" />
+                <line number="111" hits="1" branch="False" />
+                <line number="112" hits="1" branch="False" />
+                <line number="113" hits="1" branch="False" />
+                <line number="114" hits="1" branch="False" />
               </lines>
             </method>
           </methods>
           <lines>
-            <line number="116" hits="0" branch="False" />
-            <line number="117" hits="0" branch="False" />
-            <line number="118" hits="0" branch="False" />
-            <line number="119" hits="0" branch="False" />
-            <line number="120" hits="0" branch="False" />
-            <line number="121" hits="0" branch="False" />
-            <line number="106" hits="0" branch="False" />
-            <line number="107" hits="0" branch="False" />
-            <line number="108" hits="0" branch="False" />
-            <line number="109" hits="0" branch="False" />
-            <line number="110" hits="0" branch="False" />
-            <line number="111" hits="0" branch="False" />
-            <line number="112" hits="0" branch="False" />
-            <line number="113" hits="0" branch="False" />
-            <line number="114" hits="0" branch="False" />
+            <line number="116" hits="1" branch="False" />
+            <line number="117" hits="2" branch="False" />
+            <line number="118" hits="2" branch="False" />
+            <line number="119" hits="2" branch="False" />
+            <line number="120" hits="2" branch="False" />
+            <line number="121" hits="2" branch="False" />
+            <line number="106" hits="1" branch="False" />
+            <line number="107" hits="1" branch="False" />
+            <line number="108" hits="1" branch="False" />
+            <line number="109" hits="1" branch="False" />
+            <line number="110" hits="1" branch="False" />
+            <line number="111" hits="1" branch="False" />
+            <line number="112" hits="1" branch="False" />
+            <line number="113" hits="1" branch="False" />
+            <line number="114" hits="1" branch="False" />
           </lines>
         </class>
         <class name="VetAppointment.WebAPI.Controllers.AppointmentsController" filename="VetAppointment.WebAPI\Controllers\AppointmentsController.cs" line-rate="1" branch-rate="1" complexity="1">

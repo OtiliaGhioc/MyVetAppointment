@@ -1,4 +1,4 @@
-﻿namespace VetAppointment.Tests
+﻿namespace VetAppointment.Tests.UTs
 {
     public class OfficeTests
     {
