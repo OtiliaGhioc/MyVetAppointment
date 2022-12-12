@@ -1,6 +1,4 @@
-using Microsoft.EntityFrameworkCore;
-
-namespace VetAppointment.Tests
+namespace VetAppointment.Tests.UTs
 {
     public class UserTests
     {
@@ -8,9 +6,13 @@ namespace VetAppointment.Tests
         public void TestUserInfo()
         {
             User user = new User("name", "pass", true);
+            Office office = new Office("addr");
             Assert.AreEqual("name", user.Username);
-            //Assert.AreEqual("pass", user.Password);
             Assert.IsFalse(user.HasOffice);
+
+            Assert.IsTrue(user.IsPasswordValid("pass"));
+            Assert.IsTrue(user.RegisterOfficeToUser(office).IsSuccess);
+            Assert.IsTrue(user.UnregisterOfficeFromUser().IsSuccess);
         }
 
         [Fact]
