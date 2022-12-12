@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using FluentValidation;
+using Microsoft.AspNetCore.Mvc;
 using VetAppointment.Application.Repositories.Interfaces;
+using VetAppointment.WebAPI.Validators;
 using VetAppointment.Domain.Entities;
 using VetAppointment.WebAPI.DTOs;
 
@@ -10,53 +12,57 @@ namespace VetAppointment.WebAPI.Controllers
     public class DrugsController : ControllerBase
     {
         private readonly IDrugRepository drugRepository;
-        public DrugsController(IDrugRepository drugRepository)
+        private readonly IValidator<CreateDrugDto> drugValidator;
+        public DrugsController(IDrugRepository drugRepository, IValidator<CreateDrugDto> validator)
         {
             this.drugRepository = drugRepository;
+            this.drugValidator = validator;
         }
 
         [HttpGet]
-        public IActionResult SearchDrugs([FromQuery] string? title, [FromQuery] int? price)
+        public async Task<IActionResult> SearchDrugs([FromQuery] string? title, [FromQuery] int? price)
         {
-            var drugStocks = drugRepository.Find(x => x.Title == title || x.Price == price);
+            var drugStocks = await drugRepository.Find(x => x.Title == title || x.Price == price);
             if (drugStocks != null)
                 return Ok(drugStocks);
             return NotFound();
         }
 
         [HttpGet("GetAll")]
-        public IActionResult GetAllDrugs()
+        public async Task<IActionResult> GetAllDrugs()
         {
-            var drugs = drugRepository.All().Select(d => new DrugDto()
-            {
-                Id = d.DrugId,
-                Title = d.Title,
-                Price = d.Price
-            });
-            return drugs!=null ? Ok(drugs) : NotFound();
+            var drugs = await drugRepository.All();
+            return drugs != null ? Ok(drugs) : NotFound();
         }
 
         [HttpGet("{drugId}")]
-        public IActionResult GetById([FromRoute] Guid drugId)
+        public async Task<IActionResult> GetById([FromRoute] Guid drugId)
         {
-            var drug = drugRepository.Get(drugId);
+            var drug = await drugRepository.Get(drugId);
 
             return drug != null ? Ok(drug) : NotFound($"Drug with id: {drugId} was not found");
         }
 
         [HttpPost]
-        public IActionResult Create([FromBody] CreateDrugDto drugDto)
+        public async Task<IActionResult> Create([FromBody] CreateDrugDto drugDto)
         {
+            var validation = drugValidator.Validate(drugDto);
+            if (!validation.IsValid)
+                return StatusCode(400, validation.Errors.First().ErrorMessage);
             var drug = new Drug(drugDto.Title, drugDto.Price);
-            drugRepository.Add(drug);
-            drugRepository.SaveChanges();
+            await drugRepository.Add(drug);
+            await drugRepository.SaveChanges();
             return Created(nameof(GetAllDrugs), drug);
         }
 
         [HttpPut("{id}")]
-        public IActionResult Update([FromRoute] Guid id, [FromBody] CreateDrugDto drugDto)
+        public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] CreateDrugDto drugDto)
         {
-            var drug = drugRepository.Get(id);
+            var validation = drugValidator.Validate(drugDto);
+            if (!validation.IsValid)
+                return StatusCode(400, validation.Errors.First().ErrorMessage);
+
+            var drug = await drugRepository.Get(id);
 
             if (drug == null)
             {
@@ -65,22 +71,22 @@ namespace VetAppointment.WebAPI.Controllers
 
             drug.UpdateNameAndPrice(drugDto.Title, drugDto.Price);
 
-            drugRepository.Update(drug);
-            drugRepository.SaveChanges();
+            await drugRepository.Update(drug);
+            await drugRepository.SaveChanges();
             return NoContent();
         }
 
         [HttpDelete("{drugId}")]
-        public IActionResult Delete([FromRoute] Guid drugId)
+        public async Task<IActionResult> Delete([FromRoute] Guid drugId)
         {
-            var drug = drugRepository.Get(drugId);
+            var drug = await drugRepository.Get(drugId);
 
             if (drug == null)
             {
                 return NotFound($"Drug with id: {drugId} was not found");
             }
-            drugRepository.Delete(drug);
-            drugRepository.SaveChanges();
+            await drugRepository.Delete(drug);
+            await drugRepository.SaveChanges();
             return NoContent();
         }
     }

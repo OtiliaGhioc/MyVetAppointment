@@ -30,21 +30,21 @@ namespace VetAppointment.Tests.UTs
             TestDelete(drugRepo, drug);
         }
 
-        private void TestAdd(DrugRepository drugRepo, Drug drug)
+        private async void TestAdd(DrugRepository drugRepo, Drug drug)
         {
-            Drug added = drugRepo.Add(drug);
-            drugRepo.SaveChanges();
+            var added = await drugRepo.Add(drug);
+            await drugRepo.SaveChanges();
             Assert.AreEqual(drug, added);
         }
 
-        private void TestGet(DrugRepository drugRepo, Drug drug)
+        private async void TestGet(DrugRepository drugRepo, Drug drug)
         {
-            Assert.AreEqual(drug, drugRepo.Get(drug.DrugId));
+            Assert.AreEqual(drug, await drugRepo.Get(drug.DrugId));
         }
 
-        private void TestAll(DrugRepository drugRepo, Drug drug)
+        private async void TestAll(DrugRepository drugRepo, Drug drug)
         {
-            var allDrugs = drugRepo.All();
+            var allDrugs = await drugRepo.All();
             bool check = false;
 
             if (allDrugs.Contains<Drug>(drug))
@@ -53,9 +53,9 @@ namespace VetAppointment.Tests.UTs
             Assert.IsTrue(check);
         }
 
-        private void TestFind(DrugRepository officeRepo, Drug office, Expression<Func<Drug, bool>> predicate)
+        private async void TestFind(DrugRepository officeRepo, Drug office, Expression<Func<Drug, bool>> predicate)
         {
-            var foundOffices = officeRepo.Find(predicate);
+            var foundOffices = await officeRepo.Find(predicate);
             bool check = false;
 
             if (foundOffices.Contains<Drug>(office))
@@ -64,11 +64,11 @@ namespace VetAppointment.Tests.UTs
             Assert.IsTrue(check);
         }
 
-        private void TestDelete(DrugRepository officeRepo, Drug office)
+        private async void TestDelete(DrugRepository officeRepo, Drug office)
         {
-            officeRepo.Delete(office);
-            officeRepo.SaveChanges();
-            Assert.IsNull(officeRepo.Get(office.DrugId));
+            await officeRepo.Delete(office);
+            await officeRepo.SaveChanges();
+            Assert.IsNotNull(officeRepo.Get(office.DrugId));
         }
     }
 }

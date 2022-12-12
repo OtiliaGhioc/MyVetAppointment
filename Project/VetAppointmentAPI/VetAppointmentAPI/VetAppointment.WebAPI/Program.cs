@@ -1,9 +1,17 @@
 using Microsoft.AspNetCore.Hosting;
+using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using VetAppointment.Application.Repositories.Impl;
 using VetAppointment.Application.Repositories.Interfaces;
+using VetAppointment.Domain.Entities;
 using VetAppointment.Infrastructure.Context;
+using VetAppointment.WebAPI.Dtos;
+using VetAppointment.WebAPI.Dtos.AppointmentDtos;
+using VetAppointment.WebAPI.Dtos.MedicalEntryDto;
+using VetAppointment.WebAPI.Dtos.UserDto;
+using VetAppointment.WebAPI.DTOs;
+using VetAppointment.WebAPI.Validators;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -42,6 +50,13 @@ builder.Services.AddScoped<IMedicalHistoryEntryRepository, MedicalHistoryEntryRe
 builder.Services.AddScoped<IOfficeRepository, OfficeRepository>();
 builder.Services.AddScoped<IPrescriptionRepository, PrescriptionRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IValidator<CreateDrugDto>, DrugValidator>();
+builder.Services.AddScoped<IValidator<CreateDrugStockDto>, DrugStockValidator>();
+builder.Services.AddScoped<IValidator<OfficeDto>, OfficeValidator>();
+builder.Services.AddScoped<IValidator<DefaultUserDto>, UserValidator>();
+builder.Services.AddScoped<IValidator<AppointmentCreateDto>, AppointmentValidator>();
+builder.Services.AddScoped<IValidator<MedicalEntryCreateDto>, MedicalEntryValidator>();
+builder.Services.AddScoped<IValidator<BillingEntryDto>, BillingEntryValidator>();
 
 var app = builder.Build();
 
@@ -62,8 +77,9 @@ app.MapControllers();
 
 app.Run();
 
-// PS > dotnet test /p:CollectCoverage = true - s.\coverlet.runsettings
+public partial class Program { }
+// PS > dotnet test /p:CollectCoverage=true -s.\coverlet.runsettings
 
-// PS > dotnet C:\Users\{YourUser}\.nuget\packages\reportgenerator\5.1.12\tools\net7 .0\ReportGenerator.dll - reports:.\VetAppointment.Tests\TestResults\{CoverageFolderName}\coverage.cobertura.xml - targetdir:.\VetAppointment.Tests\TestResults\{CoverageFolderName}\report
+// PS > dotnet C:\Users\{YourUser}\.nuget\packages\reportgenerator\5.1.12\tools\net7.0\ReportGenerator.dll -reports:.\VetAppointment.Tests\TestResults\{CoverageFolderName}\coverage.cobertura.xml -targetdir:.\VetAppointment.Tests\TestResults\{CoverageFolderName}\report
 
 // Open either index.html in report folder

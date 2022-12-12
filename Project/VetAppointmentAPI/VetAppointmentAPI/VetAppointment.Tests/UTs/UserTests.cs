@@ -31,21 +31,21 @@ namespace VetAppointment.Tests
             TestDelete(userRepo, user);
         }
 
-        private void TestAdd(UserRepository userRepo, User user)
+        private async void TestAdd(UserRepository userRepo, User user)
         {
-            User added = userRepo.Add(user);
-            userRepo.SaveChanges();
+            User added = await userRepo.Add(user);
+            await userRepo.SaveChanges();
             Assert.AreEqual(user, added);
         }
 
-        private void TestGet(UserRepository userRepo, User user)
+        private async void TestGet(UserRepository userRepo, User user)
         {
-            Assert.AreEqual(user, userRepo.Get(user.UserId));
+            Assert.AreEqual(user, await userRepo.Get(user.UserId));
         }
 
-        private void TestAll(UserRepository userRepo, User user)
+        private async void TestAll(UserRepository userRepo, User user)
         {
-            var allUsers = userRepo.All();
+            var allUsers = await userRepo.All();
             bool check = false;
 
             if (allUsers.Contains<User>(user))
@@ -54,9 +54,9 @@ namespace VetAppointment.Tests
             Assert.IsTrue(check);
         }
 
-        private void TestFind(UserRepository userRepo, User user, Expression<Func<User, bool>> predicate)
+        private async void TestFind(UserRepository userRepo, User user, Expression<Func<User, bool>> predicate)
         {
-            var foundUsers = userRepo.Find(predicate);
+            var foundUsers = await userRepo.Find(predicate);
             bool check = false;
 
             if (foundUsers.Contains<User>(user))
@@ -65,11 +65,11 @@ namespace VetAppointment.Tests
             Assert.IsTrue(check);
         }
 
-        private void TestDelete(UserRepository userRepo, User user)
+        private async void TestDelete(UserRepository userRepo, User user)
         {
-            userRepo.Delete(user);
-            userRepo.SaveChanges();
-            Assert.IsNull(userRepo.Get(user.UserId));
+            await userRepo.Delete(user);
+            await userRepo.SaveChanges();
+            Assert.IsNull(await userRepo.Get(user.UserId));
         }
     }
 }

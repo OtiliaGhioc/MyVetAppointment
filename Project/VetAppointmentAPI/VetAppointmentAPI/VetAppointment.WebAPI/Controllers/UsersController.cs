@@ -1,7 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using FluentValidation;
+using Microsoft.AspNetCore.Mvc;
 using VetAppointment.Application.Repositories.Interfaces;
 using VetAppointment.Domain.Entities;
+using VetAppointment.WebAPI.Dtos;
 using VetAppointment.WebAPI.Dtos.UserDto;
+using VetAppointment.WebAPI.Validators;
 
 namespace VetAppointment.WebAPI.Controllers
 {
@@ -11,35 +14,37 @@ namespace VetAppointment.WebAPI.Controllers
     {
         private readonly IUserRepository userRepository;
         private readonly IAppointmentRepository appointmentRepository;
+        private readonly IValidator<DefaultUserDto> userValidator;
 
-        public UsersController(IUserRepository userRepository, IAppointmentRepository appointmentRepository)
+        public UsersController(IUserRepository userRepository, IAppointmentRepository appointmentRepository, IValidator<DefaultUserDto> validator)
         {
             this.userRepository = userRepository;
             this.appointmentRepository = appointmentRepository;
+            this.userValidator= validator;
         }
 
         // GET: api/<UsersController>
         [HttpGet]
-        public IActionResult Get()
+        public async Task<IActionResult> Get()
         {
-            return Ok(userRepository.All());
+            return Ok(await userRepository.All());
         }
 
         // GET api/<UsersController>/5
         [HttpGet("{id}")]
-        public IActionResult Get(Guid id)
+        public async Task<IActionResult> Get(Guid id)
         {
-            User? user = userRepository.Get(id);
+            User? user = await userRepository.Get(id);
             if (user == null)
                 return NotFound();
 
-            List<Appointment> userAppointments = 
-                appointmentRepository.Find(item => !item.IsExpired && item.AppointeeId == user.UserId).ToList();
+            List<Appointment> userAppointments =
+                (await appointmentRepository.Find(item => !item.IsExpired && item.AppointeeId == user.UserId)).ToList();
 
             List<User> appointers = new List<User>();
             foreach(Appointment appointment in userAppointments)
             {
-                User? appointer = userRepository.Get(appointment.AppointerId);
+                User? appointer = await userRepository.Get(appointment.AppointerId);
                 if(appointer == null)
                     userAppointments.Remove(appointment);
                 else
@@ -51,36 +56,44 @@ namespace VetAppointment.WebAPI.Controllers
 
         // POST api/<UsersController>
         [HttpPost]
-        public IActionResult Post([FromBody] DefaultUserDto userDto)
+        public async Task<IActionResult> Post([FromBody] DefaultUserDto userDto)
         {
+            var validation = userValidator.Validate(userDto);
+            if (!validation.IsValid)
+                return StatusCode(400, validation.Errors.First().ErrorMessage);
             User user = new User(userDto.Username, userDto.Password);
-            userRepository.Add(user);
-            userRepository.SaveChanges();
+            await userRepository.Add(user);
+            await userRepository.SaveChanges();
 
             return Created(nameof(User), user);
         }
 
         // PUT api/<UsersController>/5
         [HttpPut]
-        public IActionResult Put([FromBody] DefaultUserDto userDto)
+        public async Task<IActionResult> Put([FromBody] DefaultUserDto userDto)
         {
-            User? user = userRepository.Get(userDto.UserId);
+            var validation = userValidator.Validate(userDto);
+            if (!validation.IsValid)
+                return StatusCode(400, validation.Errors.First().ErrorMessage);
+            User? user = await userRepository.Get(userDto.UserId);
             if (user == null)
                 return NotFound();
 
-            userRepository.Update(user);
-            userRepository.SaveChanges();
+            await userRepository.Update(user);
+            await userRepository.SaveChanges();
 
-            return Ok(user);
+            return NoContent();
         }
 
         // DELETE api/<UsersController>/5
         [HttpDelete("{id}")]
-        public IActionResult Delete(Guid id)
+        public async Task<IActionResult> Delete(Guid id)
         {
-            User user = userRepository.Get(id);
-            userRepository.Delete(user);
-            userRepository.SaveChanges();
+            User? user = await userRepository.Get(id);
+            if(user == null)
+                return NotFound();
+            await userRepository.Delete(user);
+            await userRepository.SaveChanges();
 
             return NoContent();
         }

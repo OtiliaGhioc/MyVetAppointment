@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using FluentValidation;
+using Microsoft.AspNetCore.Mvc;
 using VetAppointment.Application.Repositories.Interfaces;
+using VetAppointment.WebAPI.Validators;
 using VetAppointment.Domain.Entities;
 using VetAppointment.WebAPI.DTOs;
 
@@ -11,61 +13,61 @@ namespace VetAppointment.WebAPI.Controllers
     {
         private readonly IDrugStockRepository drugStockRepository;
         private readonly IDrugRepository drugRepository;
+        private readonly IValidator<CreateDrugStockDto> drugValidator;
 
-        public DrugStocksController(IDrugStockRepository drugStockRepository, IDrugRepository drugRepository)
+        public DrugStocksController(IDrugStockRepository drugStockRepository, IDrugRepository drugRepository, IValidator<CreateDrugStockDto> validator)
         {
             this.drugStockRepository = drugStockRepository;
             this.drugRepository = drugRepository;
+            this.drugValidator = validator;
         }
 
         [HttpGet]
-        public IActionResult SearchDrugStockss([FromQuery] Guid? typeId, [FromQuery] int? quantity)
+        public async Task<IActionResult> SearchDrugStockss([FromQuery] Guid? typeId, [FromQuery] int? quantity)
         {
-            var drugs = drugStockRepository.Find(x => x.TypeId == typeId || x.Quantity == quantity);
+            var drugs = await drugStockRepository.Find(x => x.TypeId == typeId || x.Quantity == quantity);
             if( drugs != null)
                 return Ok(drugs);
             return NotFound();
         }
 
         [HttpGet("GetAll")]
-        public IActionResult GetAllDrugStocks()
+        public async Task<IActionResult> GetAllDrugStocks()
         {
-            var drugStocks = drugStockRepository.All().Select(d => new DrugStockDto()
-            {
-                Id = d.DrugStockId,
-                Type = d.Type,
-                TypeId = d.TypeId,
-                Quantity = d.Quantity,
-            });
+            var drugStocks = await drugStockRepository.All();
             return Ok(drugStocks);
         }
 
         [HttpGet("{drugStockId}")]
-        public IActionResult GetById([FromRoute] Guid drugStockId)
+        public async Task<IActionResult> GetById([FromRoute] Guid drugStockId)
         {
-            var drug = drugStockRepository.Get(drugStockId);
+            var drug = await drugStockRepository.Get(drugStockId);
 
             return drug != null ? Ok(drug) : NotFound($"DrugStock with id: {drugStockId} was not found");
         }
 
         [HttpPost]
-        public IActionResult Create([FromBody] CreateDrugStockDto drugDto)
+        public async Task<IActionResult> Create([FromBody] CreateDrugStockDto drugDto)
         {
-            var drug = drugRepository.Get(drugDto.TypeId);
+            var validation = drugValidator.Validate(drugDto);
+            if (!validation.IsValid)
+                return StatusCode(400, validation.Errors.First().ErrorMessage);
+
+            var drug = await drugRepository.Get(drugDto.TypeId);
 
             if (drug == null)
                 return NotFound($"Drug with id: {drugDto.TypeId} was not found");
 
             var drugStock = new DrugStock(drug,drugDto.Quantity);
-            drugStockRepository.Add(drugStock);
-            drugStockRepository.SaveChanges();
+            await drugStockRepository.Add(drugStock);
+            await drugStockRepository.SaveChanges();
             return Created(nameof(GetAllDrugStocks), drugStock);
         }
 
         [HttpPut("{id}")]
-        public IActionResult Update([FromRoute] Guid id, [FromBody] int quantityUpdate)
+        public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] int quantityUpdate)
         {
-            var drug = drugStockRepository.Get(id);
+            var drug = await drugStockRepository.Get(id);
 
             if (drug == null)
             {
@@ -74,22 +76,22 @@ namespace VetAppointment.WebAPI.Controllers
 
             drug.RemoveDrugsFromPublicStock(quantityUpdate);
 
-            drugStockRepository.Update(drug);
-            drugStockRepository.SaveChanges();
+            await drugStockRepository.Update(drug);
+            await drugStockRepository.SaveChanges();
             return NoContent();
         }
 
         [HttpDelete("{drugStockId}")]
-        public IActionResult Delete([FromRoute] Guid drugStockId)
+        public async Task<IActionResult> Delete([FromRoute] Guid drugStockId)
         {
-            var drug = drugStockRepository.Get(drugStockId);
+            var drug = await drugStockRepository.Get(drugStockId);
 
             if (drug == null)
             {
                 return NotFound($"DrugStock with id: {drugStockId} was not found");
             }
-            drugStockRepository.Delete(drug);
-            drugStockRepository.SaveChanges();
+            await drugStockRepository.Delete(drug);
+            await drugStockRepository.SaveChanges();
             return NoContent();
         }
 

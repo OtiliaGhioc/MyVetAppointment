@@ -21,9 +21,9 @@ namespace VetAppointment.Infrastructure.Context
         public DbSet<DrugStock> DrugStocks => Set<DrugStock>();
         public DbSet<BillingEntry> BillingEntries => Set<BillingEntry>();
 
-        public void Save()
+        public async Task Save()
         {
-            SaveChanges();
+            await SaveChangesAsync();
         }
     }
 }

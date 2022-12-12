@@ -28,21 +28,21 @@ namespace VetAppointment.Tests
             TestDelete(officeRepo, office);
         }
 
-        private void TestAdd(OfficeRepository officeRepo, Office office)
+        private async void TestAdd(OfficeRepository officeRepo, Office office)
         {
-            Office added = officeRepo.Add(office);
-            officeRepo.SaveChanges();
+            Office added = await officeRepo.Add(office);
+            await officeRepo.SaveChanges();
             Assert.AreEqual(office, added);
         }
 
-        private void TestGet(OfficeRepository officeRepo, Office office)
+        private async void TestGet(OfficeRepository officeRepo, Office office)
         {
-            Assert.AreEqual(office, officeRepo.Get(office.OfficeId));
+            Assert.AreEqual(office, await officeRepo.Get(office.OfficeId));
         }
 
-        private void TestAll(OfficeRepository officeRepo, Office office)
+        private async void TestAll(OfficeRepository officeRepo, Office office)
         {
-            var allOffices = officeRepo.All();
+            var allOffices = await officeRepo.All();
             bool check = false;
 
             if (allOffices.Contains<Office>(office))
@@ -51,9 +51,9 @@ namespace VetAppointment.Tests
             Assert.IsTrue(check);
         }
 
-        private void TestFind(OfficeRepository officeRepo, Office office, Expression<Func<Office, bool>> predicate)
+        private async void TestFind(OfficeRepository officeRepo, Office office, Expression<Func<Office, bool>> predicate)
         {
-            var foundOffices = officeRepo.Find(predicate);
+            var foundOffices = await officeRepo.Find(predicate);
             bool check = false;
 
             if (foundOffices.Contains<Office>(office))
@@ -62,11 +62,11 @@ namespace VetAppointment.Tests
             Assert.IsTrue(check);
         }
 
-        private void TestDelete(OfficeRepository officeRepo, Office office)
+        private async void TestDelete(OfficeRepository officeRepo, Office office)
         {
-            officeRepo.Delete(office);
-            officeRepo.SaveChanges();
-            Assert.IsNull(officeRepo.Get(office.OfficeId));
+            await officeRepo.Delete(office);
+            await officeRepo.SaveChanges();
+            Assert.IsNotNull(officeRepo.Get(office.OfficeId));
         }
     }
 }

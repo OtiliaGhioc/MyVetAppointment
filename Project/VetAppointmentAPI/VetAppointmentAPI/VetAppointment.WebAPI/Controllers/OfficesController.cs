@@ -1,7 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using FluentValidation;
+using Microsoft.AspNetCore.Mvc;
 using VetAppointment.Application.Repositories.Interfaces;
 using VetAppointment.Domain.Entities;
 using VetAppointment.WebAPI.Dtos;
+using VetAppointment.WebAPI.DTOs;
+using VetAppointment.WebAPI.Validators;
 
 namespace VetAppointment.WebAPI.Controllers
 {
@@ -10,24 +13,26 @@ namespace VetAppointment.WebAPI.Controllers
     public class OfficesController : ControllerBase
     {
         private readonly IOfficeRepository officeRepository;
+        private readonly IValidator<OfficeDto> officeValidator;
 
-        public OfficesController(IOfficeRepository officeRepository)
+        public OfficesController(IOfficeRepository officeRepository, IValidator<OfficeDto> validator)
         {
             this.officeRepository = officeRepository;
+            this.officeValidator = validator;
         }
 
         // GET: api/<OfficesController>
         [HttpGet]
-        public IActionResult Get()
+        public async Task<IActionResult> Get()
         {
-            return Ok(officeRepository.All());
+            return Ok(await officeRepository.All());
         }
 
         // GET api/<OfficesController>/5
         [HttpGet("{id}")]
-        public IActionResult Get(Guid id)
+        public async Task<IActionResult> Get(Guid id)
         {
-            var office = officeRepository.Get(id);
+            var office = await officeRepository.Get(id);
             if(office == null)
             {
                 return NotFound();
@@ -37,36 +42,44 @@ namespace VetAppointment.WebAPI.Controllers
 
         // POST api/<OfficesController>
         [HttpPost]
-        public IActionResult Post([FromBody] OfficeDto officeDto)
+        public async Task<IActionResult> Post([FromBody] OfficeDto officeDto)
         {
+            var validation = officeValidator.Validate(officeDto);
+            if (!validation.IsValid)
+                return StatusCode(400, validation.Errors.First().ErrorMessage);
             Office office = new Office(officeDto.Address);
-            officeRepository.Add(office);
-            officeRepository.SaveChanges();
+            await officeRepository.Add(office);
+            await officeRepository.SaveChanges();
 
             return Created(nameof(Office), office);
         }
 
         // PUT api/<OfficesController>/5
         [HttpPut]
-        public IActionResult Put([FromBody] OfficeDto officeDto)
+        public async Task<IActionResult> Put([FromBody] OfficeDto officeDto)
         {
-            Office? office = officeRepository.Get(officeDto.OfficeId);
+            var validation = officeValidator.Validate(officeDto);
+            if (!validation.IsValid)
+                return StatusCode(400, validation.Errors.First().ErrorMessage);
+            Office? office = await officeRepository.Get(officeDto.OfficeId);
             if (office == null)
                 return NotFound();
 
-            officeRepository.Update(office);
-            officeRepository.SaveChanges();
+            await officeRepository.Update(office);
+            await officeRepository.SaveChanges();
 
-            return Ok(office);
+            return NoContent();
         }
 
         // DELETE api/<OfficesController>/5
         [HttpDelete("{id}")]
-        public IActionResult Delete(Guid id)
+        public async Task<IActionResult> Delete(Guid id)
         {
-            Office office = officeRepository.Get(id);
-            officeRepository.Delete(office);
-            officeRepository.SaveChanges();
+            var office = await officeRepository.Get(id);
+            if (office == null)
+                return NotFound();
+            await officeRepository.Delete(office);
+            await officeRepository.SaveChanges();
 
             return NoContent();
         }
