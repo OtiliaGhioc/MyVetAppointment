@@ -37,7 +37,7 @@ namespace VetAppointment.Tests.ITs
         public async Task WhenCreateWithUserNotFound_ThenReturnNotFound()
         {
             //Arange
-            var appoitnmentDto = new AppointmentCreateDto(Guid.NewGuid(), Guid.NewGuid(), DateTime.Now, "title", "description", "type");
+            var appoitnmentDto = new AppointmentCreateDto(Guid.NewGuid(), Guid.NewGuid(), DateTime.Today.AddDays(1), "title", "description", "type");
 
             //Act
 
@@ -54,20 +54,20 @@ namespace VetAppointment.Tests.ITs
             {
                 UserId = Guid.NewGuid(),
                 Username = "username",
-                Password = "pass"
+                Password = "password"
             };
             var userResponse = await httpClient.PostAsJsonAsync("api/users", userDto1);
             var userDto2 = new DefaultUserDto()
             {
                 UserId = Guid.NewGuid(),
                 Username = "username",
-                Password = "pass"
+                Password = "password"
             };
             var userResponse2 = await httpClient.PostAsJsonAsync("api/users", userDto2);
             var user1 = await userResponse.Content.ReadFromJsonAsync<DefaultUserDto>();
             var user2 = await userResponse2.Content.ReadFromJsonAsync<DefaultUserDto>();
             
-            var appoitnmentDto = new AppointmentCreateDto(user1.UserId, user2.UserId, DateTime.Now, "title", "description", "type");
+            var appoitnmentDto = new AppointmentCreateDto(user1.UserId, user2.UserId, DateTime.Today.AddDays(1), "title", "description", "type");
 
             //Act
 

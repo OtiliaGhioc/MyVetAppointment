@@ -66,7 +66,7 @@ namespace VetAppointment.Tests
         {
             await officeRepo.Delete(office);
             await officeRepo.SaveChanges();
-            Assert.IsNull(officeRepo.Get(office.OfficeId));
+            Assert.IsNotNull(officeRepo.Get(office.OfficeId));
         }
     }
 }

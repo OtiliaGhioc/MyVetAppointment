@@ -39,7 +39,7 @@ namespace VetAppointment.Tests.ITs
             var officeDto = new OfficeDto
             {
                 OfficeId = Guid.NewGuid(),
-                Address = "aadress"
+                Address = "Strada Zorilor 13, IS, 123456"
             };
 
             //Act
@@ -62,7 +62,7 @@ namespace VetAppointment.Tests.ITs
             var officeDto = new OfficeDto
             {
                 OfficeId = Guid.NewGuid(),
-                Address = "aadress"
+                Address = "Strada Zorilor 13, IS, 123456"
             };
 
             var officeResponse = await httpClient.PostAsJsonAsync("api/offices", officeDto);
@@ -80,14 +80,14 @@ namespace VetAppointment.Tests.ITs
             var officeDto = new OfficeDto
             {
                 OfficeId = Guid.NewGuid(),
-                Address = "aadress"
+                Address = "Strada Zorilor 13, IS, 123456"
             };
 
             
 
             var officeResponse = await httpClient.PostAsJsonAsync("api/offices", officeDto);
             var office = await officeResponse.Content.ReadFromJsonAsync<OfficeDto>();
-            office.Address = "change";
+            office.Address = "Strada Lalelelor 13, IS, 123456";
             //Act
             var officeResult = await httpClient.PutAsJsonAsync($"api/offices", office);
             //Assert
@@ -101,7 +101,7 @@ namespace VetAppointment.Tests.ITs
             var officeDto = new OfficeDto
             {
                 OfficeId = Guid.NewGuid(),
-                Address = "aadress"
+                Address = "Strada Zorilor 13, IS, 123456"
             };
 
             var officeResponse = await httpClient.PostAsJsonAsync("api/offices", officeDto);

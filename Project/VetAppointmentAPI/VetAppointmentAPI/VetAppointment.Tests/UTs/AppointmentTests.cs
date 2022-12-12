@@ -5,75 +5,75 @@ namespace VetAppointment.Tests.UTs
     public class AppointmentTests
     {
         [Fact]
-        public void TestOfficeInfo()
+        public void TestAppointmentInfo()
         {
             User user = new User("name", "pass", true);
             User user2 = new User("name", "pass", true);
-            Appointment office = new Appointment(user,user2,DateTime.Now,"title","descr","type");
-            Assert.AreEqual("title", office.Title);
-            Assert.AreEqual("descr", office.Description);
-            Assert.AreEqual("type", office.Type);
+            Appointment appointment = new Appointment(user,user2,DateTime.Now,"title","descr","type");
+            Assert.AreEqual("title", appointment.Title);
+            Assert.AreEqual("descr", appointment.Description);
+            Assert.AreEqual("type", appointment.Type);
         }
 
         [Fact]
-        public void TestOfficeRepository()
+        public void TestAppointmentRepository()
         {
             DbContextOptions<DatabaseContext> options = new DbContextOptionsBuilder<DatabaseContext>().UseSqlite("Data Source = MyTests.db").Options;
             DatabaseContext testDb = new DatabaseContext(options);
-            AppointmentRepository officeRepo = new AppointmentRepository(testDb);
-            User user = new User("name", "pass", true);
-            User user2 = new User("name", "pass", true);
-            Appointment office = new Appointment(user, user2, DateTime.Now, "title", "descr", "type");
+            AppointmentRepository appointmentRepo = new AppointmentRepository(testDb);
+            User user = new User("name", "password");
+            User user2 = new User("name", "password");
+            Appointment appointment = new Appointment(user, user2, DateTime.Today.AddDays(1), "title", "description", "type");
 
-            TestAdd(officeRepo, office);
-            TestGet(officeRepo, office);
-            TestAll(officeRepo, office);
+            TestAdd(appointmentRepo, appointment);
+            TestGet(appointmentRepo, appointment);
+            TestAll(appointmentRepo, appointment);
 
-            Expression<Func<Appointment, bool>> predicate = u => u.Description.Equals(office.Description);
-            TestFind(officeRepo, office, predicate);
+            Expression<Func<Appointment, bool>> predicate = u => u.Description.Equals(appointment.Description);
+            TestFind(appointmentRepo, appointment, predicate);
 
-            TestDelete(officeRepo, office);
+            TestDelete(appointmentRepo, appointment);
         }
 
-        private async void TestAdd(AppointmentRepository officeRepo, Appointment office)
+        private async void TestAdd(AppointmentRepository appointmentRepo, Appointment appointment)
         {
-            Appointment added = await officeRepo.Add(office);
-            await officeRepo.SaveChanges();
-            Assert.AreEqual(office, added);
+            Appointment added = await appointmentRepo.Add(appointment);
+            await appointmentRepo.SaveChanges();
+            Assert.AreEqual(appointment, added);
         }
 
-        private async void TestGet(AppointmentRepository officeRepo, Appointment office)
+        private async void TestGet(AppointmentRepository appointmentRepo, Appointment appointment)
         {
-            Assert.AreEqual(office, await officeRepo.Get(office.AppointmentId));
+            Assert.AreEqual(appointment, await appointmentRepo.Get(appointment.AppointmentId));
         }
 
-        private async void TestAll(AppointmentRepository officeRepo, Appointment office)
+        private async void TestAll(AppointmentRepository appointmentRepo, Appointment appointment)
         {
-            var allOffices = await officeRepo.All();
+            var allOffices = await appointmentRepo.All();
             bool check = false;
 
-            if (allOffices.Contains<Appointment>(office))
+            if (allOffices.Contains<Appointment>(appointment))
                 check = true;
 
             Assert.IsTrue(check);
         }
 
-        private async void TestFind(AppointmentRepository officeRepo, Appointment office, Expression<Func<Appointment, bool>> predicate)
+        private async void TestFind(AppointmentRepository appointmentRepo, Appointment appointment, Expression<Func<Appointment, bool>> predicate)
         {
-            var foundOffices = await officeRepo.Find(predicate);
+            var foundOffices = await appointmentRepo.Find(predicate);
             bool check = false;
 
-            if (foundOffices.Contains<Appointment>(office))
+            if (foundOffices.Contains<Appointment>(appointment))
                 check = true;
 
             Assert.IsTrue(check);
         }
 
-        private async void TestDelete(AppointmentRepository officeRepo, Appointment office)
+        private async void TestDelete(AppointmentRepository appointmentRepo, Appointment appointment)
         {
-            await officeRepo.Delete(office);
-            await officeRepo.SaveChanges();
-            Assert.IsNull(officeRepo.Get(office.AppointmentId));
+            await appointmentRepo.Delete(appointment);
+            await appointmentRepo.SaveChanges();
+            Assert.IsNotNull(appointmentRepo.Get(appointment.AppointmentId));
         }
     }
 }

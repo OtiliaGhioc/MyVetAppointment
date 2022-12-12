@@ -38,7 +38,7 @@ namespace VetAppointment.Tests.ITs
             {
                 UserId = Guid.NewGuid(),
                 Username = "username",
-                Password = "pass"
+                Password = "password"
             };
 
             //Act
@@ -55,7 +55,7 @@ namespace VetAppointment.Tests.ITs
             {
                 UserId = Guid.NewGuid(),
                 Username = "username",
-                Password = "pass"
+                Password = "password"
             };
 
 
