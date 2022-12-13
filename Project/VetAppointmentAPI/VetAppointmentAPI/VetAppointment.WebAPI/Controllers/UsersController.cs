@@ -39,7 +39,21 @@ namespace VetAppointment.WebAPI.Controllers
             if (userId == null)
                 return NotFound();
             User? user = await userRepository.Get(Guid.Parse(userId));
+            var meData = await GetParsedUserData(user);
+            return meData;
+        }
 
+        // GET api/<UsersController>/5
+        [HttpGet("{id}")]
+        public async Task<IActionResult> Get(Guid id)
+        {
+            User? user = await userRepository.Get(id);
+            var userData = await GetParsedUserData(user);
+            return userData;
+        }
+
+        private async Task<IActionResult> GetParsedUserData(User? user)
+        {
             if (user == null)
                 return NotFound();
 
@@ -51,30 +65,6 @@ namespace VetAppointment.WebAPI.Controllers
             {
                 User? appointer = await userRepository.Get(appointment.AppointerId);
                 if (appointer == null)
-                    userAppointments.Remove(appointment);
-                else
-                    appointers.Add(appointer);
-            }
-            CompleteUserDto userDto = new CompleteUserDto(user, userAppointments, appointers);
-            return Ok(userDto);
-        }
-
-        // GET api/<UsersController>/5
-        [HttpGet("{id}")]
-        public async Task<IActionResult> Get(Guid id)
-        {
-            User? user = await userRepository.Get(id);
-            if (user == null)
-                return NotFound();
-
-            List<Appointment> userAppointments =
-                (await appointmentRepository.Find(item => !item.IsExpired && item.AppointeeId == user.UserId)).ToList();
-
-            List<User> appointers = new List<User>();
-            foreach(Appointment appointment in userAppointments)
-            {
-                User? appointer = await userRepository.Get(appointment.AppointerId);
-                if(appointer == null)
                     userAppointments.Remove(appointment);
                 else
                     appointers.Add(appointer);
