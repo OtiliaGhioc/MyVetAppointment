@@ -77,37 +77,6 @@ namespace VetAppointment.WebAPI.Controllers
             return Ok(userDto);
         }
 
-        // POST api/<UsersController>
-        [HttpPost]
-        public async Task<IActionResult> Post([FromBody] DefaultUserDto userDto)
-        {
-            var validation = userValidator.Validate(userDto);
-            if (!validation.IsValid)
-                return StatusCode(400, validation.Errors.First().ErrorMessage);
-            User user = mapper.Map<User>(userDto);
-            await userRepository.Add(user);
-            await userRepository.SaveChanges();
-
-            return Created(nameof(User), mapper.Map<CompleteUserDto>(user));
-        }
-
-        // PUT api/<UsersController>/5
-        [HttpPut]
-        public async Task<IActionResult> Put([FromBody] DefaultUserDto userDto)
-        {
-            var validation = userValidator.Validate(userDto);
-            if (!validation.IsValid)
-                return StatusCode(400, validation.Errors.First().ErrorMessage);
-            User? user = await userRepository.Get(userDto.UserId);
-            if (user == null)
-                return NotFound();
-            mapper.Map(userDto, user);
-            userRepository.Update(user);
-            await userRepository.SaveChanges();
-
-            return NoContent();
-        }
-
         // DELETE api/<UsersController>/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid id)
