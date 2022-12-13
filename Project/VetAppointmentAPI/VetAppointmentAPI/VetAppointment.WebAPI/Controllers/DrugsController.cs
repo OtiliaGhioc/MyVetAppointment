@@ -46,7 +46,7 @@ namespace VetAppointment.WebAPI.Controllers
         public async Task<IActionResult> Create([FromBody] CreateDrugDto drugDto)
         {
             var validation = drugValidator.Validate(drugDto);
-            if (!validation.IsValid || drugDto.Price == null)
+            if (!validation.IsValid || drugDto.Price == null || drugDto.Title == null)
                 return StatusCode(400, validation.Errors.First().ErrorMessage);
             var drug = new Drug(drugDto.Title, (int)drugDto.Price);
             await drugRepository.Add(drug);
@@ -58,7 +58,7 @@ namespace VetAppointment.WebAPI.Controllers
         public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] CreateDrugDto drugDto)
         {
             var validation = drugValidator.Validate(drugDto);
-            if (!validation.IsValid || drugDto.Price == null)
+            if (!validation.IsValid || drugDto.Price == null || drugDto.Title == null)
                 return StatusCode(400, validation.Errors.First().ErrorMessage);
 
             var drug = await drugRepository.Get(id);

@@ -43,7 +43,7 @@ namespace VetAppointment.WebAPI.Controllers
         public async Task<IActionResult> Post([FromBody] OfficeDto officeDto)
         {
             var validation = officeValidator.Validate(officeDto);
-            if (!validation.IsValid)
+            if (!validation.IsValid || officeDto.Address == null)
                 return StatusCode(400, validation.Errors.First().ErrorMessage);
             Office office = new Office(officeDto.Address);
             await officeRepository.Add(office);
