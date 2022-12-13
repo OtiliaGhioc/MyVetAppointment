@@ -1,8 +1,10 @@
-﻿using FluentValidation;
+﻿using AutoMapper;
+using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using VetAppointment.Application.Repositories.Interfaces;
 using VetAppointment.Domain.Entities;
 using VetAppointment.WebAPI.Dtos.AppointmentDtos;
+using VetAppointment.WebAPI.DTOs;
 
 namespace VetAppointment.WebAPI.Controllers
 {
@@ -13,11 +15,13 @@ namespace VetAppointment.WebAPI.Controllers
         private readonly IAppointmentRepository appointmentRepository;
         private readonly IUserRepository userRepository;
         private readonly IValidator<AppointmentCreateDto> appoinmentValidator;
-        public AppointmentsController(IAppointmentRepository appointmentRepository, IUserRepository userRepository, IValidator<AppointmentCreateDto> validator)
+        private readonly IMapper mapper;
+        public AppointmentsController(IAppointmentRepository appointmentRepository, IUserRepository userRepository, IValidator<AppointmentCreateDto> validator, IMapper mapper)
         {
             this.appointmentRepository = appointmentRepository;
             this.userRepository = userRepository;
             this.appoinmentValidator= validator;
+            this.mapper = mapper;
         }
 
         [HttpGet]
@@ -56,14 +60,11 @@ namespace VetAppointment.WebAPI.Controllers
             if (appointer == null)
                 return NotFound();
 
-
-            Appointment appointment = new Appointment(appointer, appointee, appointmentDto.DueDate, appointmentDto.Title, 
-                appointmentDto.Description, appointmentDto.Type);
+            Appointment appointment = mapper.Map<Appointment>(appointmentDto);
             await appointmentRepository.Add(appointment);
             await appointmentRepository.SaveChanges();
 
-            AppointmentDetailDto appointmentDetail = new AppointmentDetailDto(appointment);
-            return Created(nameof(Get), appointmentDetail);
+            return Created(nameof(Get), mapper.Map<AppointmentDetailDto>(appointment));
         }
 
         [HttpPut("{appointmentId:guid}")]
@@ -73,9 +74,10 @@ namespace VetAppointment.WebAPI.Controllers
             if (appointment == null)
                 return NotFound();
             appointment = appointmentDto.ApplyModificationsToModel(appointment);
+            mapper.Map(appointmentDto, appointment);
             await appointmentRepository.Update(appointment);
             await appointmentRepository.SaveChanges();
-            return Ok(new AppointmentDetailDto(appointment));
+            return NoContent();
         }
 
         [HttpDelete("{appointmentId:guid}")]

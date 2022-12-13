@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using AutoMapper;
+using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using VetAppointment.Application.Repositories.Interfaces;
 using VetAppointment.Domain.Entities;
@@ -16,8 +17,9 @@ namespace VetAppointment.WebAPI.Controllers
         private readonly IAppointmentRepository appointmentRepository;
         private readonly IPrescriptionRepository prescriptionRepository;
         private readonly IValidator<BillingEntryDto> billEntryValidator;
+        private readonly IMapper mapper;
 
-        public BillingEntryController(IBillingEntryRepository billingEntryRepository, IUserRepository userRepository, IUserRepository officeRepository, IAppointmentRepository appointmentRepository, IPrescriptionRepository prescriptionRepository, IValidator<BillingEntryDto> validator)
+        public BillingEntryController(IBillingEntryRepository billingEntryRepository, IUserRepository userRepository, IUserRepository officeRepository, IAppointmentRepository appointmentRepository, IPrescriptionRepository prescriptionRepository, IValidator<BillingEntryDto> validator, IMapper mapper)
         {
             this.billingEntryRepository = billingEntryRepository;
             this.issuerRepository = userRepository;
@@ -25,6 +27,7 @@ namespace VetAppointment.WebAPI.Controllers
             this.appointmentRepository = appointmentRepository;
             this.prescriptionRepository = prescriptionRepository;
             this.billEntryValidator = validator;
+            this.mapper = mapper;
         }
 
 
@@ -66,10 +69,10 @@ namespace VetAppointment.WebAPI.Controllers
             if (prescription == null)
                 return NotFound($"The Prescription with id: {billDto.PrescriptionId} was not found");
 
-            var bill = new BillingEntry(issuer, customer, billDto.DateTime, prescription, appointment, billDto.Price);
+            BillingEntry bill = mapper.Map<BillingEntry>(billDto);
             await billingEntryRepository.Add(bill);
             await billingEntryRepository.SaveChanges();
-            return Created(nameof(GetAllBills), bill);
+            return Created(nameof(GetAllBills), mapper.Map<BillingEntryDto>(bill));
 
         }
 

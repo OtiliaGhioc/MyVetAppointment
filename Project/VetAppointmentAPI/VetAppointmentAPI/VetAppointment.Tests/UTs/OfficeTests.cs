@@ -26,19 +26,19 @@
             TestDelete(officeRepo, office);
         }
 
-        private async void TestAdd(OfficeRepository officeRepo, Office office)
+        private static async void TestAdd(OfficeRepository officeRepo, Office office)
         {
             Office added = await officeRepo.Add(office);
             await officeRepo.SaveChanges();
             Assert.AreEqual(office, added);
         }
 
-        private async void TestGet(OfficeRepository officeRepo, Office office)
+        private static async void TestGet(OfficeRepository officeRepo, Office office)
         {
             Assert.AreEqual(office, await officeRepo.Get(office.OfficeId));
         }
 
-        private async void TestAll(OfficeRepository officeRepo, Office office)
+        private static async void TestAll(OfficeRepository officeRepo, Office office)
         {
             var allOffices = await officeRepo.All();
             bool check = false;
@@ -49,7 +49,7 @@
             Assert.IsTrue(check);
         }
 
-        private async void TestFind(OfficeRepository officeRepo, Office office, Expression<Func<Office, bool>> predicate)
+        private static async void TestFind(OfficeRepository officeRepo, Office office, Expression<Func<Office, bool>> predicate)
         {
             var foundOffices = await officeRepo.Find(predicate);
             bool check = false;
@@ -60,7 +60,7 @@
             Assert.IsTrue(check);
         }
 
-        private async void TestDelete(OfficeRepository officeRepo, Office office)
+        private static async void TestDelete(OfficeRepository officeRepo, Office office)
         {
             await officeRepo.Delete(office);
             await officeRepo.SaveChanges();

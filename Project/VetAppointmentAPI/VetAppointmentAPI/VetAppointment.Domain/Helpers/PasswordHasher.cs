@@ -4,7 +4,7 @@ using System.Text;
 
 namespace VetAppointment.Domain.Helpers
 {
-    public class PasswordHasher
+    public static class PasswordHasher
     {
         private static int saltLengthLimit = 32;
         private static byte[] GetSalt(int maximumSaltLength)

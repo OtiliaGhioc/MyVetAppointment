@@ -33,19 +33,19 @@ namespace VetAppointment.Tests.UTs
             TestDelete(userRepo, user);
         }
 
-        private async void TestAdd(UserRepository userRepo, User user)
+        private static async void TestAdd(UserRepository userRepo, User user)
         {
             User added = await userRepo.Add(user);
             await userRepo.SaveChanges();
             Assert.AreEqual(user, added);
         }
 
-        private async void TestGet(UserRepository userRepo, User user)
+        private static async void TestGet(UserRepository userRepo, User user)
         {
             Assert.AreEqual(user, await userRepo.Get(user.UserId));
         }
 
-        private async void TestAll(UserRepository userRepo, User user)
+        private static async void TestAll(UserRepository userRepo, User user)
         {
             var allUsers = await userRepo.All();
             bool check = false;
@@ -56,7 +56,7 @@ namespace VetAppointment.Tests.UTs
             Assert.IsTrue(check);
         }
 
-        private async void TestFind(UserRepository userRepo, User user, Expression<Func<User, bool>> predicate)
+        private static async void TestFind(UserRepository userRepo, User user, Expression<Func<User, bool>> predicate)
         {
             var foundUsers = await userRepo.Find(predicate);
             bool check = false;
@@ -67,7 +67,7 @@ namespace VetAppointment.Tests.UTs
             Assert.IsTrue(check);
         }
 
-        private async void TestDelete(UserRepository userRepo, User user)
+        private static async void TestDelete(UserRepository userRepo, User user)
         {
             await userRepo.Delete(user);
             await userRepo.SaveChanges();

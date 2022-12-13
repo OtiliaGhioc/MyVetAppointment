@@ -9,7 +9,7 @@ namespace VetAppointment.Application.Repositories.Base
     {
         protected readonly IDatabaseContext context;
 
-        public BaseRepository(IDatabaseContext context)
+        protected BaseRepository(IDatabaseContext context)
         {
             this.context = context;
         }

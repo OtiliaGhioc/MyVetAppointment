@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using AutoMapper;
+using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using VetAppointment.Application.Repositories.Interfaces;
 using VetAppointment.Domain.Entities;
@@ -12,10 +13,12 @@ namespace VetAppointment.WebAPI.Controllers
     {
         private readonly IDrugRepository drugRepository;
         private readonly IValidator<CreateDrugDto> drugValidator;
-        public DrugsController(IDrugRepository drugRepository, IValidator<CreateDrugDto> validator)
+        private readonly IMapper mapper;
+        public DrugsController(IDrugRepository drugRepository, IValidator<CreateDrugDto> validator, IMapper mapper)
         {
             this.drugRepository = drugRepository;
             this.drugValidator = validator;
+            this.mapper = mapper;
         }
 
         [HttpGet]
@@ -39,7 +42,7 @@ namespace VetAppointment.WebAPI.Controllers
         {
             var drug = await drugRepository.Get(drugId);
 
-            return drug != null ? Ok(drug) : NotFound($"Drug with id: {drugId} was not found");
+            return drug != null ? Ok(mapper.Map<DrugDto>(drug)) : NotFound($"Drug with id: {drugId} was not found");
         }
 
         [HttpPost]
@@ -48,10 +51,10 @@ namespace VetAppointment.WebAPI.Controllers
             var validation = drugValidator.Validate(drugDto);
             if (!validation.IsValid)
                 return StatusCode(400, validation.Errors.First().ErrorMessage);
-            var drug = new Drug(drugDto.Title, drugDto.Price);
+            Drug drug= mapper.Map<Drug>(drugDto);
             await drugRepository.Add(drug);
             await drugRepository.SaveChanges();
-            return Created(nameof(GetAllDrugs), drug);
+            return Created(nameof(GetAllDrugs), mapper.Map<DrugDto>(drug));
         }
 
         [HttpPut("{id}")]
@@ -69,6 +72,8 @@ namespace VetAppointment.WebAPI.Controllers
             }
 
             drug.UpdateNameAndPrice(drugDto.Title, drugDto.Price);
+
+            mapper.Map(drugDto, drug);
 
             await drugRepository.Update(drug);
             await drugRepository.SaveChanges();

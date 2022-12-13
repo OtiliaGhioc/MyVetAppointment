@@ -30,6 +30,7 @@ namespace VetAppointment.Tests.ITs
             var response = await httpClient.GetAsync("api/offices");
             //Assert
             response.EnsureSuccessStatusCode();
+            response.StatusCode.Should().Be(System.Net.HttpStatusCode.OK);
         }
 
         [Fact]
@@ -110,6 +111,7 @@ namespace VetAppointment.Tests.ITs
             var officeResult = await httpClient.GetAsync($"api/offices/{office.OfficeId}");
             //Assert
             officeResult.EnsureSuccessStatusCode();
+            officeResult.StatusCode.Should().Be(System.Net.HttpStatusCode.OK);
         }
     }
 }

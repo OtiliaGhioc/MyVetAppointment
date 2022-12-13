@@ -1,8 +1,10 @@
-﻿using FluentValidation;
+﻿using AutoMapper;
+using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using VetAppointment.Application.Repositories.Interfaces;
 using VetAppointment.Domain.Entities;
 using VetAppointment.WebAPI.Dtos.UserDto;
+using VetAppointment.WebAPI.DTOs;
 
 namespace VetAppointment.WebAPI.Controllers
 {
@@ -13,12 +15,14 @@ namespace VetAppointment.WebAPI.Controllers
         private readonly IUserRepository userRepository;
         private readonly IAppointmentRepository appointmentRepository;
         private readonly IValidator<DefaultUserDto> userValidator;
+        private readonly IMapper mapper;
 
-        public UsersController(IUserRepository userRepository, IAppointmentRepository appointmentRepository, IValidator<DefaultUserDto> validator)
+        public UsersController(IUserRepository userRepository, IAppointmentRepository appointmentRepository, IValidator<DefaultUserDto> validator, IMapper mapper)
         {
             this.userRepository = userRepository;
             this.appointmentRepository = appointmentRepository;
             this.userValidator= validator;
+            this.mapper = mapper;
         }
 
         // GET: api/<UsersController>
@@ -59,11 +63,11 @@ namespace VetAppointment.WebAPI.Controllers
             var validation = userValidator.Validate(userDto);
             if (!validation.IsValid)
                 return StatusCode(400, validation.Errors.First().ErrorMessage);
-            User user = new User(userDto.Username, userDto.Password);
+            User user = mapper.Map<User>(userDto);
             await userRepository.Add(user);
             await userRepository.SaveChanges();
 
-            return Created(nameof(User), user);
+            return Created(nameof(User), mapper.Map<CompleteUserDto>(user));
         }
 
         // PUT api/<UsersController>/5
@@ -76,7 +80,7 @@ namespace VetAppointment.WebAPI.Controllers
             User? user = await userRepository.Get(userDto.UserId);
             if (user == null)
                 return NotFound();
-
+            mapper.Map(userDto, user);
             await userRepository.Update(user);
             await userRepository.SaveChanges();
 

@@ -24,7 +24,7 @@ namespace VetAppointment.Domain.Entities
         public static Result<PrescriptionDrug> CreatePrescriptionDrug(DrugStock stock, int quantity)
         {
             Result removeStock = stock.RemoveDrugsFromPublicStock(quantity);
-            if (removeStock.IsFailure)
+            if (removeStock.Error != null && removeStock.IsFailure)
                 return Result<PrescriptionDrug>.Failure(removeStock.Error);
             
             PrescriptionDrug instance = new PrescriptionDrug(stock, quantity);

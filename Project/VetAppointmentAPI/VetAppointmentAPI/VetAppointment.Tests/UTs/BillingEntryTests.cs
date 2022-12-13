@@ -43,19 +43,19 @@
             TestDelete(billEntRepo, billingEntry);
         }
 
-        private async void TestAdd(BillingEntryRepository billEntRepo, BillingEntry billingEntry)
+        private static async void TestAdd(BillingEntryRepository billEntRepo, BillingEntry billingEntry)
         {
             BillingEntry added = await billEntRepo.Add(billingEntry);
             await billEntRepo.SaveChanges();
             Assert.AreEqual(billingEntry, added);
         }
 
-        private async void TestGet(BillingEntryRepository billEntRepo, BillingEntry billingEntry)
+        private static async void TestGet(BillingEntryRepository billEntRepo, BillingEntry billingEntry)
         {
             Assert.AreEqual<BillingEntry>(billingEntry, await billEntRepo.Get(billingEntry.BillingEntryId));
         }
 
-        private async void TestAll(BillingEntryRepository billEntRepo, BillingEntry billingEntry)
+        private static async void TestAll(BillingEntryRepository billEntRepo, BillingEntry billingEntry)
         {
             var allOffices = await billEntRepo.All();
             bool check = false;
@@ -66,7 +66,7 @@
             Assert.IsTrue(check);
         }
 
-        private async void TestFind(BillingEntryRepository billEntRepo, BillingEntry billingEntry, Expression<Func<BillingEntry, bool>> predicate)
+        private static async void TestFind(BillingEntryRepository billEntRepo, BillingEntry billingEntry, Expression<Func<BillingEntry, bool>> predicate)
         {
             var foundAppointments = await billEntRepo.Find(predicate);
             bool check = false;
@@ -77,7 +77,7 @@
             Assert.IsTrue(check);
         }
 
-        private async void TestDelete(BillingEntryRepository billEntRepo, BillingEntry billingEntry)
+        private static async void TestDelete(BillingEntryRepository billEntRepo, BillingEntry billingEntry)
         {
             await billEntRepo.Delete(billingEntry);
             await billEntRepo.SaveChanges();

@@ -55,6 +55,8 @@ builder.Services.AddScoped<IValidator<AppointmentCreateDto>, AppointmentValidato
 builder.Services.AddScoped<IValidator<MedicalEntryCreateDto>, MedicalEntryValidator>();
 builder.Services.AddScoped<IValidator<BillingEntryDto>, BillingEntryValidator>();
 
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

@@ -31,6 +31,7 @@ namespace VetAppointment.Tests.ITs
             var response = await httpClient.GetAsync("api/appointments");
             //Assert
             response.EnsureSuccessStatusCode();
+            response.StatusCode.Should().Be(System.Net.HttpStatusCode.OK);
         }
 
         [Fact]

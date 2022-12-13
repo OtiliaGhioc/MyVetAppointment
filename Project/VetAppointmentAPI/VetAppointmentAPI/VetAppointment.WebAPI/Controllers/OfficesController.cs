@@ -1,8 +1,10 @@
-﻿using FluentValidation;
+﻿using AutoMapper;
+using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using VetAppointment.Application.Repositories.Interfaces;
 using VetAppointment.Domain.Entities;
 using VetAppointment.WebAPI.Dtos;
+using VetAppointment.WebAPI.DTOs;
 
 namespace VetAppointment.WebAPI.Controllers
 {
@@ -12,11 +14,13 @@ namespace VetAppointment.WebAPI.Controllers
     {
         private readonly IOfficeRepository officeRepository;
         private readonly IValidator<OfficeDto> officeValidator;
+        private readonly IMapper mapper;
 
-        public OfficesController(IOfficeRepository officeRepository, IValidator<OfficeDto> validator)
+        public OfficesController(IOfficeRepository officeRepository, IValidator<OfficeDto> validator, IMapper mapper)
         {
             this.officeRepository = officeRepository;
             this.officeValidator = validator;
+            this.mapper = mapper;
         }
 
         // GET: api/<OfficesController>
@@ -31,7 +35,7 @@ namespace VetAppointment.WebAPI.Controllers
         public async Task<IActionResult> Get(Guid id)
         {
             var office = await officeRepository.Get(id);
-            if(office == null)
+            if (office == null)
             {
                 return NotFound();
             }
@@ -45,11 +49,11 @@ namespace VetAppointment.WebAPI.Controllers
             var validation = officeValidator.Validate(officeDto);
             if (!validation.IsValid)
                 return StatusCode(400, validation.Errors.First().ErrorMessage);
-            Office office = new Office(officeDto.Address);
+            Office office = mapper.Map<Office>(officeDto);
             await officeRepository.Add(office);
             await officeRepository.SaveChanges();
 
-            return Created(nameof(Office), office);
+            return Created(nameof(Office), mapper.Map<OfficeDto>(office));
         }
 
         // PUT api/<OfficesController>/5
@@ -62,7 +66,7 @@ namespace VetAppointment.WebAPI.Controllers
             Office? office = await officeRepository.Get(officeDto.OfficeId);
             if (office == null)
                 return NotFound();
-
+            mapper.Map(officeDto, office);
             await officeRepository.Update(office);
             await officeRepository.SaveChanges();
 
