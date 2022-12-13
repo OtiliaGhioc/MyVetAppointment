@@ -12,6 +12,10 @@
             Assert.IsTrue(prescriptionDrug.IsSuccess);
             Assert.AreEqual(drugStock.DrugStockId, prescriptionDrug?.Entity?.Stock?.DrugStockId);
             Assert.AreEqual(drug.DrugId, prescriptionDrug?.Entity?.Stock?.Type?.DrugId);
+
+            if (prescriptionDrug?.Entity == null)
+                throw new Exception();
+
             Assert.AreEqual(1, prescriptionDrug.Entity.Quantity);
         }
     }
