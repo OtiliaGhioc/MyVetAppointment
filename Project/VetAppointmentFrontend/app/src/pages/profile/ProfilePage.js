@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { API_ROOT } from '../../env';
 import ProfileDocumentsContainer from './ProfileDocumentsContainer';
 import ProfileUserCard from './ProfileUserCard';
+import { getAccessToken, getRefreshToken, makeRequestWithJWT, disconnectUser } from '../../util/JWTUtil';
 
 const profileTheme = createTheme({
     palette: {
@@ -48,15 +49,24 @@ const ProfilePage = () => {
     useEffect(() => {
         document.body.style.backgroundColor = '#ebf6fc';
 
-        let userId = '1775a144-0134-43f1-971a-bce94639707c'; // to be taken from jwt
-
         const fetchData = async () => {
-            const res = await fetch(`${API_ROOT}/Users/${userId}`, {
-                method: 'GET',
-                mode: 'cors'
-            });
+            const res = await makeRequestWithJWT(
+                `${API_ROOT}/Users/me/`, {
+                    method: 'GET',
+                    mode: 'cors'
+                }, {
+                    accessToken: getAccessToken(),
+                    refreshToken: getRefreshToken()
+                }
+            )
+                
+            if(res.status === 401) {
+                disconnectUser();
+                navigate("/");
+                return;
+            }
 
-            if (!res.ok) {
+            if(!res.ok) {
                 navigate("/not-found");
                 return;
             }
@@ -74,7 +84,7 @@ const ProfilePage = () => {
                     <Grid item xs={1} />
                     <Grid item xs={8}>
                         <Item>
-                            <ProfileDocumentsContainer appointments={appointments} medicalEntries={medicalEntries}/>
+                            <ProfileDocumentsContainer appointments={appointments} medicalEntries={medicalEntries} />
                         </Item>
                     </Grid>
                     <Grid item xs={2}>

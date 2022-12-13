@@ -16,7 +16,7 @@ namespace VetAppointment.Domain.Helpers
             return GetSalt(saltLengthLimit);
         }
 
-        public static string GetHashedPassword(string password)
+        public static string GetHashedPassword(string password, string? secret = null)
         {
             byte[] passwordAsByteArray = Encoding.ASCII.GetBytes(password);
             Argon2i argon2 = new Argon2i(passwordAsByteArray);
@@ -26,14 +26,17 @@ namespace VetAppointment.Domain.Helpers
             argon2.DegreeOfParallelism = 16;
             argon2.MemorySize = 8192;
             argon2.Iterations = 40;
-            argon2.Salt= salt;
+            argon2.Salt = salt;
+
+            if (secret != null)
+                argon2.KnownSecret = Encoding.ASCII.GetBytes(secret);
 
             byte[] hash = argon2.GetBytes(128);
             string result = Convert.ToBase64String(hash);
             return $"{Convert.ToBase64String(salt)}${result}";
         }
 
-        public static bool IsPasswordValid(string hash, string password)
+        public static bool IsPasswordValid(string password, string hash, string? secret = null)
         {
             var pieces = hash.Split(new[] { '$' }, 2);
             if (pieces.Length < 2)
@@ -46,11 +49,16 @@ namespace VetAppointment.Domain.Helpers
             byte[] passwordToHash = Encoding.ASCII.GetBytes(password);
 
             Argon2i argon2 = new Argon2i(passwordToHash);
-            
+
+            Console.WriteLine(hash);
+
             argon2.DegreeOfParallelism = 16;
             argon2.MemorySize = 8192;
             argon2.Iterations = 40;
             argon2.Salt = salt;
+
+            if (secret != null) 
+                argon2.KnownSecret = Encoding.ASCII.GetBytes(secret);
 
             byte[] hashToVerify = argon2.GetBytes(128);
 
