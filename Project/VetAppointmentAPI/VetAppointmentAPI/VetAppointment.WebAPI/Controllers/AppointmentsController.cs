@@ -75,7 +75,7 @@ namespace VetAppointment.WebAPI.Controllers
                 return NotFound();
             appointment = appointmentDto.ApplyModificationsToModel(appointment);
             mapper.Map(appointmentDto, appointment);
-            await appointmentRepository.Update(appointment);
+            appointmentRepository.Update(appointment);
             await appointmentRepository.SaveChanges();
             return NoContent();
         }

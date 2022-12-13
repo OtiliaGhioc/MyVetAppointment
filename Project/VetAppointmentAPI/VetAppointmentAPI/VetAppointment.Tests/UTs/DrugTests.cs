@@ -68,7 +68,7 @@
 
         private static async void TestDelete(DrugRepository officeRepo, Drug office)
         {
-            await officeRepo.Delete(office);
+            officeRepo.Delete(office);
             await officeRepo.SaveChanges();
             Assert.IsNotNull(officeRepo.Get(office.DrugId));
         }

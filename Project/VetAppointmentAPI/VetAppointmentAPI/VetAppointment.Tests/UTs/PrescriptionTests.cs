@@ -72,7 +72,7 @@
 
         private static async void TestDelete(PrescriptionRepository prescriptionRepo, Prescription prescription)
         {
-            await prescriptionRepo.Delete(prescription);
+            prescriptionRepo.Delete(prescription);
             await prescriptionRepo.SaveChanges();
             Assert.IsNull(await prescriptionRepo.Get(prescription.PrescriptionId));
         }

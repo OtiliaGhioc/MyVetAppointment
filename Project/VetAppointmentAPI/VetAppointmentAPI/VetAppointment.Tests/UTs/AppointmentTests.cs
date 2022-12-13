@@ -69,7 +69,7 @@
 
         private static async void TestDelete(AppointmentRepository appointmentRepo, Appointment appointment)
         {
-            await appointmentRepo.Delete(appointment);
+            appointmentRepo.Delete(appointment);
             await appointmentRepo.SaveChanges();
             Assert.IsNull(await appointmentRepo.Get(appointment.AppointmentId));
         }

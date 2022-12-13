@@ -75,7 +75,7 @@ namespace VetAppointment.WebAPI.Controllers
 
             mapper.Map(drugDto, drug);
 
-            await drugRepository.Update(drug);
+            drugRepository.Update(drug);
             await drugRepository.SaveChanges();
             return NoContent();
         }

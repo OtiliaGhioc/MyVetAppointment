@@ -67,7 +67,7 @@ namespace VetAppointment.WebAPI.Controllers
             if (office == null)
                 return NotFound();
             mapper.Map(officeDto, office);
-            await officeRepository.Update(office);
+            officeRepository.Update(office);
             await officeRepository.SaveChanges();
 
             return NoContent();

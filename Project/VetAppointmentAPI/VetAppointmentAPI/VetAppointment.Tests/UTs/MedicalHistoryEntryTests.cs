@@ -75,7 +75,7 @@
 
         private static async void TestDelete(MedicalHistoryEntryRepository medHistRepo, MedicalHistoryEntry medicalHistoryEntry)
         {
-            await medHistRepo.Delete(medicalHistoryEntry);
+            medHistRepo.Delete(medicalHistoryEntry);
             await medHistRepo.SaveChanges();
             Assert.IsNull(await medHistRepo.Get(medicalHistoryEntry.MedicalHistoryEntryId));
         }

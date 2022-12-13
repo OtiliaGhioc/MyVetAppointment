@@ -79,7 +79,7 @@
 
         private static async void TestDelete(BillingEntryRepository billEntRepo, BillingEntry billingEntry)
         {
-            await billEntRepo.Delete(billingEntry);
+            billEntRepo.Delete(billingEntry);
             await billEntRepo.SaveChanges();
             Assert.IsNull(await billEntRepo.Get(billingEntry.AppointmentId));
         }

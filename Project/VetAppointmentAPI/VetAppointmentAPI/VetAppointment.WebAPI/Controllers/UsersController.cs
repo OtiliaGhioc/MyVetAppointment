@@ -102,7 +102,7 @@ namespace VetAppointment.WebAPI.Controllers
             if (user == null)
                 return NotFound();
             mapper.Map(userDto, user);
-            await userRepository.Update(user);
+            userRepository.Update(user);
             await userRepository.SaveChanges();
 
             return NoContent();
