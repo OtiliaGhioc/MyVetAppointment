@@ -99,7 +99,7 @@ namespace VetAppointment.WebAPI.Auth
             string userId = userIdClaim.Value;
 
             Claim? userRoleClaim = token.Claims.FirstOrDefault(item => item.Type == "role");
-            string userRole = userIdClaim == null ? "default" : userIdClaim.Value;
+            string userRole = userRoleClaim == null ? "default" : userIdClaim.Value;
 
             SecurityTokenDescriptor tokenDescriptor = new SecurityTokenDescriptor();
             tokenDescriptor.Issuer = Issuer;
