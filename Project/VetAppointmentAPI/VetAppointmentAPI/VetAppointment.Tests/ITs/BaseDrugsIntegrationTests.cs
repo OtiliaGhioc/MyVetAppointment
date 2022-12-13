@@ -17,7 +17,7 @@ namespace VetAppointment.Tests.ITs
             HttpClient = application.CreateClient();
             databaseContext = new DatabaseContext(options);
             //CleanDatabases();
-        }
+        }   
         protected static void CleanDatabases()
         {
             var databaseContext = new DatabaseContext();

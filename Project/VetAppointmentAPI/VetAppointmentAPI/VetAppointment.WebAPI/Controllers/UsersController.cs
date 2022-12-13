@@ -16,11 +16,15 @@ namespace VetAppointment.WebAPI.Controllers
     {
         private readonly IUserRepository userRepository;
         private readonly IAppointmentRepository appointmentRepository;
+        private readonly IValidator<DefaultUserDto> userValidator;
+        private readonly IMapper mapper;
 
-        public UsersController(IUserRepository userRepository, IAppointmentRepository appointmentRepository)
+        public UsersController(IUserRepository userRepository, IAppointmentRepository appointmentRepository, IValidator<DefaultUserDto> validator, IMapper mapper)
         {
             this.userRepository = userRepository;
             this.appointmentRepository = appointmentRepository;
+            this.userValidator= validator;
+            this.mapper = mapper;
         }
 
         [Authorize]

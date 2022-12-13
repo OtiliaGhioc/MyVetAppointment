@@ -20,7 +20,7 @@ namespace VetAppointment.Tests.ITs
             HttpClient = application.CreateClient();
             databaseContext = new DatabaseContext(options);
         }
-        protected static void CleanDatabases()
+        protected void CleanDatabases()
         {
             //var databaseContext = new DatabaseContext();
             databaseContext.Appointments.RemoveRange(databaseContext.Appointments.ToList());
