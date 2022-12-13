@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-
-namespace VetAppointment.Tests.UTs
+﻿namespace VetAppointment.Tests.UTs
 {
     public class DrugTests
     {
@@ -10,6 +8,10 @@ namespace VetAppointment.Tests.UTs
             Drug drug = new Drug("title",5);
             Assert.AreEqual("title", drug.Title);
             Assert.AreEqual(5, drug.Price);
+
+            drug.UpdateNameAndPrice("name", 1);
+            Assert.AreEqual("name", drug.Title);
+            Assert.AreEqual(1, drug.Price);
         }
 
         [Fact]

@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-
-namespace VetAppointment.Tests.UTs
+﻿namespace VetAppointment.Tests.UTs
 {
     public class AppointmentTests
     {
@@ -21,9 +19,9 @@ namespace VetAppointment.Tests.UTs
             DbContextOptions<DatabaseContext> options = new DbContextOptionsBuilder<DatabaseContext>().UseSqlite("Data Source = MyTests.db").Options;
             DatabaseContext testDb = new DatabaseContext(options);
             AppointmentRepository appointmentRepo = new AppointmentRepository(testDb);
-            User user = new User("name", "password");
-            User user2 = new User("name", "password");
-            Appointment appointment = new Appointment(user, user2, DateTime.Today.AddDays(1), "title", "description", "type");
+            User user = new User("name", "pass", true);
+            User user2 = new User("name", "pass", true);
+            Appointment appointment = new Appointment(user, user2, DateTime.Now, "title", "descr", "type");
 
             TestAdd(appointmentRepo, appointment);
             TestGet(appointmentRepo, appointment);
@@ -44,7 +42,7 @@ namespace VetAppointment.Tests.UTs
 
         private async void TestGet(AppointmentRepository appointmentRepo, Appointment appointment)
         {
-            Assert.AreEqual(appointment, await appointmentRepo.Get(appointment.AppointmentId));
+            Assert.AreEqual<Appointment>(appointment, await appointmentRepo.Get(appointment.AppointmentId));
         }
 
         private async void TestAll(AppointmentRepository appointmentRepo, Appointment appointment)
@@ -60,10 +58,10 @@ namespace VetAppointment.Tests.UTs
 
         private async void TestFind(AppointmentRepository appointmentRepo, Appointment appointment, Expression<Func<Appointment, bool>> predicate)
         {
-            var foundOffices = await appointmentRepo.Find(predicate);
+            var foundAppointments = await appointmentRepo.Find(predicate);
             bool check = false;
 
-            if (foundOffices.Contains<Appointment>(appointment))
+            if (foundAppointments.Contains<Appointment>(appointment))
                 check = true;
 
             Assert.IsTrue(check);
@@ -73,7 +71,7 @@ namespace VetAppointment.Tests.UTs
         {
             await appointmentRepo.Delete(appointment);
             await appointmentRepo.SaveChanges();
-            Assert.IsNotNull(appointmentRepo.Get(appointment.AppointmentId));
+            Assert.IsNull(await appointmentRepo.Get(appointment.AppointmentId));
         }
     }
 }
