@@ -68,6 +68,10 @@ namespace VetAppointment.Tests.ITs
 
             var officeResponse = await httpClient.PostAsJsonAsync("api/offices", officeDto);
             var office = await officeResponse.Content.ReadFromJsonAsync<OfficeDto>();
+
+            if (office == null)
+                throw new Exception();
+
             //Act
             var officeResult = await httpClient.DeleteAsync($"api/offices/{office.OfficeId}");
             //Assert
@@ -84,10 +88,12 @@ namespace VetAppointment.Tests.ITs
                 Address = "Strada Zorilor 13, IS, 123456"
             };
 
-            
-
             var officeResponse = await httpClient.PostAsJsonAsync("api/offices", officeDto);
             var office = await officeResponse.Content.ReadFromJsonAsync<OfficeDto>();
+
+            if (office == null)
+                throw new Exception();
+
             office.Address = "Strada Lalelelor 13, IS, 123456";
             //Act
             var officeResult = await httpClient.PutAsJsonAsync($"api/offices", office);
@@ -107,6 +113,9 @@ namespace VetAppointment.Tests.ITs
 
             var officeResponse = await httpClient.PostAsJsonAsync("api/offices", officeDto);
             var office = await officeResponse.Content.ReadFromJsonAsync<OfficeDto>();
+            if (office == null)
+                throw new Exception();
+
             //Act
             var officeResult = await httpClient.GetAsync($"api/offices/{office.OfficeId}");
             //Assert

@@ -16,13 +16,15 @@
                 Errors = errors;
             }
 
-            public AuthResponseDto(string accessToken, string refreshToken) 
+            public AuthResponseDto(string accessToken, string refreshToken, Guid userId) 
             { 
                 AccessToken= accessToken;
                 RefreshToken= refreshToken;
+                UserId = userId;
             }
 
             public IEnumerable<string>? Errors { get; private set; } = new List<string>();
+            public Guid? UserId { get; private set; }
             public string? AccessToken { get; private set; }
             public string? RefreshToken { get; set; }
         }
@@ -43,7 +45,6 @@
             {
                 AccessToken = accessToken;
             }
-
             public IEnumerable<string> Errors { get; private set; } = new List<string>();
             public string? AccessToken { get; private set; }
         }

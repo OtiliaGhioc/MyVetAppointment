@@ -67,7 +67,10 @@ namespace VetAppointment.Tests.ITs
             var userResponse2 = await httpClient.PostAsJsonAsync("api/users", userDto2);
             var user1 = await userResponse.Content.ReadFromJsonAsync<DefaultUserDto>();
             var user2 = await userResponse2.Content.ReadFromJsonAsync<DefaultUserDto>();
-            
+
+            if (user1 == null || user2 == null)
+                throw new Exception();
+
             var appoitnmentDto = new AppointmentCreateDto(user1.UserId, user2.UserId, DateTime.Today.AddDays(1), "title", "description", "type");
 
             //Act

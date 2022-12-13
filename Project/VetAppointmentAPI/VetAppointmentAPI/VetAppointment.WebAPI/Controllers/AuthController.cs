@@ -54,7 +54,7 @@ namespace VetAppointment.WebAPI.Controllers
             if (tokens.Item1 == null || tokens.Item2 == null)
                 return StatusCode(500, "Could not generate access and/or refresh tokens for user");
 
-            return Ok(new AuthResponseDto(tokens.Item1, tokens.Item2));
+            return Ok(new AuthResponseDto(tokens.Item1, tokens.Item2, user.UserId));
         }
 
         [HttpPost("register")]
@@ -78,7 +78,7 @@ namespace VetAppointment.WebAPI.Controllers
             if (tokens.Item1 == null || tokens.Item2 == null)
                 return StatusCode(500, "Could not generate access and/or refresh tokens for user");
 
-            return Ok(new AuthResponseDto(tokens.Item1, tokens.Item2));
+            return Ok(new AuthResponseDto(tokens.Item1, tokens.Item2, createdUser.UserId));
         }
 
         [HttpPost("refresh")]

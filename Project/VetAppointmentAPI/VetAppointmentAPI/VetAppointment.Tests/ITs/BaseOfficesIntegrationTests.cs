@@ -18,7 +18,7 @@ namespace VetAppointment.Tests.ITs
             databaseContext = new DatabaseContext(options);
             //CleanDatabases();
         }
-        protected void CleanDatabases()
+        protected static void CleanDatabases()
         {
             databaseContext.Appointments.RemoveRange(databaseContext.Appointments.ToList());
             databaseContext.Users.RemoveRange(databaseContext.Users.ToList());

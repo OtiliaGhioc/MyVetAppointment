@@ -13,6 +13,10 @@
             Assert.IsTrue(result1.IsSuccess);
             Assert.IsTrue(result2.IsFailure);
             Assert.AreEqual("err", result2.Error);
+
+            if (result1.Entity == null)
+                throw new Exception(result1.Error);
+
             Assert.AreEqual(drug.DrugId, result1.Entity.DrugId);
         }
     }

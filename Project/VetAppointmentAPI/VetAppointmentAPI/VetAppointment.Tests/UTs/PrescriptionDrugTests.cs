@@ -10,8 +10,8 @@
             Result<PrescriptionDrug> prescriptionDrug = PrescriptionDrug.CreatePrescriptionDrug(drugStock, 1);
 
             Assert.IsTrue(prescriptionDrug.IsSuccess);
-            Assert.AreEqual(drugStock.DrugStockId, prescriptionDrug.Entity.Stock.DrugStockId);
-            Assert.AreEqual(drug.DrugId, prescriptionDrug.Entity.Stock.Type.DrugId);
+            Assert.AreEqual(drugStock.DrugStockId, prescriptionDrug?.Entity?.Stock?.DrugStockId);
+            Assert.AreEqual(drug.DrugId, prescriptionDrug?.Entity?.Stock?.Type?.DrugId);
             Assert.AreEqual(1, prescriptionDrug.Entity.Quantity);
         }
     }

@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System.Net.Http.Json;
 using VetAppointment.Application.Repositories.Interfaces;
 using VetAppointment.WebAPI.Dtos.UserDto;
+using VetAppointment.WebAPI.DTOs.AuthDtos;
 
 namespace VetAppointment.Tests.ITs
 {
@@ -33,38 +34,27 @@ namespace VetAppointment.Tests.ITs
         }
 
         [Fact]
-        public async Task WhenCreate_ThenReturnCreated()
-        {
-            var userDto = new DefaultUserDto()
-            {
-                UserId = Guid.NewGuid(),
-                Username = "username",
-                Password = "password"
-            };
-
-            //Act
-
-            var userResponse = await httpClient.PostAsJsonAsync("api/users", userDto);
-            //Assert
-            userResponse.StatusCode.Should().Be(System.Net.HttpStatusCode.Created);
-        }
-
-        [Fact]
         public async Task WhenUpdate_ThenReturnCreated()
         {
-            var userDto = new DefaultUserDto()
+            var userDto = new UserAuthDto()
             {
-                UserId = Guid.NewGuid(),
                 Username = "username",
-                Password = "password"
+                Password = "password",
+                IsMedic = false
             };
 
 
-            var userResponse = await httpClient.PostAsJsonAsync("api/users", userDto);
-            var user = await userResponse.Content.ReadFromJsonAsync<DefaultUserDto>();
+            var userResponse = await httpClient.PostAsJsonAsync("api/Auth/register", userDto);
+            var authResponse = await userResponse.Content.ReadFromJsonAsync<AuthResponseDto>();
+
+            if (authResponse == null)
+                throw new Exception();
 
             //Act
-            var updateUser = await httpClient.PutAsJsonAsync("api/users", user);
+            var updateUser = await httpClient.PutAsJsonAsync($"api/users/{authResponse.UserId}", new DefaultUserDto
+            {
+                Username = "username2"
+            });
 
             //Assert
             updateUser.StatusCode.Should().Be(System.Net.HttpStatusCode.NoContent);
