@@ -36,7 +36,7 @@ namespace VetAppointment.WebAPI.Controllers
         {
             var bill = await billingEntryRepository.Get(billingEntryId);
 
-            return bill != null ? Ok(bill) : NotFound($"The Bill with id: {billingEntryId} was not found");
+            return bill != null ? Ok(mapper.Map<BillingEntryDto>(bill)) : NotFound($"The Bill with id: {billingEntryId} was not found");
         }
 
         [HttpGet("GetAll")]

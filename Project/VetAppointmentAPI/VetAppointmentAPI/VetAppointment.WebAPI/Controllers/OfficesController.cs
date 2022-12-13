@@ -39,7 +39,7 @@ namespace VetAppointment.WebAPI.Controllers
             {
                 return NotFound();
             }
-            return Ok(office);
+            return Ok(mapper.Map<OfficeDto>(office));
         }
 
         // POST api/<OfficesController>
