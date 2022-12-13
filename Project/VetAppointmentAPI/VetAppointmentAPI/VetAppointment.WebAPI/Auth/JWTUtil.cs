@@ -6,9 +6,9 @@ using VetAppointment.Domain.Entities;
 
 namespace VetAppointment.WebAPI.Auth
 {
-    public class JWTUtil
+    public class JwtUtil
     {
-        public JWTUtil(string secretKey, string issuer, string audience, int accessTokenValidityInMinutes, int refreshTokenValidityInDays)
+        public JwtUtil(string secretKey, string issuer, string audience, int accessTokenValidityInMinutes, int refreshTokenValidityInDays)
         {
             SecretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
             JWTSigningCredentials = new SigningCredentials(SecretKey, SecurityAlgorithms.HmacSha256);
@@ -72,9 +72,9 @@ namespace VetAppointment.WebAPI.Auth
                     IssuerSigningKey = SecretKey
                 };
 
-                SecurityToken validatedToken;
-
-                var claims = tokenHandler.ValidateToken(token, tokenValidationParams, out validatedToken);
+                var claims = tokenHandler.ValidateToken(token, tokenValidationParams, out SecurityToken validatedToken);
+                if (!claims.Claims.Any())
+                    return false;
                 return true;
             }
             catch (ArgumentException) { return false; }

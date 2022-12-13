@@ -23,13 +23,6 @@ namespace VetAppointment.WebAPI.Controllers
             this.userValidator= validator;
         }
 
-        // GET: api/<UsersController>
-        [HttpGet]
-        public async Task<IActionResult> Get()
-        {
-            return Ok(await userRepository.All());
-        }
-
         [Authorize]
         [HttpGet("me")]
         public async Task<IActionResult> GetMe()
@@ -41,6 +34,13 @@ namespace VetAppointment.WebAPI.Controllers
             User? user = await userRepository.Get(Guid.Parse(userId));
             var meData = await GetParsedUserData(user);
             return meData;
+        }
+
+        // GET: api/<UsersController>
+        [HttpGet]
+        public async Task<IActionResult> Get()
+        {
+            return Ok(await userRepository.All());
         }
 
         // GET api/<UsersController>/5
@@ -84,7 +84,7 @@ namespace VetAppointment.WebAPI.Controllers
             if (user == null)
                 return NotFound();
 
-            await userRepository.Update(user);
+            userRepository.Update(user);
             await userRepository.SaveChanges();
 
             return NoContent();
@@ -97,7 +97,7 @@ namespace VetAppointment.WebAPI.Controllers
             User? user = await userRepository.Get(id);
             if(user == null)
                 return NotFound();
-            await userRepository.Delete(user);
+            userRepository.Delete(user);
             await userRepository.SaveChanges();
 
             return NoContent();

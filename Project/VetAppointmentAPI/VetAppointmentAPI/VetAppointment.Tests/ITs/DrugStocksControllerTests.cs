@@ -2,7 +2,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using System.Net.Http.Json;
 using VetAppointment.Application.Repositories.Interfaces;
-using VetAppointment.WebAPI.DTOs;
 
 namespace VetAppointment.Tests.ITs
 {

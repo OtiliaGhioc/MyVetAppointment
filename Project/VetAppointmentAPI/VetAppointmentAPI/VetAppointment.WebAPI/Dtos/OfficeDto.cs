@@ -3,6 +3,6 @@
     public class OfficeDto
     {
         public Guid OfficeId { get; set; }
-        public string Address { get; set; }
+        public string? Address { get; set; }
     }
 }

@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using VetAppointment.Application.Repositories.Interfaces;
 using VetAppointment.Domain.Entities;
 using VetAppointment.Domain.Helpers;
@@ -13,28 +12,26 @@ namespace VetAppointment.WebAPI.Controllers
     public class AuthController : ControllerBase
     {
         private readonly IUserRepository userRepository;
-        private readonly IConfiguration configuration;
-        private readonly JWTUtil jwtUtil;
+        private readonly JwtUtil jwtUtil;
         private readonly string? PasswordHasherSecret;
 
         public AuthController(IUserRepository userRepository, IConfiguration configuration)
         {
             this.userRepository = userRepository;
-            this.configuration = configuration;
             this.PasswordHasherSecret = (string?)configuration.GetValue(typeof(string), "PasswordHasher:Secret", null);
 
             string jwtSecret = (string?)configuration.GetValue(typeof(string), "JWT:Secret", null) ??
-                throw new ArgumentNullException("JWT:Secret");
+                throw new ArgumentNullException(nameof(configuration));
             string jwtIssuer = (string?)configuration.GetValue(typeof(string), "JWT:Issuer", null) ??
-                throw new ArgumentNullException("JWT:Issuer");
+                throw new ArgumentNullException(nameof(configuration));
             string jwtAudience = (string?)configuration.GetValue(typeof(string), "JWT:Audience", null) ??
-                throw new ArgumentNullException("JWT:Audience");
+                throw new ArgumentNullException(nameof(configuration));
             int jwtAccessTokenValidity = (int?)configuration.GetValue(typeof(int), "JWT:AccessTokenValidityInMinutes", null) ??
-                throw new ArgumentNullException("JWT:AccessTokenValidityInMinutes");
+                throw new ArgumentNullException(nameof(configuration));
             int jwtRefreshTokenValidity = (int?)configuration.GetValue(typeof(int), "JWT:RefreshTokenValidityInDays", null) ??
-                throw new ArgumentNullException("JWT:RefreshTokenValidityInDays");
+                throw new ArgumentNullException(nameof(configuration));
 
-            this.jwtUtil = new JWTUtil(jwtSecret, jwtIssuer, jwtAudience, jwtAccessTokenValidity, jwtRefreshTokenValidity);
+            this.jwtUtil = new JwtUtil(jwtSecret, jwtIssuer, jwtAudience, jwtAccessTokenValidity, jwtRefreshTokenValidity);
         }
 
         [HttpPost("login")]
@@ -85,7 +82,7 @@ namespace VetAppointment.WebAPI.Controllers
         }
 
         [HttpPost("refresh")]
-        public async Task<IActionResult> TokenRefresh([FromBody] RefreshTokenDto refreshDto)
+        public IActionResult TokenRefresh([FromBody] RefreshTokenDto refreshDto)
         {
             if (refreshDto.RefreshToken == null)
                 return BadRequest("Invalid request body");

@@ -5,7 +5,6 @@ using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
 using System.Text;
 using VetAppointment.Application.Repositories.Impl;
-using FluentValidation;
 using VetAppointment.Application.Repositories.Interfaces;
 using VetAppointment.Infrastructure.Context;
 using VetAppointment.WebAPI.Dtos;
@@ -60,6 +59,8 @@ builder.Services.AddScoped<IValidator<AppointmentCreateDto>, AppointmentValidato
 builder.Services.AddScoped<IValidator<MedicalEntryCreateDto>, MedicalEntryValidator>();
 builder.Services.AddScoped<IValidator<BillingEntryDto>, BillingEntryValidator>();
 
+SymmetricSecurityKey secretKey = new(Encoding.UTF8.GetBytes(builder.Configuration.GetValue<string>("JWT:Secret") ?? throw new ArgumentNullException(nameof(args))));
+
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(item => item.TokenValidationParameters = new()
     {
@@ -69,7 +70,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         ValidAudience = builder.Configuration.GetValue<string>("JWT:Audience"),
         ValidateLifetime = true,
         ValidateIssuerSigningKey = true,
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration.GetValue<string>("JWT:Secret")))
+        IssuerSigningKey = secretKey
     });
 
 builder.Services.AddAuthorization(options =>

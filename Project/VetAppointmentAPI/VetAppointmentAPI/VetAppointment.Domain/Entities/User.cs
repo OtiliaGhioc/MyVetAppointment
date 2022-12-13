@@ -42,7 +42,7 @@ namespace VetAppointment.Domain.Entities
             return Result.Success();
         }
 
-        public bool IsPasswordValid(string password, string? secret)
+        public bool IsPasswordValid(string password, string? secret = null)
         {
             return PasswordHasher.IsPasswordValid(password, Password, secret);
         }

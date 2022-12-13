@@ -63,7 +63,7 @@ namespace VetAppointment.WebAPI.Controllers
             if (office == null)
                 return NotFound();
 
-            await officeRepository.Update(office);
+            officeRepository.Update(office);
             await officeRepository.SaveChanges();
 
             return NoContent();
@@ -76,7 +76,7 @@ namespace VetAppointment.WebAPI.Controllers
             var office = await officeRepository.Get(id);
             if (office == null)
                 return NotFound();
-            await officeRepository.Delete(office);
+            officeRepository.Delete(office);
             await officeRepository.SaveChanges();
 
             return NoContent();

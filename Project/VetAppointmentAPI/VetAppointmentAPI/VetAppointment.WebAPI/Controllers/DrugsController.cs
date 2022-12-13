@@ -46,9 +46,9 @@ namespace VetAppointment.WebAPI.Controllers
         public async Task<IActionResult> Create([FromBody] CreateDrugDto drugDto)
         {
             var validation = drugValidator.Validate(drugDto);
-            if (!validation.IsValid)
+            if (!validation.IsValid || drugDto.Price == null)
                 return StatusCode(400, validation.Errors.First().ErrorMessage);
-            var drug = new Drug(drugDto.Title, drugDto.Price);
+            var drug = new Drug(drugDto.Title, (int)drugDto.Price);
             await drugRepository.Add(drug);
             await drugRepository.SaveChanges();
             return Created(nameof(GetAllDrugs), drug);
@@ -58,7 +58,7 @@ namespace VetAppointment.WebAPI.Controllers
         public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] CreateDrugDto drugDto)
         {
             var validation = drugValidator.Validate(drugDto);
-            if (!validation.IsValid)
+            if (!validation.IsValid || drugDto.Price == null)
                 return StatusCode(400, validation.Errors.First().ErrorMessage);
 
             var drug = await drugRepository.Get(id);
@@ -68,9 +68,9 @@ namespace VetAppointment.WebAPI.Controllers
                 return NotFound($"Drug with id: {id} was not found");
             }
 
-            drug.UpdateNameAndPrice(drugDto.Title, drugDto.Price);
+            drug.UpdateNameAndPrice(drugDto.Title, (int)drugDto.Price);
 
-            await drugRepository.Update(drug);
+            drugRepository.Update(drug);
             await drugRepository.SaveChanges();
             return NoContent();
         }
@@ -84,7 +84,7 @@ namespace VetAppointment.WebAPI.Controllers
             {
                 return NotFound($"Drug with id: {drugId} was not found");
             }
-            await drugRepository.Delete(drug);
+            drugRepository.Delete(drug);
             await drugRepository.SaveChanges();
             return NoContent();
         }

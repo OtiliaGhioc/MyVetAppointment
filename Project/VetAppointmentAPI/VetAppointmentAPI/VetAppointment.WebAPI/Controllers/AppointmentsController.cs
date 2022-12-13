@@ -1,7 +1,5 @@
 ﻿using FluentValidation;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
 using VetAppointment.Application.Repositories.Interfaces;
 using VetAppointment.Domain.Entities;
 using VetAppointment.WebAPI.Dtos.AppointmentDtos;
@@ -75,7 +73,7 @@ namespace VetAppointment.WebAPI.Controllers
             if (appointment == null)
                 return NotFound();
             appointment = appointmentDto.ApplyModificationsToModel(appointment);
-            await appointmentRepository.Update(appointment);
+            appointmentRepository.Update(appointment);
             await appointmentRepository.SaveChanges();
             return Ok(new AppointmentDetailDto(appointment));
         }
@@ -86,7 +84,7 @@ namespace VetAppointment.WebAPI.Controllers
             Appointment? appointment = await appointmentRepository.Get(appointmentId);
             if (appointment == null)
                 return NotFound();
-            await appointmentRepository.Delete(appointment);
+            appointmentRepository.Delete(appointment);
             await appointmentRepository.SaveChanges();
             return NoContent();
         }

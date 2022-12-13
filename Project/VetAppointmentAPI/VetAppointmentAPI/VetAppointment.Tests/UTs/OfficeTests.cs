@@ -62,7 +62,7 @@
 
         private async void TestDelete(OfficeRepository officeRepo, Office office)
         {
-            await officeRepo.Delete(office);
+            officeRepo.Delete(office);
             await officeRepo.SaveChanges();
             Assert.IsNotNull(officeRepo.Get(office.OfficeId));
         }

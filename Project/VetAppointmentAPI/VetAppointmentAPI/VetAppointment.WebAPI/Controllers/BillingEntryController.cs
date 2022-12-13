@@ -82,7 +82,7 @@ namespace VetAppointment.WebAPI.Controllers
             {
                 return NotFound($"The Bill with id: {billingEntryId} was not found");
             }
-            await billingEntryRepository.Delete(bill);
+            billingEntryRepository.Delete(bill);
             await billingEntryRepository.SaveChanges();
             return NoContent();
         }
