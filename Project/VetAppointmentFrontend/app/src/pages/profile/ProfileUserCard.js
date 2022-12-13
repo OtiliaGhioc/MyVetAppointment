@@ -5,8 +5,14 @@ import Typography from "@mui/material/Typography";
 import CardActions from "@mui/material/CardActions";
 import Button from "@mui/material/Button";
 import { useEffect } from 'react';
+import { useNavigate} from "react-router-dom";
 
 const ProfileUserCard = ({ username, isMedic, joinedDate, hasOffice }) => {
+    const navigate = useNavigate();
+    const accessCreateAppointment = async () => {
+        navigate("/appointment/create");
+        return;
+    }
     let officeButton = hasOffice ? 
         <CardActions>
             <Button style={{ margin: '0 auto', border: '2px solid' }} color="secondary" variant="outlined">
@@ -27,6 +33,11 @@ const ProfileUserCard = ({ username, isMedic, joinedDate, hasOffice }) => {
                         Joined {joinedDate}
                     </Typography>
                 </CardContent>
+                <CardActions>
+                    <Button style={{ margin: '0 auto', border: '2px solid' }} color="secondary" variant="outlined" onClick={accessCreateAppointment}>
+                        Create appointment
+                    </Button>
+                </CardActions> : <></>
                 {officeButton}
             </Card>
         </Box>

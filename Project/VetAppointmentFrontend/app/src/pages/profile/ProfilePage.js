@@ -48,7 +48,10 @@ const ProfilePage = () => {
     useEffect(() => {
         document.body.style.backgroundColor = '#ebf6fc';
 
-        let userId = '1775a144-0134-43f1-971a-bce94639707c'; // to be taken from jwt
+        //let userId = '1775a144-0134-43f1-971a-bce94639707c'; // to be taken from jwt -- Calin
+        let userId = '009452fc-f236-47a0-a183-a82716264db8';
+
+
 
         const fetchData = async () => {
             const res = await fetch(`${API_ROOT}/Users/${userId}`, {

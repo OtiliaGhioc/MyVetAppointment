@@ -40,6 +40,9 @@ const AppointmentDataContainer = () => {
             return;
         }
     }
+    const editAppointment = async ()=>{
+        navigate(`/appointment/${id}/update`)
+    }
 
     useEffect(() => {
         document.body.style.backgroundColor = '#ebf6fc';
@@ -63,6 +66,7 @@ const AppointmentDataContainer = () => {
                             <h3>Appointed to: {appointment.appointee}</h3>
                             <h3>Description: {appointment.description}</h3>
                             <Button variant="contained" style={{ margin: '0 auto 0 1rem', border: '2px solid', color: 'red' }} onClick={cancelAppointment}>Cancel</Button>
+                            <Button variant="contained" style={{ margin: '0 auto 0 1rem', border: '2px solid', color: 'green' }} onClick={editAppointment}>Edit</Button>
                         </Container>
                     </>
                 }
