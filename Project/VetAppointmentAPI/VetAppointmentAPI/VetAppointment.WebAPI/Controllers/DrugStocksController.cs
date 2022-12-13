@@ -45,7 +45,7 @@ namespace VetAppointment.WebAPI.Controllers
         {
             var drug = await drugStockRepository.Get(drugStockId);
 
-            return drug != null ? Ok(drug) : NotFound($"DrugStock with id: {drugStockId} was not found");
+            return drug != null ? Ok(mapper.Map<DrugStockDto>(drug)) : NotFound($"DrugStock with id: {drugStockId} was not found");
         }
 
         [HttpPost]

@@ -41,9 +41,7 @@ namespace VetAppointment.WebAPI.Controllers
             if (medicalHistoryEntry == null)
                 return NotFound();
 
-            MedicalEntryDetailDto medicalEntryDetailDto = new MedicalEntryDetailDto(medicalHistoryEntry);
-
-            return Ok(medicalEntryDetailDto);
+            return Ok(mapper.Map<MedicalEntryDetailDto>(medicalHistoryEntry));
         }
 
         [HttpPost]
