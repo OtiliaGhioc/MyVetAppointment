@@ -1,10 +1,11 @@
-using Microsoft.AspNetCore.Hosting;
 using FluentValidation;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
+using System.Security.Claims;
+using System.Text;
 using VetAppointment.Application.Repositories.Impl;
 using VetAppointment.Application.Repositories.Interfaces;
-using VetAppointment.Domain.Entities;
 using VetAppointment.Infrastructure.Context;
 using VetAppointment.WebAPI.Dtos;
 using VetAppointment.WebAPI.Dtos.AppointmentDtos;
@@ -14,9 +15,6 @@ using VetAppointment.WebAPI.DTOs;
 using VetAppointment.WebAPI.Validators;
 
 var builder = WebApplication.CreateBuilder(args);
-
-string password_hasher_secret = (string)builder.Configuration.GetSection("PasswordHasher").GetValue(typeof(string), "Secret");
-Environment.SetEnvironmentVariable("PasswordHasher__Secret", password_hasher_secret);
 
 builder.Services.AddDbContext<DatabaseContext>(options => options.UseSqlite(
     builder.Configuration.GetConnectionString("VetAppointmentDb"),
@@ -30,7 +28,10 @@ builder.Services.AddCors(options =>
     options.AddPolicy(name: CustomAllowSpecificOrigins,
                       policy =>
                       {
-                          policy.WithOrigins("http://localhost:3000").WithMethods("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS");
+                          policy.WithOrigins("http://localhost:3000")
+                                .AllowAnyHeader()
+                                .AllowAnyMethod()
+                                .AllowCredentials();
                       });
 });
 
@@ -58,6 +59,24 @@ builder.Services.AddScoped<IValidator<AppointmentCreateDto>, AppointmentValidato
 builder.Services.AddScoped<IValidator<MedicalEntryCreateDto>, MedicalEntryValidator>();
 builder.Services.AddScoped<IValidator<BillingEntryDto>, BillingEntryValidator>();
 
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(item => item.TokenValidationParameters = new()
+    {
+        ValidateIssuer = true,
+        ValidIssuer = builder.Configuration.GetValue<string>("JWT:Issuer"),
+        ValidateAudience = true,
+        ValidAudience = builder.Configuration.GetValue<string>("JWT:Audience"),
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration.GetValue<string>("JWT:Secret")))
+    });
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("medic", policy => policy.RequireClaim(ClaimTypes.Role, "medic"));
+    options.AddPolicy("default", policy => policy.RequireClaim(ClaimTypes.Role, "default"));
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -71,6 +90,8 @@ app.UseHttpsRedirection();
 
 app.UseCors(CustomAllowSpecificOrigins);
 
+app.UseAuthentication();
+
 app.UseAuthorization();
 
 app.MapControllers();
@@ -78,6 +99,7 @@ app.MapControllers();
 app.Run();
 
 public partial class Program { }
+
 // PS > dotnet test /p:CollectCoverage=true -s.\coverlet.runsettings
 
 // PS > dotnet C:\Users\{YourUser}\.nuget\packages\reportgenerator\5.1.12\tools\net7.0\ReportGenerator.dll -reports:.\VetAppointment.Tests\TestResults\{CoverageFolderName}\coverage.cobertura.xml -targetdir:.\VetAppointment.Tests\TestResults\{CoverageFolderName}\report

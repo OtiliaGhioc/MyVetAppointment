@@ -2,9 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using VetAppointment.Application.Repositories.Interfaces;
 using VetAppointment.Domain.Entities;
-using VetAppointment.WebAPI.Dtos.AppointmentDtos;
 using VetAppointment.WebAPI.Dtos.MedicalEntryDto;
-using VetAppointment.WebAPI.Validators;
 
 namespace VetAppointment.WebAPI.Controllers
 {

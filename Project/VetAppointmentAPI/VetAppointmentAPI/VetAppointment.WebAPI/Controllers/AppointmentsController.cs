@@ -1,10 +1,10 @@
 ﻿using FluentValidation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 using VetAppointment.Application.Repositories.Interfaces;
 using VetAppointment.Domain.Entities;
-using VetAppointment.WebAPI.Dtos;
 using VetAppointment.WebAPI.Dtos.AppointmentDtos;
-using VetAppointment.WebAPI.Validators;
 
 namespace VetAppointment.WebAPI.Controllers
 {

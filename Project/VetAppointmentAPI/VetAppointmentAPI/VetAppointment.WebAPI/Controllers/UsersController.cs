@@ -1,10 +1,10 @@
 ﻿using FluentValidation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 using VetAppointment.Application.Repositories.Interfaces;
 using VetAppointment.Domain.Entities;
-using VetAppointment.WebAPI.Dtos;
 using VetAppointment.WebAPI.Dtos.UserDto;
-using VetAppointment.WebAPI.Validators;
 
 namespace VetAppointment.WebAPI.Controllers
 {
@@ -30,6 +30,35 @@ namespace VetAppointment.WebAPI.Controllers
             return Ok(await userRepository.All());
         }
 
+        [Authorize]
+        [HttpGet("me")]
+        public async Task<IActionResult> GetMe()
+        {
+            string? userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            if (userId == null)
+                return NotFound();
+            User? user = await userRepository.Get(Guid.Parse(userId));
+
+            if (user == null)
+                return NotFound();
+
+            List<Appointment> userAppointments =
+                (await appointmentRepository.Find(item => !item.IsExpired && item.AppointeeId == user.UserId)).ToList();
+
+            List<User> appointers = new List<User>();
+            foreach (Appointment appointment in userAppointments)
+            {
+                User? appointer = await userRepository.Get(appointment.AppointerId);
+                if (appointer == null)
+                    userAppointments.Remove(appointment);
+                else
+                    appointers.Add(appointer);
+            }
+            CompleteUserDto userDto = new CompleteUserDto(user, userAppointments, appointers);
+            return Ok(userDto);
+        }
+
         // GET api/<UsersController>/5
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(Guid id)
@@ -52,20 +81,6 @@ namespace VetAppointment.WebAPI.Controllers
             }
             CompleteUserDto userDto = new CompleteUserDto(user, userAppointments, appointers);
             return Ok(userDto);
-        }
-
-        // POST api/<UsersController>
-        [HttpPost]
-        public async Task<IActionResult> Post([FromBody] DefaultUserDto userDto)
-        {
-            var validation = userValidator.Validate(userDto);
-            if (!validation.IsValid)
-                return StatusCode(400, validation.Errors.First().ErrorMessage);
-            User user = new User(userDto.Username, userDto.Password);
-            await userRepository.Add(user);
-            await userRepository.SaveChanges();
-
-            return Created(nameof(User), user);
         }
 
         // PUT api/<UsersController>/5

@@ -2,9 +2,9 @@
 {
     public class Result<TEntity>
     {
-        public TEntity Entity { get; set; }
+        public TEntity? Entity { get; set; }
 
-        public string Error { get; private set; }
+        public string? Error { get; private set; }
         public bool IsSuccess { get; private set; }
 
         public bool IsFailure { get; private set; }
@@ -14,7 +14,7 @@
             return new Result<TEntity> { Entity = entity, IsSuccess = true };
         }
 
-        public static Result<TEntity> Failure(string error)
+        public static Result<TEntity> Failure(string? error)
         {
             return new Result<TEntity>
             {
