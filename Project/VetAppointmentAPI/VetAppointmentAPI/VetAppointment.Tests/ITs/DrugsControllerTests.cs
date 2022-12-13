@@ -1,5 +1,4 @@
 ﻿using System.Net.Http.Json;
-using VetAppointment.WebAPI.DTOs;
 using Microsoft.AspNetCore.TestHost;
 using VetAppointment.Application.Repositories.Interfaces;
 using Microsoft.Extensions.DependencyInjection;

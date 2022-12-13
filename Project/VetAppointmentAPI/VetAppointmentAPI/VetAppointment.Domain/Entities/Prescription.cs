@@ -19,6 +19,7 @@ namespace VetAppointment.Domain.Entities
         {
             if (drug == null)
                 return Result.Failure("Cannot add a null value to prescription");
+
             Drugs = Drugs.Append(drug);
             return Result.Success();
         }

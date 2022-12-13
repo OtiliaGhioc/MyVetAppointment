@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System.Linq.Expressions;
 using VetAppointment.Infrastructure.Context;
 
@@ -20,10 +19,9 @@ namespace VetAppointment.Application.Repositories.Base
             return entity;
         }
 
-        public virtual async Task Delete(T entity)
+        public virtual void Delete(T entity)
         {
-            EntityEntry entry = context.Set<T>().Entry(entity);
-            entry.State = EntityState.Deleted;
+            context.Set<T>().Remove(entity);
         }
         public virtual async Task<IEnumerable<T>> Find(Expression<Func<T, bool>> predicate)
         {
@@ -43,10 +41,9 @@ namespace VetAppointment.Application.Repositories.Base
                 .ToListAsync();
         }
 
-        public virtual async Task Update(T entity)
+        public virtual void Update(T entity)
         {
-            EntityEntry entry = context.Set<T>().Entry(entity);
-            entry.State = EntityState.Modified;
+            context.Set<T>().Update(entity);
         }
 
         public async Task SaveChanges()

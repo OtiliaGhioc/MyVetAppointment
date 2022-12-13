@@ -74,7 +74,7 @@ namespace VetAppointment.WebAPI.Controllers
             MedicalHistoryEntry? medicalHistoryEntry = await medicalHistoryEntryRepository.Get(medicalEntryId);
             if (medicalHistoryEntry == null)
                 return NotFound();
-            await medicalHistoryEntryRepository.Delete(medicalHistoryEntry);
+            medicalHistoryEntryRepository.Delete(medicalHistoryEntry);
             await medicalHistoryEntryRepository.SaveChanges();
             return NoContent();
         }

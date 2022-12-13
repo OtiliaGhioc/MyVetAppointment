@@ -80,7 +80,7 @@ namespace VetAppointment.WebAPI.Controllers
             var office = await officeRepository.Get(id);
             if (office == null)
                 return NotFound();
-            await officeRepository.Delete(office);
+            officeRepository.Delete(office);
             await officeRepository.SaveChanges();
 
             return NoContent();

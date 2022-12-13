@@ -86,7 +86,7 @@ namespace VetAppointment.WebAPI.Controllers
             Appointment? appointment = await appointmentRepository.Get(appointmentId);
             if (appointment == null)
                 return NotFound();
-            await appointmentRepository.Delete(appointment);
+            appointmentRepository.Delete(appointment);
             await appointmentRepository.SaveChanges();
             return NoContent();
         }

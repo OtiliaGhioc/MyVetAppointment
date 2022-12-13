@@ -30,14 +30,13 @@ namespace VetAppointment.Domain.Entities
             Quantity -= quantity;
             return Result.Success();
         }
-        /*public Result AddDrugsInStock(int quantity)
+
+        public Result AddDrugsInStock(int quantity)
         {
-            if (Quantity != 0)
-                return Result.Failure("You do not need to add drugs!");
             if (quantity < 0)
                 return Result.Failure("Cannot add negative stock!");
             Quantity += quantity;
             return Result.Success();
-        }*/
+        }
     }
 }

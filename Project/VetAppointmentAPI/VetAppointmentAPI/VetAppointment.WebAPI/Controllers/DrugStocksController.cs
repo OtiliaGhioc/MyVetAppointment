@@ -78,7 +78,7 @@ namespace VetAppointment.WebAPI.Controllers
 
             drug.RemoveDrugsFromPublicStock(quantityUpdate);
 
-            await drugStockRepository.Update(drug);
+            drugStockRepository.Update(drug);
             await drugStockRepository.SaveChanges();
             return NoContent();
         }
@@ -92,7 +92,7 @@ namespace VetAppointment.WebAPI.Controllers
             {
                 return NotFound($"DrugStock with id: {drugStockId} was not found");
             }
-            await drugStockRepository.Delete(drug);
+            drugStockRepository.Delete(drug);
             await drugStockRepository.SaveChanges();
             return NoContent();
         }

@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using FluentValidation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 using VetAppointment.Application.Repositories.Interfaces;
 using VetAppointment.Domain.Entities;
 using VetAppointment.WebAPI.Dtos.UserDto;
@@ -25,6 +27,19 @@ namespace VetAppointment.WebAPI.Controllers
             this.mapper = mapper;
         }
 
+        [Authorize]
+        [HttpGet("me")]
+        public async Task<IActionResult> GetMe()
+        {
+            string? userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            if (userId == null)
+                return NotFound();
+            User? user = await userRepository.Get(Guid.Parse(userId));
+            var meData = await GetParsedUserData(user);
+            return meData;
+        }
+
         // GET: api/<UsersController>
         [HttpGet]
         public async Task<IActionResult> Get()
@@ -37,6 +52,12 @@ namespace VetAppointment.WebAPI.Controllers
         public async Task<IActionResult> Get(Guid id)
         {
             User? user = await userRepository.Get(id);
+            var userData = await GetParsedUserData(user);
+            return userData;
+        }
+
+        private async Task<IActionResult> GetParsedUserData(User? user)
+        {
             if (user == null)
                 return NotFound();
 
@@ -44,10 +65,10 @@ namespace VetAppointment.WebAPI.Controllers
                 (await appointmentRepository.Find(item => !item.IsExpired && item.AppointeeId == user.UserId)).ToList();
 
             List<User> appointers = new List<User>();
-            foreach(Appointment appointment in userAppointments)
+            foreach (Appointment appointment in userAppointments)
             {
                 User? appointer = await userRepository.Get(appointment.AppointerId);
-                if(appointer == null)
+                if (appointer == null)
                     userAppointments.Remove(appointment);
                 else
                     appointers.Add(appointer);
@@ -94,7 +115,7 @@ namespace VetAppointment.WebAPI.Controllers
             User? user = await userRepository.Get(id);
             if(user == null)
                 return NotFound();
-            await userRepository.Delete(user);
+            userRepository.Delete(user);
             await userRepository.SaveChanges();
 
             return NoContent();

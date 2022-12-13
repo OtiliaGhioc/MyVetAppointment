@@ -14,7 +14,7 @@
             return new Result<TEntity> { Entity = entity, IsSuccess = true };
         }
 
-        public static Result<TEntity> Failure(string error)
+        public static Result<TEntity> Failure(string? error)
         {
             return new Result<TEntity>
             {

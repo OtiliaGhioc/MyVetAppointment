@@ -69,7 +69,7 @@ namespace VetAppointment.Tests.UTs
 
         private static async void TestDelete(UserRepository userRepo, User user)
         {
-            await userRepo.Delete(user);
+            userRepo.Delete(user);
             await userRepo.SaveChanges();
             Assert.IsNull(await userRepo.Get(user.UserId));
         }
