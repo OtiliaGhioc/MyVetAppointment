@@ -39,19 +39,19 @@
             TestDelete(medHistRepo, medicalHistoryEntry);
         }
 
-        private async void TestAdd(MedicalHistoryEntryRepository medHistRepo, MedicalHistoryEntry medicalHistoryEntry)
+        private static async void TestAdd(MedicalHistoryEntryRepository medHistRepo, MedicalHistoryEntry medicalHistoryEntry)
         {
             var added = await medHistRepo.Add(medicalHistoryEntry);
             await medHistRepo.SaveChanges();
             Assert.AreEqual(medicalHistoryEntry, added);
         }
 
-        private async void TestGet(MedicalHistoryEntryRepository medHistRepo, MedicalHistoryEntry medicalHistoryEntry)
+        private static async void TestGet(MedicalHistoryEntryRepository medHistRepo, MedicalHistoryEntry medicalHistoryEntry)
         {
             Assert.AreEqual<MedicalHistoryEntry>(medicalHistoryEntry, await medHistRepo.Get(medicalHistoryEntry.MedicalHistoryEntryId));
         }
 
-        private async void TestAll(MedicalHistoryEntryRepository medHistRepo, MedicalHistoryEntry medicalHistoryEntry)
+        private static async void TestAll(MedicalHistoryEntryRepository medHistRepo, MedicalHistoryEntry medicalHistoryEntry)
         {
             var allMedHistEntries = await medHistRepo.All();
             bool check = false;
@@ -62,7 +62,7 @@
             Assert.IsTrue(check);
         }
 
-        private async void TestFind(MedicalHistoryEntryRepository medHistRepo, MedicalHistoryEntry medicalHistoryEntry, Expression<Func<MedicalHistoryEntry, bool>> predicate)
+        private static async void TestFind(MedicalHistoryEntryRepository medHistRepo, MedicalHistoryEntry medicalHistoryEntry, Expression<Func<MedicalHistoryEntry, bool>> predicate)
         {
             var foundMedHistEntries = await medHistRepo.Find(predicate);
             bool check = false;
@@ -73,9 +73,9 @@
             Assert.IsTrue(check);
         }
 
-        private async void TestDelete(MedicalHistoryEntryRepository medHistRepo, MedicalHistoryEntry medicalHistoryEntry)
+        private static async void TestDelete(MedicalHistoryEntryRepository medHistRepo, MedicalHistoryEntry medicalHistoryEntry)
         {
-            await medHistRepo.Delete(medicalHistoryEntry);
+            medHistRepo.Delete(medicalHistoryEntry);
             await medHistRepo.SaveChanges();
             Assert.IsNull(await medHistRepo.Get(medicalHistoryEntry.MedicalHistoryEntryId));
         }

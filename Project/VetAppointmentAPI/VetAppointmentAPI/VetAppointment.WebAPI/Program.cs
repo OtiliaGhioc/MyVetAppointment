@@ -79,6 +79,8 @@ builder.Services.AddAuthorization(options =>
     options.AddPolicy("default", policy => policy.RequireClaim(ClaimTypes.Role, "default"));
 });
 
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

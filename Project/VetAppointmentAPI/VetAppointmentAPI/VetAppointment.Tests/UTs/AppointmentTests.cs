@@ -33,19 +33,19 @@
             TestDelete(appointmentRepo, appointment);
         }
 
-        private async void TestAdd(AppointmentRepository appointmentRepo, Appointment appointment)
+        private static async void TestAdd(AppointmentRepository appointmentRepo, Appointment appointment)
         {
             Appointment added = await appointmentRepo.Add(appointment);
             await appointmentRepo.SaveChanges();
             Assert.AreEqual(appointment, added);
         }
 
-        private async void TestGet(AppointmentRepository appointmentRepo, Appointment appointment)
+        private static async void TestGet(AppointmentRepository appointmentRepo, Appointment appointment)
         {
             Assert.AreEqual<Appointment>(appointment, await appointmentRepo.Get(appointment.AppointmentId));
         }
 
-        private async void TestAll(AppointmentRepository appointmentRepo, Appointment appointment)
+        private static async void TestAll(AppointmentRepository appointmentRepo, Appointment appointment)
         {
             var allOffices = await appointmentRepo.All();
             bool check = false;
@@ -56,7 +56,7 @@
             Assert.IsTrue(check);
         }
 
-        private async void TestFind(AppointmentRepository appointmentRepo, Appointment appointment, Expression<Func<Appointment, bool>> predicate)
+        private static async void TestFind(AppointmentRepository appointmentRepo, Appointment appointment, Expression<Func<Appointment, bool>> predicate)
         {
             var foundAppointments = await appointmentRepo.Find(predicate);
             bool check = false;
@@ -67,9 +67,9 @@
             Assert.IsTrue(check);
         }
 
-        private async void TestDelete(AppointmentRepository appointmentRepo, Appointment appointment)
+        private static async void TestDelete(AppointmentRepository appointmentRepo, Appointment appointment)
         {
-            await appointmentRepo.Delete(appointment);
+            appointmentRepo.Delete(appointment);
             await appointmentRepo.SaveChanges();
             Assert.IsNull(await appointmentRepo.Get(appointment.AppointmentId));
         }

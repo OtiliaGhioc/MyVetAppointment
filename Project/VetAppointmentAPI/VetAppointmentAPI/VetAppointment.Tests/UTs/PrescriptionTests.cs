@@ -36,19 +36,19 @@
             TestDelete(prescriptionRepo, prescription);
         }
 
-        private async void TestAdd(PrescriptionRepository prescriptionRepo, Prescription prescription)
+        private static async void TestAdd(PrescriptionRepository prescriptionRepo, Prescription prescription)
         {
             Prescription added = await prescriptionRepo.Add(prescription);
             await prescriptionRepo.SaveChanges();
             Assert.AreEqual(prescription, added);
         }
 
-        private async void TestGet(PrescriptionRepository prescriptionRepo, Prescription prescription)
+        private static async void TestGet(PrescriptionRepository prescriptionRepo, Prescription prescription)
         {
             Assert.AreEqual(prescription, await prescriptionRepo.Get(prescription.PrescriptionId));
         }
 
-        private async void TestAll(PrescriptionRepository prescriptionRepo, Prescription prescription)
+        private static async void TestAll(PrescriptionRepository prescriptionRepo, Prescription prescription)
         {
             var allPrescriptions = await prescriptionRepo.All();
             bool check = false;
@@ -59,7 +59,7 @@
             Assert.IsTrue(check);
         }
 
-        private async void TestFind(PrescriptionRepository prescriptionRepo, Prescription prescription, Expression<Func<Prescription, bool>> predicate)
+        private static async void TestFind(PrescriptionRepository prescriptionRepo, Prescription prescription, Expression<Func<Prescription, bool>> predicate)
         {
             var foundOffices = await prescriptionRepo.Find(predicate);
             bool check = false;
@@ -70,9 +70,9 @@
             Assert.IsTrue(check);
         }
 
-        private async void TestDelete(PrescriptionRepository prescriptionRepo, Prescription prescription)
+        private static async void TestDelete(PrescriptionRepository prescriptionRepo, Prescription prescription)
         {
-            await prescriptionRepo.Delete(prescription);
+            prescriptionRepo.Delete(prescription);
             await prescriptionRepo.SaveChanges();
             Assert.IsNull(await prescriptionRepo.Get(prescription.PrescriptionId));
         }

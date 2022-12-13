@@ -32,19 +32,19 @@
             TestDelete(drugRepo, drug);
         }
 
-        private async void TestAdd(DrugRepository drugRepo, Drug drug)
+        private static async void TestAdd(DrugRepository drugRepo, Drug drug)
         {
             var added = await drugRepo.Add(drug);
             await drugRepo.SaveChanges();
             Assert.AreEqual(drug, added);
         }
 
-        private async void TestGet(DrugRepository drugRepo, Drug drug)
+        private static async void TestGet(DrugRepository drugRepo, Drug drug)
         {
             Assert.AreEqual(drug, await drugRepo.Get(drug.DrugId));
         }
 
-        private async void TestAll(DrugRepository drugRepo, Drug drug)
+        private static async void TestAll(DrugRepository drugRepo, Drug drug)
         {
             var allDrugs = await drugRepo.All();
             bool check = false;
@@ -55,7 +55,7 @@
             Assert.IsTrue(check);
         }
 
-        private async void TestFind(DrugRepository officeRepo, Drug office, Expression<Func<Drug, bool>> predicate)
+        private static async void TestFind(DrugRepository officeRepo, Drug office, Expression<Func<Drug, bool>> predicate)
         {
             var foundOffices = await officeRepo.Find(predicate);
             bool check = false;
@@ -66,9 +66,9 @@
             Assert.IsTrue(check);
         }
 
-        private async void TestDelete(DrugRepository officeRepo, Drug office)
+        private static async void TestDelete(DrugRepository officeRepo, Drug office)
         {
-            await officeRepo.Delete(office);
+            officeRepo.Delete(office);
             await officeRepo.SaveChanges();
             Assert.IsNotNull(officeRepo.Get(office.DrugId));
         }

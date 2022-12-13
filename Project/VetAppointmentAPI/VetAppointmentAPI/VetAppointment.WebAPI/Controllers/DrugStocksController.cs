@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using AutoMapper;
+using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using VetAppointment.Application.Repositories.Interfaces;
 using VetAppointment.Domain.Entities;
@@ -13,12 +14,14 @@ namespace VetAppointment.WebAPI.Controllers
         private readonly IDrugStockRepository drugStockRepository;
         private readonly IDrugRepository drugRepository;
         private readonly IValidator<CreateDrugStockDto> drugValidator;
+        private readonly IMapper mapper;
 
-        public DrugStocksController(IDrugStockRepository drugStockRepository, IDrugRepository drugRepository, IValidator<CreateDrugStockDto> validator)
+        public DrugStocksController(IDrugStockRepository drugStockRepository, IDrugRepository drugRepository, IValidator<CreateDrugStockDto> validator, IMapper mapper)
         {
             this.drugStockRepository = drugStockRepository;
             this.drugRepository = drugRepository;
             this.drugValidator = validator;
+            this.mapper = mapper;
         }
 
         [HttpGet]
@@ -57,10 +60,10 @@ namespace VetAppointment.WebAPI.Controllers
             if (drug == null)
                 return NotFound($"Drug with id: {drugDto.TypeId} was not found");
 
-            var drugStock = new DrugStock(drug,drugDto.Quantity);
+            DrugStock drugStock = mapper.Map<DrugStock>(drugDto);
             await drugStockRepository.Add(drugStock);
             await drugStockRepository.SaveChanges();
-            return Created(nameof(GetAllDrugStocks), drugStock);
+            return Created(nameof(GetAllDrugStocks), mapper.Map<DrugStockDto>(drugStock));
         }
 
         [HttpPut("{id}")]

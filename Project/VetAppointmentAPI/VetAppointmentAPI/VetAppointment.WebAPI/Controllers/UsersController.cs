@@ -1,10 +1,12 @@
-﻿using FluentValidation;
+﻿using AutoMapper;
+using FluentValidation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using VetAppointment.Application.Repositories.Interfaces;
 using VetAppointment.Domain.Entities;
 using VetAppointment.WebAPI.Dtos.UserDto;
+using VetAppointment.WebAPI.DTOs;
 
 namespace VetAppointment.WebAPI.Controllers
 {
@@ -15,12 +17,14 @@ namespace VetAppointment.WebAPI.Controllers
         private readonly IUserRepository userRepository;
         private readonly IAppointmentRepository appointmentRepository;
         private readonly IValidator<DefaultUserDto> userValidator;
+        private readonly IMapper mapper;
 
-        public UsersController(IUserRepository userRepository, IAppointmentRepository appointmentRepository, IValidator<DefaultUserDto> validator)
+        public UsersController(IUserRepository userRepository, IAppointmentRepository appointmentRepository, IValidator<DefaultUserDto> validator, IMapper mapper)
         {
             this.userRepository = userRepository;
             this.appointmentRepository = appointmentRepository;
             this.userValidator= validator;
+            this.mapper = mapper;
         }
 
         [Authorize]
@@ -71,23 +75,6 @@ namespace VetAppointment.WebAPI.Controllers
             }
             CompleteUserDto userDto = new CompleteUserDto(user, userAppointments, appointers);
             return Ok(userDto);
-        }
-
-        // PUT api/<UsersController>/5
-        [HttpPut]
-        public async Task<IActionResult> Put([FromBody] DefaultUserDto userDto)
-        {
-            var validation = userValidator.Validate(userDto);
-            if (!validation.IsValid)
-                return StatusCode(400, validation.Errors.First().ErrorMessage);
-            User? user = await userRepository.Get(userDto.UserId);
-            if (user == null)
-                return NotFound();
-
-            userRepository.Update(user);
-            await userRepository.SaveChanges();
-
-            return NoContent();
         }
 
         // DELETE api/<UsersController>/5

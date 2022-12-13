@@ -1,8 +1,10 @@
-﻿using FluentValidation;
+﻿using AutoMapper;
+using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using VetAppointment.Application.Repositories.Interfaces;
 using VetAppointment.Domain.Entities;
 using VetAppointment.WebAPI.Dtos.MedicalEntryDto;
+using VetAppointment.WebAPI.DTOs;
 
 namespace VetAppointment.WebAPI.Controllers
 {
@@ -14,14 +16,16 @@ namespace VetAppointment.WebAPI.Controllers
         private readonly IAppointmentRepository appointmentRepository;
         private readonly IPrescriptionRepository prescriptionRepository;
         private readonly IValidator<MedicalEntryCreateDto> medicalEntryValidator;
+        private readonly IMapper mapper;
 
         public MedicalEntriesController(IMedicalHistoryEntryRepository medicalHistoryEntryRepository,
-            IAppointmentRepository appointmentRepository, IPrescriptionRepository prescriptionRepository, IValidator<MedicalEntryCreateDto> medicalEntryValidator)
+            IAppointmentRepository appointmentRepository, IPrescriptionRepository prescriptionRepository, IValidator<MedicalEntryCreateDto> medicalEntryValidator, IMapper mapper)
         {
             this.medicalHistoryEntryRepository = medicalHistoryEntryRepository;
             this.appointmentRepository = appointmentRepository;
             this.prescriptionRepository = prescriptionRepository;
             this.medicalEntryValidator = medicalEntryValidator;
+            this.mapper = mapper;
         }
 
         [HttpGet]
@@ -57,12 +61,11 @@ namespace VetAppointment.WebAPI.Controllers
                 return NotFound();
 
 
-            MedicalHistoryEntry medicalHistoryEntry = new MedicalHistoryEntry(appointment, prescription);
+            MedicalHistoryEntry medicalHistoryEntry = mapper.Map<MedicalHistoryEntry>(medicalEntryDto);
             await medicalHistoryEntryRepository.Add(medicalHistoryEntry);
             await medicalHistoryEntryRepository.SaveChanges();
 
-            MedicalEntryDetailDto medicalEntryDetail = new MedicalEntryDetailDto(medicalHistoryEntry);
-            return Created(nameof(Get), medicalEntryDetail);
+            return Created(nameof(Get), mapper.Map<MedicalEntryDetailDto>(medicalHistoryEntry));
         }
 
         [HttpDelete("{medicalEntryId:guid}")]
