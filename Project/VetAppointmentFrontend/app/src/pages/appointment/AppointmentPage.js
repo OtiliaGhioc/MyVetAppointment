@@ -1,13 +1,12 @@
-import * as React from 'react';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import Grid from '@mui/material/Grid';
-import { styled } from '@mui/material/styles';
+import { Button } from '@mui/material';
 import Box from '@mui/material/Box';
+import Container from '@mui/material/Container';
+import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
+import { createTheme, styled, ThemeProvider } from '@mui/material/styles';
+import * as React from 'react';
 import { useEffect } from 'react';
 import AppointmentDataContainer from './AppointmentDataContainer';
-import { Button } from '@mui/material';
-import Container from '@mui/material/Container';
 
 const profileTheme = createTheme({
     palette: {

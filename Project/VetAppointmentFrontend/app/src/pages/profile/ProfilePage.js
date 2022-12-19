@@ -3,12 +3,11 @@ import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import { createTheme, styled, ThemeProvider } from '@mui/material/styles';
 import * as React from 'react';
-import { useEffect } from 'react';
-import { useNavigate } from "react-router-dom";
-import { API_ROOT } from '../../env';
-import ProfileDocumentsContainer from './ProfileDocumentsContainer';
+import { useLocation, useNavigate } from "react-router-dom";
+import { API_ROOT, BACKGROUND_COLOR } from '../../env';
+import { getDocumentName } from '../../util/DocumentUtil';
+import { disconnectUser, getAccessToken, getRefreshToken, makeRequestWithJWT } from '../../util/JWTUtil';
 import ProfileUserCard from './ProfileUserCard';
-import { getAccessToken, getRefreshToken, makeRequestWithJWT, disconnectUser } from '../../util/JWTUtil';
 
 const profileTheme = createTheme({
     palette: {
@@ -28,46 +27,53 @@ const Item = styled(Paper)(({ theme }) => ({
     color: theme.palette.text.secondary,
 }));
 
-const ProfilePage = () => {
+const ProfilePage = ({ locationChangeCallback }) => {
     const [username, setUsername] = React.useState('username');
     const [isMedic, setIsMedic] = React.useState(false);
     const [hasOffice, setHasOffice] = React.useState(false);
     const [joinedDate, setJoinedDate] = React.useState('March 2020');
-    const [appointments, setAppointments] = React.useState([]);
-    const [medicalEntries, setMedicalEntries] = React.useState([]);
 
     const navigate = useNavigate();
+
+    const location = useLocation()
+
+    React.useEffect(() => {
+        document.title = getDocumentName('Profile')
+    }, [])
+
+    React.useEffect(() => {
+        locationChangeCallback(location);
+    }, [location]);
 
     const setPageData = (data) => {
         setUsername(data.username);
         setIsMedic(data.isMedic);
         setJoinedDate(data.joinedDate);
         setHasOffice(data.hasOffice);
-        setAppointments(data.appointments);
     }
 
-    useEffect(() => {
-        document.body.style.backgroundColor = '#ebf6fc';
+    React.useEffect(() => {
+        document.body.style.backgroundColor = BACKGROUND_COLOR;
 
         const fetchData = async () => {
             const res = await makeRequestWithJWT(
                 `${API_ROOT}/Users/me/`, {
-                    method: 'GET',
-                    mode: 'cors'
-                }, {
-                    accessToken: getAccessToken(),
-                    refreshToken: getRefreshToken()
-                }
+                method: 'GET',
+                mode: 'cors'
+            }, {
+                accessToken: getAccessToken(),
+                refreshToken: getRefreshToken()
+            }
             )
-                
-            if(res.status === 401) {
+
+            if (res.status === 401) {
                 disconnectUser();
-                navigate("/");
+                navigate('/login');
                 return;
             }
 
-            if(!res.ok) {
-                navigate("/not-found");
+            if (!res.ok) {
+                navigate('/not-found');
                 return;
             }
 
@@ -81,18 +87,13 @@ const ProfilePage = () => {
         <ThemeProvider theme={profileTheme}>
             <Box sx={{ flexGrow: 1, margin: '2rem auto 0 auto' }}>
                 <Grid container spacing={2}>
-                    <Grid item xs={1} />
-                    <Grid item xs={8}>
-                        <Item>
-                            <ProfileDocumentsContainer appointments={appointments} medicalEntries={medicalEntries} />
-                        </Item>
-                    </Grid>
-                    <Grid item xs={2}>
+                    <Grid item xs={4}/>
+                    <Grid item xs={4}>
                         <Item>
                             <ProfileUserCard username={username} isMedic={isMedic} joinedDate={joinedDate} hasOffice={hasOffice} />
                         </Item>
                     </Grid>
-                    <Grid item xs={1} />
+                    <Grid item xs={4} />
                 </Grid>
             </Box>
         </ThemeProvider>

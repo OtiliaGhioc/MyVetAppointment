@@ -15,9 +15,10 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import * as React from 'react';
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
-import { literal, object, string } from 'zod';
+import { useLocation, useNavigate } from "react-router-dom";
+import { boolean, object, string } from 'zod';
 import { API_ROOT } from '../../env';
+import { getDocumentName } from "../../util/DocumentUtil";
 import { getRefreshToken, storeTokens } from '../../util/JWTUtil';
 
 const theme = createTheme();
@@ -32,14 +33,19 @@ const registerSchema = object({
         .min(8, 'Password must be more than 8 characters')
         .max(32, 'Password must be less than 32 characters'),
     passwordConfirm: string().min(1, 'Please confirm your password'),
-    isMedic: literal(false),
+    isMedic: boolean()
 }).refine((data) => data.password === data.passwordConfirm, {
     path: ['passwordConfirm'],
     message: 'Passwords do not match',
 });
 
-const RegisterPage = () => {
+const RegisterPage = ({locationChangeCallback}) => {
     const navigate = useNavigate();
+    const location = useLocation()
+
+    React.useEffect(() => {
+        locationChangeCallback(location);
+    }, [location]);
 
     const {
         register,
@@ -51,8 +57,12 @@ const RegisterPage = () => {
     });
 
     React.useEffect(() => {
+        document.title = getDocumentName('Register');
+    }, []);
+
+    React.useEffect(() => {
         if (getRefreshToken() !== null)
-            navigate('/');
+            navigate('/me');
     }, [navigate])
 
     const performRegister = async (username, password, isMedic) => {
@@ -81,7 +91,7 @@ const RegisterPage = () => {
 
         const jsonData = await res.json();
         storeTokens(jsonData.accessToken, jsonData.refreshToken);
-        navigate("/");
+        navigate("/me");
     }
 
     const processSubmit = (data) => {
@@ -164,10 +174,10 @@ const RegisterPage = () => {
                                 }
                             />
                             <FormGroup>
-                                <FormControlLabel 
-                                control={<Checkbox defaultChecked={false} />} 
-                                label="I am a medic" 
-                                {...register('isMedic')}/>
+                                <FormControlLabel
+                                    control={<Checkbox defaultChecked={false} />}
+                                    label="I am a medic"
+                                    {...register('isMedic')} />
                             </FormGroup>
                             <Button
                                 type="submit"
