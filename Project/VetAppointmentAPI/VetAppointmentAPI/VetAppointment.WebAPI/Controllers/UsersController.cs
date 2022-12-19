@@ -2,9 +2,11 @@
 using FluentValidation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections;
 using System.Security.Claims;
 using VetAppointment.Application.Repositories.Interfaces;
 using VetAppointment.Domain.Entities;
+using VetAppointment.WebAPI.Dtos.AppointmentDtos;
 using VetAppointment.WebAPI.Dtos.UserDto;
 using VetAppointment.WebAPI.DTOs;
 
@@ -16,13 +18,20 @@ namespace VetAppointment.WebAPI.Controllers
     {
         private readonly IUserRepository userRepository;
         private readonly IAppointmentRepository appointmentRepository;
+        private readonly IMedicalHistoryEntryRepository medicalHistoryEntryRepository;
         private readonly IValidator<DefaultUserDto> userValidator;
         private readonly IMapper mapper;
 
-        public UsersController(IUserRepository userRepository, IAppointmentRepository appointmentRepository, IValidator<DefaultUserDto> validator, IMapper mapper)
+        public UsersController(
+            IUserRepository userRepository, 
+            IAppointmentRepository appointmentRepository, 
+            IMedicalHistoryEntryRepository medicalHistoryEntryRepository, 
+            IValidator<DefaultUserDto> validator, 
+            IMapper mapper)
         {
             this.userRepository = userRepository;
             this.appointmentRepository = appointmentRepository;
+            this.medicalHistoryEntryRepository = medicalHistoryEntryRepository;
             this.userValidator= validator;
             this.mapper = mapper;
         }
@@ -36,8 +45,51 @@ namespace VetAppointment.WebAPI.Controllers
             if (userId == null)
                 return NotFound();
             User? user = await userRepository.Get(Guid.Parse(userId));
-            var meData = await GetParsedUserData(user);
-            return meData;
+            if (user == null)
+                return NotFound();
+
+            var meData = new DetailUserDto(user);
+            return Ok(meData);
+        }
+
+        [Authorize]
+        [HttpGet("me/appointments")]
+        public async Task<IActionResult> GetMyAppointments()
+        {
+            string? userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            if (userId == null)
+                return NotFound();
+            User? user = await userRepository.Get(Guid.Parse(userId));
+            if (user == null)
+                return NotFound();
+
+            List<Appointment> userAppointments = (List<Appointment>)await GetUserAppointments(user);
+            var userAppointers = await GetAppointersForUserAppointments(userAppointments);
+            List<User> appointers = (List<User>)userAppointers.Item1;
+            userAppointments = (List<Appointment>)userAppointers.Item2;
+
+            return Ok(new UserAppointmentsDto(user, userAppointments, appointers));
+        }
+
+        [Authorize]
+        [HttpGet("me/medical-history")]
+        public async Task<IActionResult> GetMyMedicalHistory()
+        {
+            string? userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            if (userId == null)
+                return NotFound();
+            User? user = await userRepository.Get(Guid.Parse(userId));
+            if (user == null)
+                return NotFound();
+
+            List<MedicalHistoryEntry> userMedicalHistoryEntries = (List<MedicalHistoryEntry>)await GetUserMedicalHistoryEntries(user);
+            var userAppointers = await GetAppointersForUserMedicalHistoryEntries(userMedicalHistoryEntries);
+            List<User> appointers = (List<User>)userAppointers.Item1;
+            userMedicalHistoryEntries = (List<MedicalHistoryEntry>)userAppointers.Item2;
+
+            return Ok(new UserMedicalHistoryDto(user, userMedicalHistoryEntries, appointers));
         }
 
         // GET: api/<UsersController>
@@ -61,9 +113,31 @@ namespace VetAppointment.WebAPI.Controllers
             if (user == null)
                 return NotFound();
 
+            List<Appointment> userAppointments = (List<Appointment>)await GetUserAppointments(user);
+            var userAppointers = await GetAppointersForUserAppointments(userAppointments);
+            List<User> appointers = (List<User>)userAppointers.Item1;
+            userAppointments = (List<Appointment>)userAppointers.Item2;
+
+            CompleteUserDto userDto = new CompleteUserDto(user, userAppointments, appointers);
+            return Ok(userDto);
+        }
+
+        private async Task<IEnumerable<Appointment>> GetUserAppointments(User user)
+        {
             List<Appointment> userAppointments =
                 (await appointmentRepository.Find(item => !item.IsExpired && item.AppointeeId == user.UserId)).ToList();
+            return userAppointments;
+        }
 
+        private async Task<IEnumerable<MedicalHistoryEntry>> GetUserMedicalHistoryEntries(User user)
+        {
+            List<MedicalHistoryEntry> userMedicalEntries = new();
+            return userMedicalEntries;
+        }
+
+        private async Task<Tuple<IEnumerable<User>, IEnumerable<Appointment>>> 
+            GetAppointersForUserAppointments(List<Appointment> userAppointments)
+        {
             List<User> appointers = new List<User>();
             foreach (Appointment appointment in userAppointments)
             {
@@ -73,8 +147,31 @@ namespace VetAppointment.WebAPI.Controllers
                 else
                     appointers.Add(appointer);
             }
-            CompleteUserDto userDto = new CompleteUserDto(user, userAppointments, appointers);
-            return Ok(userDto);
+            return new Tuple<IEnumerable<User>, IEnumerable<Appointment>>(appointers, userAppointments);
+        }
+
+        private async Task<Tuple<IEnumerable<User>, IEnumerable<MedicalHistoryEntry>>>
+            GetAppointersForUserMedicalHistoryEntries(List<MedicalHistoryEntry> userMedicalHistoryEntries)
+        {
+            List<User> appointers = new List<User>();
+            foreach (MedicalHistoryEntry medicalHistoryEntry in userMedicalHistoryEntries)
+            {
+                var appointerId = medicalHistoryEntry.Appointment?.AppointerId;
+
+                if (appointerId == null)
+                {
+                    userMedicalHistoryEntries.Remove(medicalHistoryEntry);
+                    continue;
+                }
+
+                User? appointer = await userRepository.Get((Guid)appointerId);
+
+                if (appointer == null)
+                    userMedicalHistoryEntries.Remove(medicalHistoryEntry);
+                else
+                    appointers.Add(appointer);
+            }
+            return new Tuple<IEnumerable<User>, IEnumerable<MedicalHistoryEntry>>(appointers, userMedicalHistoryEntries);
         }
 
         // PUT api/<UsersController>/5

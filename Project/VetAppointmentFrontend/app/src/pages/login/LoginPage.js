@@ -12,9 +12,10 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import * as React from 'react';
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { object, string } from 'zod';
 import { API_ROOT } from '../../env';
+import { getDocumentName } from "../../util/DocumentUtil";
 import { getRefreshToken, storeTokens } from '../../util/JWTUtil';
 
 const theme = createTheme();
@@ -30,8 +31,13 @@ const loginSchema = object({
         .max(32, 'Password must be less than 32 characters')
 });
 
-const LoginPage = () => {
+const LoginPage = ({ locationChangeCallback }) => {
     const navigate = useNavigate();
+    const location = useLocation()
+
+    React.useEffect(() => {
+        locationChangeCallback(location);
+    }, [location]);
 
     const {
         register,
@@ -43,8 +49,12 @@ const LoginPage = () => {
     });
 
     React.useEffect(() => {
+        document.title = getDocumentName('Login');
+    }, []);
+
+    React.useEffect(() => {
         if (getRefreshToken() !== null)
-            navigate('/');
+            navigate('/me');
     }, [navigate])
 
     const performLogin = async (username, password) => {
@@ -72,7 +82,7 @@ const LoginPage = () => {
 
         const jsonData = await res.json();
         storeTokens(jsonData.accessToken, jsonData.refreshToken);
-        navigate("/");
+        navigate("/me");
     }
 
     const processSubmit = (data) => {

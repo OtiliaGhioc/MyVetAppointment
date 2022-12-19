@@ -27,5 +27,21 @@ namespace VetAppointment.WebAPI.Dtos
             public Guid AppointmentId { get; set; }
             public Guid PrescriptionId { get; set; }
         }
+
+        public class MedicalEntryEssentialOnlyDto
+        {
+            public MedicalEntryEssentialOnlyDto(MedicalHistoryEntry medicalHistoryEntry, User appointer)
+            {
+                MedicalHistoryEntryId = medicalHistoryEntry.MedicalHistoryEntryId;
+                Appointer = appointer.Username;
+                Title = medicalHistoryEntry.Appointment != null ? medicalHistoryEntry.Appointment.Title : "No title";
+                Date = medicalHistoryEntry.Appointment != null ? medicalHistoryEntry.Appointment.DueDate.ToString("dd-MMM-yyyy") : "No date";
+            }
+
+            public Guid MedicalHistoryEntryId { get; private set; }
+            public string Appointer { get; private set; }
+            public string Title { get; private set; }
+            public string Date { get; private set; }
+        }
     }
 }
