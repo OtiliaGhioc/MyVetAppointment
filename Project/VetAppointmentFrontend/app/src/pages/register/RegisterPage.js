@@ -71,7 +71,7 @@ const RegisterPage = ({locationChangeCallback}) => {
             return;
         }
 
-        const res = await fetch(`${API_ROOT}/Auth/register/`, {
+        const res = await fetch(`${API_ROOT}/v1.0/Auth/register/`, {
             method: 'POST',
             mode: 'cors',
             headers: {

@@ -1,6 +1,4 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.VisualBasic;
 using VetAppointment.Domain.Entities;
 using VetAppointment.WebAPI.Dtos;
 using VetAppointment.WebAPI.Dtos.AppointmentDtos;

@@ -7,7 +7,8 @@ using VetAppointment.WebAPI.DTOs;
 
 namespace VetAppointment.WebAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v{version:apiVersion}/[controller]")]
+    [ApiVersion("1.0")]
     [ApiController]
     public class DrugsController : ControllerBase
     {

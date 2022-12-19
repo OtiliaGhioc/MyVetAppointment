@@ -13,7 +13,7 @@ const MedicalHistoryDataContainer = () => {
     let { medicalEntryId } = useParams();
     
     const fetchDataMedicalHistory = async () => {
-        let path = `${API_ROOT}/MedicalEntries/${medicalEntryId}`
+        let path = `${API_ROOT}/v1.0/MedicalEntries/${medicalEntryId}`
         const response = await fetch(path, {
             method: 'GET',
             mode: 'cors'

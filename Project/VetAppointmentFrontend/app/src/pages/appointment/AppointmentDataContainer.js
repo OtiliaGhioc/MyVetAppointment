@@ -13,7 +13,7 @@ const AppointmentDataContainer = () => {
     let { id } = useParams();
 
     const fetchDataAppointment = async () => {
-        let path = `${API_ROOT}/Appointments/${id}`
+        let path = `${API_ROOT}/v1.0/Appointments/${id}`
         const response = await fetch(path, {
             method: 'GET',
             mode: 'cors'
@@ -30,7 +30,7 @@ const AppointmentDataContainer = () => {
     }
 
     const cancelAppointment = async () => {
-        const res = await fetch(`${API_ROOT}/Appointments/${appointment.appointmentId}`, {
+        const res = await fetch(`${API_ROOT}/v1.0/Appointments/${appointment.appointmentId}`, {
             method: 'DELETE',
             mode: 'cors'
         });
