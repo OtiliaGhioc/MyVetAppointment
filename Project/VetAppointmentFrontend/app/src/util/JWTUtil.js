@@ -36,7 +36,7 @@ const getNewAccessToken = async (
     refreshToken
 ) => {
     let res;
-    let url = `${API_ROOT}/Auth/refresh/`;
+    let url = `${API_ROOT}/v1.0/Auth/refresh/`;
 
     try {
         res = await fetch(url, {

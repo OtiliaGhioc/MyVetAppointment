@@ -57,7 +57,7 @@ const ProfilePage = ({ locationChangeCallback }) => {
 
         const fetchData = async () => {
             const res = await makeRequestWithJWT(
-                `${API_ROOT}/Users/me/`, {
+                `${API_ROOT}/v1.0/Users/me/`, {
                 method: 'GET',
                 mode: 'cors'
             }, {

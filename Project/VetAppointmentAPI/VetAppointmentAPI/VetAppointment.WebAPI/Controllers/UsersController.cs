@@ -2,17 +2,15 @@
 using FluentValidation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections;
 using System.Security.Claims;
 using VetAppointment.Application.Repositories.Interfaces;
 using VetAppointment.Domain.Entities;
-using VetAppointment.WebAPI.Dtos.AppointmentDtos;
 using VetAppointment.WebAPI.Dtos.UserDto;
-using VetAppointment.WebAPI.DTOs;
 
 namespace VetAppointment.WebAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v{version:apiVersion}/[controller]")]
+    [ApiVersion("1.0")]
     [ApiController]
     public class UsersController : ControllerBase
     {

@@ -27,7 +27,7 @@ const AppointmentsListPage = ({ locationChangeCallback }) => {
 
         const fetchMyAppointments = async () => {
             const res = await makeRequestWithJWT(
-                `${API_ROOT}/Users/me/appointments`, {
+                `${API_ROOT}/v1.0/Users/me/appointments`, {
                 method: 'GET',
                 mode: 'cors'
             }, {

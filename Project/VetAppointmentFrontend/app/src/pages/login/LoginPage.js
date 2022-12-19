@@ -63,7 +63,7 @@ const LoginPage = ({ locationChangeCallback }) => {
             return;
         }
 
-        const res = await fetch(`${API_ROOT}/Auth/login/`, {
+        const res = await fetch(`${API_ROOT}/v1.0/Auth/login/`, {
             method: 'POST',
             mode: 'cors',
             headers: {

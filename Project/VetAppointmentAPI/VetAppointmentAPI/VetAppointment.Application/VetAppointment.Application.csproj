@@ -27,7 +27,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\VetAppointment.Domain\VetAppointment.Domain.csproj" />
-    <ProjectReference Include="..\VetAppointment.Infrastructure\VetAppointment.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

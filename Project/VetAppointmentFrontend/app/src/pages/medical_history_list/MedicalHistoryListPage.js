@@ -27,7 +27,7 @@ const MedicalHistoryListPage = ({ locationChangeCallback }) => {
 
         const fetchMyMedicalHistoryEntries = async () => {
             const res = await makeRequestWithJWT(
-                `${API_ROOT}/Users/me/medical-history`, {
+                `${API_ROOT}/v1.0/Users/me/medical-history`, {
                 method: 'GET',
                 mode: 'cors'
             }, {
