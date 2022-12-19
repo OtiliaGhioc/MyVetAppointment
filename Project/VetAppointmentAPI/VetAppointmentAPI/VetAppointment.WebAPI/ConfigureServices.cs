@@ -31,7 +31,7 @@ namespace VetAppointment.Infrastructure
         public static IServiceCollection AddAuthenticationServices
             (this IServiceCollection services , IConfiguration configuration)
         {
-            SymmetricSecurityKey secretKey = new(Encoding.UTF8.GetBytes(configuration.GetValue<string>("JWT:Secret") ?? throw new ArgumentNullException(nameof(AddAuthenticationServices))));
+            SymmetricSecurityKey secretKey = new(Encoding.UTF8.GetBytes(configuration.GetValue<string>("JWT:Secret") ?? throw new ArgumentNullException(nameof(configuration))));
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(item => item.TokenValidationParameters = new()
