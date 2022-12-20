@@ -49,20 +49,18 @@ namespace VetAppointment.WebAPI.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] UpdateDrugCommand command)
+        public async Task<ActionResult<DrugResponse>> Update([FromRoute] Guid id, [FromBody] UpdateDrugCommand command)
         {
-            await mediator.Send(command);
-            return NoContent();
+            return await mediator.Send(command);
         }
 
         [HttpDelete("{drugId}")]
-        public async Task<IActionResult> Delete([FromRoute] Guid drugId)
+        public async Task<Unit> Delete([FromRoute] Guid drugId)
         {
-            await mediator.Send(new DeleteDrugCommand
+            return await mediator.Send(new DeleteDrugCommand
             {
                 Id = drugId
             });
-            return NoContent();
         }
     }
 }

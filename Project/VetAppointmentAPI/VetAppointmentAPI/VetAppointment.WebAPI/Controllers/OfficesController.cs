@@ -52,21 +52,19 @@ namespace VetAppointment.WebAPI.Controllers
 
         // PUT api/<OfficesController>/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put([FromRoute] Guid id, [FromBody] UpdateOfficeCommand command)
+        public async Task<ActionResult<OfficeResponse>> Put([FromRoute] Guid id, [FromBody] UpdateOfficeCommand command)
         {
-            await mediator.Send(command);
-            return NoContent();
+             return await mediator.Send(command);
         }
 
         // DELETE api/<OfficesController>/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(Guid id)
+        public async Task<Unit> Delete(Guid id)
         {
-            await mediator.Send(new DeleteOfficeCommand
+            return await mediator.Send(new DeleteOfficeCommand
             {
                 Id = id
             });
-            return NoContent();
         }
     }
 }
