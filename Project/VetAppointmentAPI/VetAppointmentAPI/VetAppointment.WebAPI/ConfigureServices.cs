@@ -12,14 +12,6 @@ namespace VetAppointment.WebAPI
 {
     public static class ConfigureServices
     {
-        public static IServiceCollection AddValidationServices
-            (this IServiceCollection services)
-        {
-            services.AddFluentValidationAutoValidation();
-            services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
-            return services;
-        }
-
         public static IServiceCollection AddAuthenticationServices
             (this IServiceCollection services , IConfiguration configuration)
         {
@@ -83,14 +75,6 @@ namespace VetAppointment.WebAPI
                     options.GroupNameFormat = "'v'VVV";
                     options.SubstituteApiVersionInUrl = true;
                 });
-            return services;
-        }
-
-        public static IServiceCollection AddMappingServices
-            (this IServiceCollection services)
-        {
-            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-            services.AddMediatR(AppDomain.CurrentDomain.GetAssemblies());
             return services;
         }
     }

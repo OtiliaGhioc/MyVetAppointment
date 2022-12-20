@@ -22,6 +22,7 @@ namespace VetAppointment.Application.Helpers
 
             CreateMap<Drug, CreateDrugCommand>().ReverseMap();
             CreateMap<Drug, UpdateDrugCommand>()
+                .ForMember(x => x.Id, opt => opt.MapFrom(y => y.DrugId))
                 .ForMember(x => x.Title, opt => opt.MapFrom(y => y.Title))
                 .ForMember(x => x.Price, opt => opt.MapFrom(y => y.Price))
                 .ReverseMap();

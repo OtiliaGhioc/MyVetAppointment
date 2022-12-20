@@ -10,15 +10,16 @@ namespace VetAppointment.Application.Repositories.Impl
     {
         public DrugRepository(IDatabaseContext context) : base(context) { }
 
-        public async Task<Drug> DeleteAsync(Drug drug)
+        public async Task DeleteAsync(Drug drug)
         {
             context.Remove(drug);
-            return drug;
+            await context.Save();
         }
 
         public async Task<Drug> UpdateAsync(Drug drug)
         {
             context.Set<Drug>().Update(drug);
+            await context.Save();
             return drug;
         }
     }

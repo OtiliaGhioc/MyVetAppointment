@@ -3,7 +3,6 @@ using VetAppointment.Application.Commands;
 using VetAppointment.Application.DTOs;
 using VetAppointment.Application.Helpers;
 using VetAppointment.Application.Repositories.Interfaces;
-using VetAppointment.Domain.Entities;
 
 namespace VetAppointment.Application.Handlers
 {
@@ -18,7 +17,8 @@ namespace VetAppointment.Application.Handlers
 
         public async Task<DrugResponse> Handle(UpdateDrugCommand request, CancellationToken cancellationToken)
         {
-            var drugEntity = DrugMapper.Mapper.Map<Drug>(request);
+            var drug = await repository.Get(request.Id);
+            var drugEntity = DrugMapper.Mapper.Map(request, drug);
             if (drugEntity == null)
             {
                 throw new ApplicationException("Issue with the mapper");

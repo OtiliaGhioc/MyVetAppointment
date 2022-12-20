@@ -16,6 +16,8 @@ namespace VetAppointment.Application.Helpers
                 .ReverseMap();
             CreateMap<Office, CreateOfficeCommand>().ReverseMap();
             CreateMap<Office, UpdateOfficeCommand>().ReverseMap();
+            CreateMap<Office, DeleteOfficeCommand>().ReverseMap();
+            CreateMap<DeleteOfficeCommand, Office>().ReverseMap();
         }
     }
 }

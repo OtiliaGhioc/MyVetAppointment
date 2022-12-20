@@ -3,7 +3,6 @@ using VetAppointment.Application.Commands;
 using VetAppointment.Application.Dtos;
 using VetAppointment.Application.Helpers;
 using VetAppointment.Application.Repositories.Interfaces;
-using VetAppointment.Domain.Entities;
 
 namespace VetAppointment.Application.Handlers
 {
@@ -18,7 +17,8 @@ namespace VetAppointment.Application.Handlers
 
         public async Task<OfficeResponse> Handle(UpdateOfficeCommand request, CancellationToken cancellationToken)
         {
-            var office = OfficeMapper.Mapper.Map<Office>(request);
+            var officeEntity = await repository.Get(request.Id);
+            var office = OfficeMapper.Mapper.Map(request, officeEntity);
             if (office == null)
             {
                 throw new ApplicationException("Issue with the mapper");

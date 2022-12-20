@@ -36,50 +36,32 @@ namespace VetAppointment.WebAPI.Controllers
         [HttpGet("{drugId}")]
         public async Task<ActionResult<DrugResponse>> GetById([FromRoute] Guid drugId)
         {
-            var result = await mediator.Send(new GetDrugByIdQuery
+            return await mediator.Send(new GetDrugByIdQuery
             {
                 Id = drugId
             });
-            return Ok(result);
         }
 
         [HttpPost]
         public async Task<ActionResult<DrugResponse>> Create([FromBody] CreateDrugCommand command)
         {
-            var result = await mediator.Send(command);
-            return Ok(result);
+            return await mediator.Send(command);
         }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] UpdateDrugCommand command)
         {
-            var drug = await mediator.Send(new GetDrugByIdQuery
-            {
-                Id = id
-            });
-
-            if (drug == null)
-            {
-                return NotFound($"Drug with id: {id} was not found");
-            }
-
-            var result = await mediator.Send(command);
+            await mediator.Send(command);
             return NoContent();
         }
 
         [HttpDelete("{drugId}")]
         public async Task<IActionResult> Delete([FromRoute] Guid drugId)
         {
-            var drug = await mediator.Send(new GetDrugByIdQuery
+            await mediator.Send(new DeleteDrugCommand
             {
                 Id = drugId
             });
-
-            if (drug == null)
-            {
-                return NotFound($"Drug with id: {drugId} was not found");
-            }
-            var result = await mediator.Send(new DeleteDrugCommand());
             return NoContent();
         }
     }

@@ -9,9 +9,16 @@ namespace VetAppointment.Application.Repositories.Impl
     {
         public OfficeRepository(IDatabaseContext context) : base(context) { }
 
+        public async Task DeleteAsync(Office office)
+        {
+            context.Remove(office);
+            await context.Save();
+        }
+
         public async Task<Office> UpdateAsync(Office office)
         {
             context.Set<Office>().Update(office);
+            await context.Save();
             return office;
         }
     }

@@ -6,5 +6,6 @@ namespace VetAppointment.Application.Repositories.Interfaces
     public interface IOfficeRepository : IBaseRepository<Office>
     {
         public Task<Office> UpdateAsync(Office office);
+        public Task DeleteAsync(Office office);
     }
 }

@@ -37,36 +37,24 @@ namespace VetAppointment.WebAPI.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<OfficeResponse>> Get(Guid id)
         {
-            var result = await mediator.Send(new GetOfficeByIdQuery
+            return await mediator.Send(new GetOfficeByIdQuery
             {
                 Id = id
             });
-            return Ok(result);
         }
 
         // POST api/<OfficesController>
         [HttpPost]
         public async Task<ActionResult<OfficeResponse>> Post([FromBody] CreateOfficeCommand command)
         {
-            var result = await mediator.Send(command);
-            return Ok(result);
+            return await mediator.Send(command);
         }
 
         // PUT api/<OfficesController>/5
         [HttpPut("{id}")]
         public async Task<IActionResult> Put([FromRoute] Guid id, [FromBody] UpdateOfficeCommand command)
         {
-            var drug = await mediator.Send(new GetOfficeByIdQuery
-            {
-                Id = id
-            });
-
-            if (drug == null)
-            {
-                return NotFound($"Drug with id: {id} was not found");
-            }
-
-            var result = await mediator.Send(command);
+            await mediator.Send(command);
             return NoContent();
         }
 
@@ -74,12 +62,10 @@ namespace VetAppointment.WebAPI.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {
-            var office = await officeRepository.Get(id);
-            if (office == null)
-                return NotFound();
-            officeRepository.Delete(office);
-            await officeRepository.SaveChanges();
-
+            await mediator.Send(new DeleteOfficeCommand
+            {
+                Id = id
+            });
             return NoContent();
         }
     }
