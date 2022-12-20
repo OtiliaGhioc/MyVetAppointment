@@ -21,7 +21,7 @@ namespace VetAppointment.Application.Handlers
             var drugEntity = DrugMapper.Mapper.Map(request,drug);
             if (drugEntity == null)
             {
-                throw new ApplicationException("Issue with the mapper");
+                throw new Exception("Issue with the mapper");
             }
             await repository.DeleteAsync(drugEntity);
             return Unit.Value;

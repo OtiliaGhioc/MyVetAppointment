@@ -1,25 +1,32 @@
 import { API_ROOT } from "../env";
 
+const JWT_ACCESS_KEY = 'jwt_ta';
+const JWT_REFRESH_KEY = 'jwt_tr';
+
 export const disconnectUser = () => {
-    localStorage.removeItem('jwt_ta');
-    localStorage.removeItem('jwt_tr');
+    localStorage.removeItem(JWT_ACCESS_KEY);
+    localStorage.removeItem(JWT_REFRESH_KEY);
+}
+
+export const browserHasJWTokens = () => {
+    return localStorage.getItem(JWT_ACCESS_KEY) !== null || localStorage.getItem(JWT_REFRESH_KEY) !== null;
 }
 
 export const storeTokens = (accessToken, refreshToken) => {
-    localStorage.setItem('jwt_ta', accessToken);
-    localStorage.setItem('jwt_tr', refreshToken);
+    localStorage.setItem(JWT_ACCESS_KEY, accessToken);
+    localStorage.setItem(JWT_REFRESH_KEY, refreshToken);
 }
 
 export const getAccessToken = () => {
-    return localStorage.getItem('jwt_ta');
+    return localStorage.getItem(JWT_ACCESS_KEY);
 }
 
 export const getRefreshToken = () => {
-    return localStorage.getItem('jwt_tr');
+    return localStorage.getItem(JWT_REFRESH_KEY);
 }
 
 const updateAccessToken = (accessToken) => {
-    localStorage.setItem('jwt_ta', accessToken);
+    localStorage.setItem(JWT_ACCESS_KEY, accessToken);
 }
 
 const setBearerToken = (

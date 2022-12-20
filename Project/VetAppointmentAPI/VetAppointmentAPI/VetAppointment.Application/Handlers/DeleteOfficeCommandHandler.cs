@@ -21,7 +21,7 @@ namespace VetAppointment.Application.Handlers
             var officeEntity = OfficeMapper.Mapper.Map(request, office);
             if (officeEntity == null)
             {
-                throw new ApplicationException("Issue with the mapper");
+                throw new Exception("Issue with the mapper");
             }
             await repository.DeleteAsync(officeEntity);
             return Unit.Value;

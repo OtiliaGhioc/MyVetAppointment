@@ -4,6 +4,7 @@ import './App.css';
 import SideDrawer from './components/nav/SideDrawer';
 import AppointmentPage from './pages/appointment/AppointmentPage';
 import AppointmentsListPage from './pages/appointments_list/AppointmentsListPage';
+import LandingPage from './pages/landing_page/LandingPage';
 import LoginPage from './pages/login/LoginPage';
 import MedicalHistoryPage from './pages/medical_history/MedicalHistoryEntryPage';
 import MedicalHistoryListPage from './pages/medical_history_list/MedicalHistoryListPage';
@@ -22,6 +23,7 @@ const App = () => {
     <SideDrawer currentPath={currentPath}>
       <Router>
         <Routes>
+          <Route exact path="/" element={<LandingPage />} />
           <Route exact path="/me" element={<ProfilePage locationChangeCallback={handleLocationChange} />} />
           <Route exact path="/appointments" element={<AppointmentsListPage locationChangeCallback={handleLocationChange} />} />
           <Route exact path="/medical-history" element={<MedicalHistoryListPage locationChangeCallback={handleLocationChange} />} />
@@ -29,7 +31,7 @@ const App = () => {
           <Route exact path="/register" element={<RegisterPage locationChangeCallback={handleLocationChange} />} />
           <Route exact path="/medical-history/:id" element={<MedicalHistoryPage />} />
           <Route exact path="/appointment/:id" element={<AppointmentPage />} />
-          <Route exact path="*" element={<NotFound locationChangeCallback={handleLocationChange}/>} />
+          <Route exact path="*" element={<NotFound locationChangeCallback={handleLocationChange} />} />
         </Routes>
       </Router>
     </SideDrawer>

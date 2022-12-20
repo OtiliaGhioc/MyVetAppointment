@@ -12,12 +12,10 @@ namespace VetAppointment.WebAPI.Controllers
     [ApiController]
     public class OfficesController : ControllerBase
     {
-        private readonly IOfficeRepository officeRepository;
         private readonly IMediator mediator;
 
-        public OfficesController(IOfficeRepository officeRepository, IMediator mediator)
+        public OfficesController(IMediator mediator)
         {
-            this.officeRepository = officeRepository;
             this.mediator = mediator;
         }
 
@@ -61,7 +59,7 @@ namespace VetAppointment.WebAPI.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {
-            var res = await mediator.Send(new DeleteOfficeCommand
+            await mediator.Send(new DeleteOfficeCommand
             {
                 Id = id
             });

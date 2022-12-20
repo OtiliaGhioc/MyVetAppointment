@@ -21,7 +21,7 @@ namespace VetAppointment.Application.Handlers
             var office = OfficeMapper.Mapper.Map(request, officeEntity);
             if (office == null)
             {
-                throw new ApplicationException("Issue with the mapper");
+                throw new Exception("Issue with the mapper");
             }
             var newOffice = await repository.UpdateAsync(office);
             return OfficeMapper.Mapper.Map<OfficeResponse>(newOffice);

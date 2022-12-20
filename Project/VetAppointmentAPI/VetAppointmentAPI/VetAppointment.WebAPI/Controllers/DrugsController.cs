@@ -12,12 +12,10 @@ namespace VetAppointment.WebAPI.Controllers
     [ApiController]
     public class DrugsController : ControllerBase
     {
-        private readonly IDrugRepository drugRepository;
         private readonly IMediator mediator;
 
-        public DrugsController(IDrugRepository drugRepository,IMediator mediator)
+        public DrugsController(IMediator mediator)
         {
-            this.drugRepository = drugRepository;
             this.mediator = mediator;
         }
 
