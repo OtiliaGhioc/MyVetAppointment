@@ -65,7 +65,7 @@ namespace VetAppointment.WebAPI.Controllers
             {
                 Id = id
             });
-            return res == null ? NotFound() : NoContent();
+            return NoContent();
         }
     }
 }
