@@ -2,7 +2,6 @@
 using VetAppointment.Application.Repositories.Interfaces;
 using VetAppointment.Infrastructure.Context;
 using VetAppointment.Domain.Entities;
-using Microsoft.EntityFrameworkCore;
 
 namespace VetAppointment.Application.Repositories.Impl
 {

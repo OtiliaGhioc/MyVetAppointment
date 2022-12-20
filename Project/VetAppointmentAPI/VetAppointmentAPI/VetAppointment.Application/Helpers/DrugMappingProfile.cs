@@ -1,9 +1,4 @@
 ﻿using AutoMapper;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using VetAppointment.Application.Commands;
 using VetAppointment.Application.DTOs;
 using VetAppointment.Domain.Entities;

@@ -1,12 +1,8 @@
-﻿using FluentValidation;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc.Versioning;
-using System.Reflection;
-using FluentValidation.AspNetCore;
-using MediatR;
 
 namespace VetAppointment.WebAPI
 {

@@ -1,15 +1,9 @@
-﻿using AutoMapper;
-using FluentValidation;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using VetAppointment.Application.Repositories.Interfaces;
-using VetAppointment.Domain.Entities;
 using VetAppointment.Application.DTOs;
 using MediatR;
 using VetAppointment.Application.Commands;
-using VetAppointment.WebAPI.DTOs;
 using VetAppointment.Application.Queries;
-using System.Collections.Generic;
-using VetAppointment.Application.Helpers;
 
 namespace VetAppointment.WebAPI.Controllers
 {
@@ -27,7 +21,7 @@ namespace VetAppointment.WebAPI.Controllers
             this.mediator = mediator;
         }
 
-        [HttpGet("GetAll")]
+        [HttpGet]
         public async Task<List<DrugResponse>> GetAllDrugs()
         {
             return await mediator.Send(new GetAllDrugsQuery());
@@ -36,23 +30,26 @@ namespace VetAppointment.WebAPI.Controllers
         [HttpGet("{drugId}")]
         public async Task<ActionResult<DrugResponse>> GetById([FromRoute] Guid drugId)
         {
-            return await mediator.Send(new GetDrugByIdQuery
+            var res = await mediator.Send(new GetDrugByIdQuery
             {
                 Id = drugId
             });
+
+            return res == null ? NotFound() : Ok(res);
         }
 
         [HttpPost]
         public async Task<ActionResult<DrugResponse>> Create([FromBody] CreateDrugCommand command)
         {
-            return await mediator.Send(command);
+            var res = await mediator.Send(command);
+            return res == null ? BadRequest() : Created(nameof(GetAllDrugs), res);
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] UpdateDrugCommand command)
+        [HttpPut]
+        public async Task<IActionResult> Update([FromBody] UpdateDrugCommand command)
         {
-            await mediator.Send(command);
-            return NoContent();
+            var res = await mediator.Send(command);
+            return res == null ? BadRequest() : Ok(res);
         }
 
         [HttpDelete("{drugId}")]

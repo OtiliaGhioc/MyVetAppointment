@@ -1,14 +1,9 @@
-﻿using AutoMapper;
-using FluentValidation;
-using MediatR;
+﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using VetAppointment.Application.Commands;
 using VetAppointment.Application.Dtos;
 using VetAppointment.Application.Queries;
 using VetAppointment.Application.Repositories.Interfaces;
-using VetAppointment.Domain.Entities;
-using VetAppointment.WebAPI.Dtos;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace VetAppointment.WebAPI.Controllers
 {
@@ -28,45 +23,49 @@ namespace VetAppointment.WebAPI.Controllers
 
         // GET: api/<OfficesController>
         [HttpGet]
-        public async Task<List<OfficeResponse>> Get()
+        public async Task<ActionResult<List<OfficeResponse>>> Get()
         {
-            return await mediator.Send(new GetAllOfficesQuery());
+            var res = await mediator.Send(new GetAllOfficesQuery());
+            return res == null ? BadRequest() : Ok(res);
         }
 
         // GET api/<OfficesController>/5
         [HttpGet("{id}")]
         public async Task<ActionResult<OfficeResponse>> Get(Guid id)
         {
-            return await mediator.Send(new GetOfficeByIdQuery
+            var res = await mediator.Send(new GetOfficeByIdQuery
             {
                 Id = id
             });
+
+            return res == null ? NotFound() : Ok(res);
         }
 
         // POST api/<OfficesController>
         [HttpPost]
         public async Task<ActionResult<OfficeResponse>> Post([FromBody] CreateOfficeCommand command)
         {
-            return await mediator.Send(command);
+            var res =  await mediator.Send(command);
+            return res == null ? BadRequest() : Created(nameof(Get), res);
         }
 
         // PUT api/<OfficesController>/5
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Put([FromRoute] Guid id, [FromBody] UpdateOfficeCommand command)
+        [HttpPut]
+        public async Task<IActionResult> Put([FromBody] UpdateOfficeCommand command)
         {
-            await mediator.Send(command);
-            return NoContent();
+            var res = await mediator.Send(command);
+            return res == null ? BadRequest() : Ok(res);
         }
 
         // DELETE api/<OfficesController>/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {
-            await mediator.Send(new DeleteOfficeCommand
+            var res = await mediator.Send(new DeleteOfficeCommand
             {
                 Id = id
             });
-            return NoContent();
+            return res == null ? NotFound() : NoContent();
         }
     }
 }

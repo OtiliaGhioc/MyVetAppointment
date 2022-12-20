@@ -1,12 +1,6 @@
 ﻿using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using VetAppointment.Application.Commands;
 using VetAppointment.Application.Dtos;
-using VetAppointment.Application.DTOs;
 using VetAppointment.Application.Helpers;
 using VetAppointment.Application.Repositories.Interfaces;
 using VetAppointment.Domain.Entities;
