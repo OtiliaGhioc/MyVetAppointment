@@ -16,6 +16,7 @@ namespace VetAppointment.Application.Repositories.Base
         public virtual async Task<T> Add(T entity)
         {
             await context.Set<T>().AddAsync(entity);
+            await context.Save();
             return entity;
         }
 

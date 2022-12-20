@@ -1,30 +1,22 @@
 ﻿using FluentValidation;
-using VetAppointment.WebAPI.Dtos.AppointmentDtos;
-using VetAppointment.WebAPI.Dtos.MedicalEntryDto;
-using VetAppointment.WebAPI.Dtos.UserDto;
-using VetAppointment.WebAPI.Dtos;
-using VetAppointment.WebAPI.DTOs;
-using VetAppointment.WebAPI.Validators;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc.Versioning;
+using System.Reflection;
+using FluentValidation.AspNetCore;
+using MediatR;
 
-namespace VetAppointment.Infrastructure
+namespace VetAppointment.WebAPI
 {
     public static class ConfigureServices
     {
         public static IServiceCollection AddValidationServices
             (this IServiceCollection services)
         {
-            services.AddScoped<IValidator<CreateDrugDto>, DrugValidator>();
-            services.AddScoped<IValidator<CreateDrugStockDto>, DrugStockValidator>();
-            services.AddScoped<IValidator<OfficeDto>, OfficeValidator>();
-            services.AddScoped<IValidator<DefaultUserDto>, UserValidator>();
-            services.AddScoped<IValidator<AppointmentCreateDto>, AppointmentValidator>();
-            services.AddScoped<IValidator<MedicalEntryCreateDto>, MedicalEntryValidator>();
-            services.AddScoped<IValidator<BillingEntryDto>, BillingEntryValidator>();
+            services.AddFluentValidationAutoValidation();
+            services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
             return services;
         }
 
@@ -98,6 +90,7 @@ namespace VetAppointment.Infrastructure
             (this IServiceCollection services)
         {
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            services.AddMediatR(AppDomain.CurrentDomain.GetAssemblies());
             return services;
         }
     }
