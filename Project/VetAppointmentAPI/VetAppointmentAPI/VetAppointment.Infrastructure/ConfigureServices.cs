@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using VetAppointment.Application.Repositories.Base;
 using VetAppointment.Application.Repositories.Impl;
 using VetAppointment.Application.Repositories.Interfaces;
 using VetAppointment.Infrastructure.Context;

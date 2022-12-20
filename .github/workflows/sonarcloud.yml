@@ -43,6 +43,5 @@ jobs:
         shell: powershell
         run: |
           .\.sonar\scanner\dotnet-sonarscanner begin /k:"OtiliaGhioc_MyVetAppointment" /o:"keyforsonar" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
-          dotnet build Project/VetAppointmentAPI/VetAppointmentAPI/ --no-incremental
-          dotnet test --collect:"XPlat Code Coverage" /p:ExcludeByFile="**/Migrations/*.cs"
+          dotnet build ./Project/VetAppointmentAPI/VetAppointmentAPI/ --no-incremental
           .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"

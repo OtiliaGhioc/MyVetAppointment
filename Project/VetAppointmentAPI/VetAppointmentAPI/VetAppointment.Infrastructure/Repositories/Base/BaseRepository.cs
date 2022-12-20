@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
+using VetAppointment.Domain.Entities;
 using VetAppointment.Infrastructure.Context;
 
 namespace VetAppointment.Application.Repositories.Base
@@ -16,6 +17,7 @@ namespace VetAppointment.Application.Repositories.Base
         public virtual async Task<T> Add(T entity)
         {
             await context.Set<T>().AddAsync(entity);
+            await context.Save();
             return entity;
         }
 
@@ -49,6 +51,19 @@ namespace VetAppointment.Application.Repositories.Base
         public async Task SaveChanges()
         {
             await context.Save();
+        }
+
+        public async Task DeleteAsync(T entity)
+        {
+            context.Remove(entity);
+            await context.Save();
+        }
+
+        public async Task<T> UpdateAsync(T entity)
+        {
+            context.Set<T>().Update(entity);
+            await context.Save();
+            return entity;
         }
     }
 }

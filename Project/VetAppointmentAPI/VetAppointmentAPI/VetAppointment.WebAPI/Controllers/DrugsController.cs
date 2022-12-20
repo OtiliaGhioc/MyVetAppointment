@@ -1,9 +1,9 @@
-﻿using AutoMapper;
-using FluentValidation;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using VetAppointment.Application.Repositories.Interfaces;
-using VetAppointment.Domain.Entities;
-using VetAppointment.WebAPI.DTOs;
+using VetAppointment.Application.DTOs;
+using MediatR;
+using VetAppointment.Application.Commands;
+using VetAppointment.Application.Queries;
 
 namespace VetAppointment.WebAPI.Controllers
 {
@@ -13,85 +13,52 @@ namespace VetAppointment.WebAPI.Controllers
     public class DrugsController : ControllerBase
     {
         private readonly IDrugRepository drugRepository;
-        private readonly IValidator<CreateDrugDto> drugValidator;
-        private readonly IMapper mapper;
-        public DrugsController(IDrugRepository drugRepository, IValidator<CreateDrugDto> validator, IMapper mapper)
+        private readonly IMediator mediator;
+
+        public DrugsController(IDrugRepository drugRepository,IMediator mediator)
         {
             this.drugRepository = drugRepository;
-            this.drugValidator = validator;
-            this.mapper = mapper;
+            this.mediator = mediator;
         }
 
         [HttpGet]
-        public async Task<IActionResult> SearchDrugs([FromQuery] string? title, [FromQuery] int? price)
+        public async Task<List<DrugResponse>> GetAllDrugs()
         {
-            var drugStocks = await drugRepository.Find(x => x.Title == title || x.Price == price);
-            if (drugStocks != null)
-                return Ok(drugStocks);
-            return NotFound();
-        }
-
-        [HttpGet("GetAll")]
-        public async Task<IActionResult> GetAllDrugs()
-        {
-            var drugs = await drugRepository.All();
-            return drugs != null ? Ok(drugs) : NotFound();
+            return await mediator.Send(new GetAllDrugsQuery());
         }
 
         [HttpGet("{drugId}")]
-        public async Task<IActionResult> GetById([FromRoute] Guid drugId)
+        public async Task<ActionResult<DrugResponse>> GetById([FromRoute] Guid drugId)
         {
-            var drug = await drugRepository.Get(drugId);
+            var res = await mediator.Send(new GetDrugByIdQuery
+            {
+                Id = drugId
+            });
 
-            return drug != null ? Ok(mapper.Map<DrugDto>(drug)) : NotFound($"Drug with id: {drugId} was not found");
+            return res == null ? NotFound() : Ok(res);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] CreateDrugDto drugDto)
+        public async Task<ActionResult<DrugResponse>> Create([FromBody] CreateDrugCommand command)
         {
-            var validation = drugValidator.Validate(drugDto);
-            if (!validation.IsValid || drugDto.Price == null || drugDto.Title == null)
-                return StatusCode(400, validation.Errors.First().ErrorMessage);
-            Drug drug= mapper.Map<Drug>(drugDto);
-            await drugRepository.Add(drug);
-            await drugRepository.SaveChanges();
-            return Created(nameof(GetAllDrugs), mapper.Map<DrugDto>(drug));
+            var res = await mediator.Send(command);
+            return res == null ? BadRequest() : Created(nameof(GetAllDrugs), res);
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] CreateDrugDto drugDto)
+        [HttpPut]
+        public async Task<IActionResult> Update([FromBody] UpdateDrugCommand command)
         {
-            var validation = drugValidator.Validate(drugDto);
-            if (!validation.IsValid || drugDto.Price == null || drugDto.Title == null)
-                return StatusCode(400, validation.Errors.First().ErrorMessage);
-
-            var drug = await drugRepository.Get(id);
-
-            if (drug == null)
-            {
-                return NotFound($"Drug with id: {id} was not found");
-            }
-
-            drug.UpdateNameAndPrice(drugDto.Title, (int)drugDto.Price);
-
-            mapper.Map(drugDto, drug);
-
-            drugRepository.Update(drug);
-            await drugRepository.SaveChanges();
-            return NoContent();
+            var res = await mediator.Send(command);
+            return res == null ? BadRequest() : Ok(res);
         }
 
         [HttpDelete("{drugId}")]
         public async Task<IActionResult> Delete([FromRoute] Guid drugId)
         {
-            var drug = await drugRepository.Get(drugId);
-
-            if (drug == null)
+            await mediator.Send(new DeleteDrugCommand
             {
-                return NotFound($"Drug with id: {drugId} was not found");
-            }
-            drugRepository.Delete(drug);
-            await drugRepository.SaveChanges();
+                Id = drugId
+            });
             return NoContent();
         }
     }

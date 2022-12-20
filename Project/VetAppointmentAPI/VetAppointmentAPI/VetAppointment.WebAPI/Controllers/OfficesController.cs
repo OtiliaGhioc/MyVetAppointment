@@ -1,9 +1,9 @@
-﻿using AutoMapper;
-using FluentValidation;
+﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using VetAppointment.Application.Commands;
+using VetAppointment.Application.Dtos;
+using VetAppointment.Application.Queries;
 using VetAppointment.Application.Repositories.Interfaces;
-using VetAppointment.Domain.Entities;
-using VetAppointment.WebAPI.Dtos;
 
 namespace VetAppointment.WebAPI.Controllers
 {
@@ -13,76 +13,58 @@ namespace VetAppointment.WebAPI.Controllers
     public class OfficesController : ControllerBase
     {
         private readonly IOfficeRepository officeRepository;
-        private readonly IValidator<OfficeDto> officeValidator;
-        private readonly IMapper mapper;
+        private readonly IMediator mediator;
 
-        public OfficesController(IOfficeRepository officeRepository, IValidator<OfficeDto> validator, IMapper mapper)
+        public OfficesController(IOfficeRepository officeRepository, IMediator mediator)
         {
             this.officeRepository = officeRepository;
-            this.officeValidator = validator;
-            this.mapper = mapper;
+            this.mediator = mediator;
         }
 
         // GET: api/<OfficesController>
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public async Task<ActionResult<List<OfficeResponse>>> Get()
         {
-            return Ok(await officeRepository.All());
+            var res = await mediator.Send(new GetAllOfficesQuery());
+            return res == null ? BadRequest() : Ok(res);
         }
 
         // GET api/<OfficesController>/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> Get(Guid id)
+        public async Task<ActionResult<OfficeResponse>> Get(Guid id)
         {
-            var office = await officeRepository.Get(id);
-            if (office == null)
+            var res = await mediator.Send(new GetOfficeByIdQuery
             {
-                return NotFound();
-            }
-            return Ok(mapper.Map<OfficeDto>(office));
+                Id = id
+            });
+
+            return res == null ? NotFound() : Ok(res);
         }
 
         // POST api/<OfficesController>
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] OfficeDto officeDto)
+        public async Task<ActionResult<OfficeResponse>> Post([FromBody] CreateOfficeCommand command)
         {
-            var validation = officeValidator.Validate(officeDto);
-            if (!validation.IsValid || officeDto.Address == null)
-                return StatusCode(400, validation.Errors.First().ErrorMessage);
-            Office office = mapper.Map<Office>(officeDto);
-            await officeRepository.Add(office);
-            await officeRepository.SaveChanges();
-
-            return Created(nameof(Office), mapper.Map<OfficeDto>(office));
+            var res =  await mediator.Send(command);
+            return res == null ? BadRequest() : Created(nameof(Get), res);
         }
 
         // PUT api/<OfficesController>/5
         [HttpPut]
-        public async Task<IActionResult> Put([FromBody] OfficeDto officeDto)
+        public async Task<IActionResult> Put([FromBody] UpdateOfficeCommand command)
         {
-            var validation = officeValidator.Validate(officeDto);
-            if (!validation.IsValid)
-                return StatusCode(400, validation.Errors.First().ErrorMessage);
-            Office? office = await officeRepository.Get(officeDto.OfficeId);
-            if (office == null)
-                return NotFound();
-            mapper.Map(officeDto, office);
-            officeRepository.Update(office);
-            await officeRepository.SaveChanges();
-
-            return NoContent();
+            var res = await mediator.Send(command);
+            return res == null ? BadRequest() : Ok(res);
         }
 
         // DELETE api/<OfficesController>/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {
-            var office = await officeRepository.Get(id);
-            if (office == null)
-                return NotFound();
-            officeRepository.Delete(office);
-            await officeRepository.SaveChanges();
-
+            var res = await mediator.Send(new DeleteOfficeCommand
+            {
+                Id = id
+            });
             return NoContent();
         }
     }

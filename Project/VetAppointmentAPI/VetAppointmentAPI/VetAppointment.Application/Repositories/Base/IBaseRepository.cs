@@ -1,4 +1,5 @@
 ﻿using System.Linq.Expressions;
+using VetAppointment.Domain.Entities;
 
 namespace VetAppointment.Application.Repositories.Base
 {
@@ -7,6 +8,9 @@ namespace VetAppointment.Application.Repositories.Base
         Task<T> Add(T entity);
         void Update(T entity);
         void Delete(T entity);
+
+        Task<T> UpdateAsync(T entity);
+        Task DeleteAsync(T entity);
         Task<T?> Get(Guid id);
         Task<IEnumerable<T>> All();
         Task<IEnumerable<T>> Find(Expression<Func<T, bool>> predicate);

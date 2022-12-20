@@ -1,4 +1,6 @@
+using VetAppointment.Application;
 using VetAppointment.Infrastructure;
+using VetAppointment.WebAPI;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,10 +15,9 @@ builder.Services.AddVersioningServices();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddApplicationServices();
 builder.Services.AddInfrastructureServices(builder.Configuration);
-builder.Services.AddValidationServices();
 builder.Services.AddAuthenticationServices(builder.Configuration);
-builder.Services.AddMappingServices();
 
 var app = builder.Build();
 

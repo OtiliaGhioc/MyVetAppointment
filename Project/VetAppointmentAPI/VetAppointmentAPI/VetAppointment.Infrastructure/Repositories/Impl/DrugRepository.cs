@@ -8,5 +8,6 @@ namespace VetAppointment.Application.Repositories.Impl
     public class DrugRepository : BaseRepository<Drug>, IDrugRepository
     {
         public DrugRepository(IDatabaseContext context) : base(context) { }
+
     }
 }

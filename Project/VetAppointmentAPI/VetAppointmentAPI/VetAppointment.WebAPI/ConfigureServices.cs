@@ -1,33 +1,13 @@
-﻿using FluentValidation;
-using VetAppointment.WebAPI.Dtos.AppointmentDtos;
-using VetAppointment.WebAPI.Dtos.MedicalEntryDto;
-using VetAppointment.WebAPI.Dtos.UserDto;
-using VetAppointment.WebAPI.Dtos;
-using VetAppointment.WebAPI.DTOs;
-using VetAppointment.WebAPI.Validators;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc.Versioning;
 
-namespace VetAppointment.Infrastructure
+namespace VetAppointment.WebAPI
 {
     public static class ConfigureServices
     {
-        public static IServiceCollection AddValidationServices
-            (this IServiceCollection services)
-        {
-            services.AddScoped<IValidator<CreateDrugDto>, DrugValidator>();
-            services.AddScoped<IValidator<CreateDrugStockDto>, DrugStockValidator>();
-            services.AddScoped<IValidator<OfficeDto>, OfficeValidator>();
-            services.AddScoped<IValidator<DefaultUserDto>, UserValidator>();
-            services.AddScoped<IValidator<AppointmentCreateDto>, AppointmentValidator>();
-            services.AddScoped<IValidator<MedicalEntryCreateDto>, MedicalEntryValidator>();
-            services.AddScoped<IValidator<BillingEntryDto>, BillingEntryValidator>();
-            return services;
-        }
-
         public static IServiceCollection AddAuthenticationServices
             (this IServiceCollection services , IConfiguration configuration)
         {
@@ -91,13 +71,6 @@ namespace VetAppointment.Infrastructure
                     options.GroupNameFormat = "'v'VVV";
                     options.SubstituteApiVersionInUrl = true;
                 });
-            return services;
-        }
-
-        public static IServiceCollection AddMappingServices
-            (this IServiceCollection services)
-        {
-            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             return services;
         }
     }

@@ -8,5 +8,6 @@ namespace VetAppointment.Application.Repositories.Impl
     public class OfficeRepository : BaseRepository<Office>, IOfficeRepository
     {
         public OfficeRepository(IDatabaseContext context) : base(context) { }
+
     }
 }
