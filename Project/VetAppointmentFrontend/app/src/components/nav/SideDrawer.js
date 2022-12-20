@@ -112,7 +112,7 @@ const commonDrawerItems = [
 const medicDrawerItems = [
     { title: 'Drug stocks', icon: <InventoryIcon />, href: '/drug-stocks' },
     { title: 'Prescriptions', icon: <MedicationIcon />, href: '/prescriptions' },
-    { title: 'Logout', icon: <LogoutIcon style={{color: 'red'}}/>, onClick: () => { disconnectUser(); window.location.pathname = '/login'; } }
+    { title: 'Logout', icon: <LogoutIcon style={{ color: 'red' }} />, onClick: () => { disconnectUser(); window.location.pathname = '/login'; } }
 ]
 
 export default function SideDrawer(props) {
@@ -164,7 +164,7 @@ export default function SideDrawer(props) {
                         >
                             <MenuIcon />
                         </IconButton>
-                        <Typography variant="h6" noWrap component="div" style={{ fontWeight: '600', textShadow: '2px 2px 4px black' }}>
+                        <Typography id={pageTitle} variant="h6" noWrap component="div" style={{ fontWeight: '600', textShadow: '2px 2px 4px black' }}>
                             {pageTitle}
                         </Typography>
                     </Toolbar>
