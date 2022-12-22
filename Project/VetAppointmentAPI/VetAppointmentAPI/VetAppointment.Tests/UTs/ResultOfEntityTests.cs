@@ -5,7 +5,7 @@
         [Fact]
         public void TestResultOfEntityInfo()
         {
-            Drug drug = new Drug("title", 1);
+            Drug drug = new Drug("title");
 
             Result<Drug> result1 = Result<Drug>.Success(drug);
             Result<Drug> result2 = Result<Drug>.Failure("err");

@@ -6,12 +6,6 @@ namespace VetAppointment.Application.Commands
     {
         public CreateDrugCommandValidation()
         {
-            RuleFor(x => x.Price)
-                .NotNull()
-                .NotEmpty()
-                .WithMessage("Price can not be empty or null")
-                .GreaterThanOrEqualTo(1)
-                .WithMessage("Price should be greater or equal to 1");
             RuleFor(x => x.Title)
                 .NotNull()
                 .NotEmpty()

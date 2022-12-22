@@ -13,7 +13,7 @@
         public void TestAddDrugToPrescription()
         {
             Prescription prescription = new Prescription("descr");
-            var prescriptionDrug = PrescriptionDrug.CreatePrescriptionDrug(new DrugStock(new Drug("title", 1), 1), 1);
+            var prescriptionDrug = PrescriptionDrug.CreatePrescriptionDrug(new DrugStock(new Drug("title"), 1, 1), 1);
             if (prescriptionDrug.Entity == null)
                 throw new Exception();
 

@@ -66,7 +66,7 @@ const AppointmentsList = ({ appointments }) => {
 
     return (
         <>
-            <Container style={{ width: '100%', padding: '1rem', backgroundImage: 'url(/img/dog_paws_pattern.jpg)', backgroundSize: '50%' }}>
+            <Container style={{ width: '100%', padding: '1rem', backgroundImage: 'url(/img/dog_paws_pattern.jpg)', backgroundSize: '150%' }}>
                 <BaseDataTable tableHeaderValues={appointmentsTableHeaderValues} tableRows={appointmentsData} />
             </Container>
         </>

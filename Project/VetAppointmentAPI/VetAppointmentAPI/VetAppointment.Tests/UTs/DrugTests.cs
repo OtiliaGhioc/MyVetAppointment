@@ -5,13 +5,11 @@
         [Fact]
         public void TestDrugInfo()
         {
-            Drug drug = new Drug("title",5);
+            Drug drug = new Drug("title");
             Assert.AreEqual("title", drug.Title);
-            Assert.AreEqual(5, drug.Price);
 
-            drug.UpdateNameAndPrice("name", 1);
+            drug.UpdateDrugInformation("name");
             Assert.AreEqual("name", drug.Title);
-            Assert.AreEqual(1, drug.Price);
         }
 
         [Fact]
@@ -20,7 +18,7 @@
             DbContextOptions<DatabaseContext> options = new DbContextOptionsBuilder<DatabaseContext>().UseSqlite("Data Source = MyTests.db").Options;
             DatabaseContext testDb = new DatabaseContext(options);
             DrugRepository drugRepo = new DrugRepository(testDb);
-            Drug drug = new Drug("title", 5);
+            Drug drug = new Drug("title");
 
             TestAdd(drugRepo, drug);
             TestGet(drugRepo, drug);

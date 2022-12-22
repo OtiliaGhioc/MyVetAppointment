@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using VetAppointment.Application.Commands;
 using VetAppointment.Application.Dtos;
 using VetAppointment.Application.Queries;
-using VetAppointment.Application.Repositories.Interfaces;
 
 namespace VetAppointment.WebAPI.Controllers
 {

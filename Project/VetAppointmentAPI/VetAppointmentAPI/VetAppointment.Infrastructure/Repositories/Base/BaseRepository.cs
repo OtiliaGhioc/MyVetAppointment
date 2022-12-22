@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
-using VetAppointment.Domain.Entities;
 using VetAppointment.Infrastructure.Context;
 
 namespace VetAppointment.Application.Repositories.Base

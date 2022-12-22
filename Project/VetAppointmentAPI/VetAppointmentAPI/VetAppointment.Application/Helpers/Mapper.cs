@@ -13,12 +13,10 @@ namespace VetAppointment.WebAPI.Helpers
         public Mapper()
         {
             CreateMap<CreateDrugDto, Drug>()
-                .ForMember(x => x.Title, opt => opt.MapFrom(y => y.Title))
-                .ForMember(x => x.Price, opt => opt.MapFrom(y => y.Price));
+                .ForMember(x => x.Title, opt => opt.MapFrom(y => y.Title));
             CreateMap<Drug, DrugDto>()
                 .ForMember(x => x.Id, opt => opt.MapFrom(y => y.DrugId))
-                .ForMember(x => x.Title, opt => opt.MapFrom(y => y.Title))
-                .ForMember(x => x.Price, opt => opt.MapFrom(y => y.Price));
+                .ForMember(x => x.Title, opt => opt.MapFrom(y => y.Title));
             CreateMap<CreateDrugStockDto, DrugStock>()
                 .ForMember(x => x.DrugStockId, opt => opt.Ignore())
                 .ForMember(x => x.Type, opt => opt.Ignore());
