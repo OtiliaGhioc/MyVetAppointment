@@ -35,7 +35,7 @@ const ProfilePage = ({ locationChangeCallback }) => {
 
     const navigate = useNavigate();
 
-    const location = useLocation()
+    const location = useLocation();
 
     React.useEffect(() => {
         document.title = getDocumentName('Profile')

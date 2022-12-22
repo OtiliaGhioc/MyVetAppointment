@@ -30,8 +30,7 @@ namespace VetAppointment.Tests.ITs
             //Arange
             var drugDto = new CreateDrugDto
             {
-                Title = "One Drug",
-                Price = 20
+                Title = "One Drug"
             };
 
             //Act

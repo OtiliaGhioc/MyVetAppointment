@@ -27,7 +27,6 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 const AppointmentPage = () => {
-    const [data, setData] = React.useState({ hits: [] });
     useEffect(() => { document.body.style.backgroundColor = '#ebf6fc' }, [])
 
     return (
@@ -35,20 +34,13 @@ const AppointmentPage = () => {
             <ThemeProvider theme={profileTheme}>
                 <Box sx={{ flexGrow: 1, margin: '2rem auto 0 auto' }}>
                     <Grid container spacing={2}>
-                        <Grid item xs={1} />
+                        <Grid item xs={2} />
                         <Grid item xs={8}>
                             <Item>
                                 <AppointmentDataContainer />
                             </Item>
                         </Grid>
-                        <Grid item xs={2}>
-                            <Item>
-                                <Container style={{ width: '100%', height: 'fit-content', padding: '1rem', backgroundColor: "#8fc3e3" }}>
-                                    <Button variant="contained" style={{ margin: '0 auto', border: '2px solid', color: 'white' }} href='/me'>Back</Button>
-                                </Container>
-                            </Item>
-                        </Grid>
-                        <Grid item xs={1} />
+                        <Grid item xs={2} />
                     </Grid>
                 </Box>
             </ThemeProvider>

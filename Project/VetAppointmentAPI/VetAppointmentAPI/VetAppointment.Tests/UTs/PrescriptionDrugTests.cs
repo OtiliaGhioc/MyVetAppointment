@@ -5,8 +5,8 @@
         [Fact]
         public void TestPrescriptionDrugInfo()
         {
-            Drug drug = new Drug("title", 1);
-            DrugStock drugStock = new DrugStock(drug, 2);
+            Drug drug = new Drug("title");
+            DrugStock drugStock = new DrugStock(drug, 2, 1);
             Result<PrescriptionDrug> prescriptionDrug = PrescriptionDrug.CreatePrescriptionDrug(drugStock, 1);
 
             Assert.IsTrue(prescriptionDrug.IsSuccess);

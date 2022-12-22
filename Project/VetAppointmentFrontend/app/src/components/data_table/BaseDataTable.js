@@ -201,14 +201,14 @@ const BaseDataTable = ({ tableHeaderValues, tableRows }) => {
                                                 scope="row"
                                                 padding='normal'
                                             >
-                                                {vals[0].isButton ? <Button variant="contained" style={{ color: 'white' }} href={vals[0].href}>{vals[0].text}</Button> : vals[0]}
+                                                {vals[0].isButton ? <Button variant="contained" style={{ color: 'white' }} href={vals[0].href}>{vals[0].text} onClick={vals[0].onClick}</Button> : vals[0]}
                                             </TableCell>
                                             {vals.map((val, val_idx) => {
                                                 if (val_idx > 0) {
                                                     if (val.isButton)
                                                         return (
                                                             <TableCell key={val.id} align="right">
-                                                                <Button variant="contained" style={{ color: 'white' }} href={val.href}>{val.text}</Button>
+                                                                <Button variant="contained" style={{ color: 'white' }} href={val.href} onClick={val.onClick}>{val.text}</Button>
                                                             </TableCell>
                                                         )
                                                     else

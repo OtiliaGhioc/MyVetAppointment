@@ -8,9 +8,9 @@
             //Arange
             var title = "drug1";
             var price = 30;
-            var drug = new Drug(title, price);
+            var drug = new Drug(title);
             var quantity = 20;
-            var stock = new DrugStock(drug, quantity);
+            var stock = new DrugStock(drug, quantity, price);
             var quantityUpdate = 5;
 
             //Act
@@ -26,9 +26,9 @@
             //Arange
             var title = "drug1";
             var price = 30;
-            var drug = new Drug(title, price);
+            var drug = new Drug(title);
             var quantity = 20;
-            var stock = new DrugStock(drug, quantity);
+            var stock = new DrugStock(drug, quantity, price);
             var quantityUpdate = 50;
 
             //Act
@@ -45,9 +45,9 @@
             //Arange
             var title = "drug1";
             var price = 30;
-            var drug = new Drug(title, price);
+            var drug = new Drug(title);
             var quantity = 20;
-            var stock = new DrugStock(drug, quantity);
+            var stock = new DrugStock(drug, quantity, price);
             var quantityUpdate = -2;
 
             //Act

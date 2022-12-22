@@ -4,6 +4,7 @@ import './App.css';
 import SideDrawer from './components/nav/SideDrawer';
 import AppointmentPage from './pages/appointment/AppointmentPage';
 import AppointmentsListPage from './pages/appointments_list/AppointmentsListPage';
+import DrugStocksPage from './pages/drug_stocks/DrugStocksPage';
 import LandingPage from './pages/landing_page/LandingPage';
 import LoginPage from './pages/login/LoginPage';
 import MedicalHistoryPage from './pages/medical_history/MedicalHistoryEntryPage';
@@ -27,6 +28,7 @@ const App = () => {
           <Route exact path="/me" element={<ProfilePage locationChangeCallback={handleLocationChange} />} />
           <Route exact path="/appointments" element={<AppointmentsListPage locationChangeCallback={handleLocationChange} />} />
           <Route exact path="/medical-history" element={<MedicalHistoryListPage locationChangeCallback={handleLocationChange} />} />
+          <Route exact path="/drug-stocks" element={<DrugStocksPage locationChangeCallback={handleLocationChange} />} />
           <Route exact path="/login" element={<LoginPage locationChangeCallback={handleLocationChange} />} />
           <Route exact path="/register" element={<RegisterPage locationChangeCallback={handleLocationChange} />} />
           <Route exact path="/medical-history/:id" element={<MedicalHistoryPage />} />

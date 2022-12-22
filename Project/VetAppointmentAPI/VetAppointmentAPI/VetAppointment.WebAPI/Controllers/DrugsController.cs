@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using VetAppointment.Application.Repositories.Interfaces;
 using VetAppointment.Application.DTOs;
 using MediatR;
 using VetAppointment.Application.Commands;

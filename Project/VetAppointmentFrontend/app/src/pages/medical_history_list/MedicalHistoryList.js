@@ -59,7 +59,7 @@ const MedicalHistoryList = ({ medicalHistoryEntries }) => {
 
     return (
         <>
-            <Container style={{ width: '100%', padding: '1rem', backgroundImage: 'url(/img/dog_paws_pattern.jpg)', backgroundSize: '50%' }}>
+            <Container style={{ width: '100%', padding: '1rem', backgroundImage: 'url(/img/dog_paws_pattern.jpg)', backgroundSize: '150%' }}>
                 <BaseDataTable tableHeaderValues={medicalHistoryHeaderValues} tableRows={medicalHistoryData} />
             </Container>
         </>

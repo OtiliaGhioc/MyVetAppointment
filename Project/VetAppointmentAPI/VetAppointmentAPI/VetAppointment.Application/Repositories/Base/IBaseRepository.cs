@@ -1,5 +1,4 @@
 ﻿using System.Linq.Expressions;
-using VetAppointment.Domain.Entities;
 
 namespace VetAppointment.Application.Repositories.Base
 {

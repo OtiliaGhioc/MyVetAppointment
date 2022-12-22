@@ -59,6 +59,7 @@ namespace VetAppointment.WebAPI.Dtos
 
         public class AppointmentDetailDto
         {
+            public AppointmentDetailDto() { }
             public AppointmentDetailDto(Appointment appointment)
             {
                 AppointmentId = appointment.AppointmentId;

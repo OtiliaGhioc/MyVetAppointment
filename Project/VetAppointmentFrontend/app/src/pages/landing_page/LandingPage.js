@@ -6,7 +6,6 @@ const LandingPage = () => {
     const navigate = useNavigate();
 
     React.useEffect(() => {
-        console.log('check')
         if(browserHasJWTokens())
             navigate('/me');
         else
