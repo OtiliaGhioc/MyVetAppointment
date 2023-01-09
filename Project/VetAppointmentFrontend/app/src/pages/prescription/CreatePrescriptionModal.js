@@ -11,6 +11,7 @@ import { useForm } from 'react-hook-form';
 import CloseIcon from '@mui/icons-material/Close';
 import { API_ROOT } from '../../env';
 import { object, string } from 'zod';
+import { getAccessToken, getRefreshToken, makeRequestWithJWT } from "../../util/JWTUtil";
 
 const prescriptionSchema = object({
     prescriptionDescr: string()
@@ -39,7 +40,7 @@ const CreatePrescriptionModal = ({ isOpen, handleClose, updatePrescriptionList }
     }, [isOpen])
 
     const submitPrescriptionUpdate = async (data) => {
-        const res = await fetch(`${API_ROOT}/v1.0/Prescriptions/`, {
+        const res = await makeRequestWithJWT(`${API_ROOT}/v1.0/Prescriptions/`, {
             method: 'POST',
             mode: 'cors',
             headers: {
@@ -48,7 +49,11 @@ const CreatePrescriptionModal = ({ isOpen, handleClose, updatePrescriptionList }
             body: JSON.stringify({
                 description: data.prescriptionDescr
             })
-        });
+        }, {
+            accessToken: getAccessToken(),
+            refreshToken: getRefreshToken()
+        }
+        );
 
         if (res.ok) {
             window.location.reload(true);

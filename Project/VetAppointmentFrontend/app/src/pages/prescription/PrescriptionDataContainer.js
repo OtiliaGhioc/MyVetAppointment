@@ -41,10 +41,15 @@ const PrescriptionDataContainer = () => {
     }
 
     async function cancelPrescription(prsID) {
-        const res = await fetch(`${API_ROOT}/v1.0/Prescriptions/${prsID}`, {
+        const res = await makeRequestWithJWT(
+            `${API_ROOT}/v1.0/Prescriptions/${prsID}`, {
             method: 'DELETE',
             mode: 'cors'
-        });
+        }, {
+            accessToken: getAccessToken(),
+            refreshToken: getRefreshToken()
+        }
+        )
 
         if (res.ok) {
             window.location.reload(true);
