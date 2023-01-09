@@ -4,12 +4,14 @@ import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from "react-router-dom";
 import { API_ROOT } from '../../env';
+import CancelAppointmentModal from './CancelAppointmentModal';
 
 
 const AppointmentDataContainer = () => {
 
     const navigate = useNavigate();
     const [appointment, setAppointment] = useState();
+    const [isCancelAppointmentModalOpen, setIsCancelAppointmentModalOpen] = React.useState(false);
     let { id } = useParams();
 
     const fetchDataAppointment = async () => {
@@ -36,7 +38,7 @@ const AppointmentDataContainer = () => {
         });
 
         if (res.ok) {
-            navigate("/me");
+            navigate("/appointments");
             return;
         }
     }
@@ -47,22 +49,28 @@ const AppointmentDataContainer = () => {
         fetchDataAppointment();
 
     }, [navigate])
+    
+    const openCancelAppointmentModal = () => {
+        setIsCancelAppointmentModalOpen(true);
+    }
 
+    const handleCancelAppointmentModalClose = () => {
+        setIsCancelAppointmentModalOpen(false);
+    }
+    
     if (appointment)
         return (
             <div>
                 {
                     <>
-                        <Container style={{ width: '100%', height: '5rem', padding: '1rem', backgroundColor: "#8fc3e3" }}>
+                        <Container style={{ width: '100%', padding: '1rem', backgroundImage: 'url(/img/dog_paws_pattern.jpg)', textShadow: '2px 2px 4px black', backgroundSize: '150%', color: 'white' }}>
                             <h1>{appointment.title}</h1>
-                        </Container>
-
-                        <Container style={{ width: '100%', padding: '1rem', backgroundColor: "#8fc3e3" }}>
                             <h3>Created on: {appointment.dueDate}</h3>
                             <h3>Created by: {appointment.appointer}</h3>
                             <h3>Appointed to: {appointment.appointee}</h3>
                             <h3>Description: {appointment.description}</h3>
-                            <Button variant="contained" style={{ margin: '0 auto 0 1rem', border: '2px solid', color: 'red' }} onClick={cancelAppointment}>Cancel</Button>
+                            <Button variant="contained" style={{ margin: '0 auto 0 1rem', border: '2px solid', color: 'red', backgroundColor: '#751919' }} onClick={openCancelAppointmentModal}>Cancel</Button>
+                            <CancelAppointmentModal isOpen={isCancelAppointmentModalOpen} handleClose={handleCancelAppointmentModalClose} cancelAppointmentCallback={cancelAppointment}/>
                         </Container>
                     </>
                 }
