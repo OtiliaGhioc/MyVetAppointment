@@ -3,15 +3,18 @@ import * as React from 'react';
 import BaseDataTable from '../../components/data_table/BaseDataTable';
 
 
-const createMedicalHistoryRowEntry = (medicalEntryId, title, date, appointer) => {
+const createMedicalHistoryRowEntry = (title, appointmentId, prescriptionId) => {
     return {
         title,
-        date,
-        appointer,
-        button: {
+        appointment: {
             isButton: true,
-            href: `/medical=entry/${medicalEntryId}`,
-            text: 'View'
+            href: `/appointment/${appointmentId}`,
+            text: 'Appointment'
+        },
+        prescription: {
+            isButton: true,
+            href: `/prescriptions`,
+            text: 'Prescription'
         }
     };
 }
@@ -21,30 +24,9 @@ const MedicalHistoryList = ({ medicalHistoryEntries }) => {
         {
             id: 'title',
             numeric: false,
-            disablePadding: true,
+            disablePadding: false,
             canBeSorted: false,
             label: 'Title',
-        },
-        {
-            id: 'date',
-            numeric: true,
-            disablePadding: false,
-            canBeSorted: true,
-            label: 'Date',
-        },
-        {
-            id: 'appointer',
-            numeric: true,
-            disablePadding: false,
-            canBeSorted: false,
-            label: 'Appointer',
-        },
-        {
-            id: 'view',
-            numeric: true,
-            disablePadding: false,
-            canBeSorted: false,
-            label: 'View',
         }
     ]
 
@@ -53,7 +35,7 @@ const MedicalHistoryList = ({ medicalHistoryEntries }) => {
     React.useEffect(() => {
         if (typeof medicalHistoryEntries === 'undefined') return;
         setMedicalHistoryData([...medicalHistoryEntries.map((item) => {
-            return createMedicalHistoryRowEntry(item.medicalHistoryEntryId, item.title, item.date, item.appointer);
+            return createMedicalHistoryRowEntry(item.title, item.appointmentId, item.prescriptionId);
         })])
     }, [medicalHistoryEntries])
 

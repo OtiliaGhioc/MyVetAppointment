@@ -53,11 +53,11 @@ namespace VetAppointment.WebAPI.Controllers
                 }
             }
 
-            //return Ok(filteredPrescriptions);
+            return Ok(filteredPrescriptions);
             //PRESCRIPTIILE SUNT LEGATE DE USER PRIN MEDICAL HISTORY;
             //PANA NU E IMPLEMENTAT ALA CA SA PUTEM ADAUGA PRESCRIPTIA IN MEDICAL HISTORY DEGEABA FILTRAM
 
-            return Ok(prescriptions);
+            //return Ok(prescriptions);
         }
 
         private async Task<IEnumerable<MedicalHistoryEntry>> GetUserMedicalHistoryEntries(User user)
@@ -76,38 +76,77 @@ namespace VetAppointment.WebAPI.Controllers
             return Ok(new PrescriptionDto());
         }
 
-        //[Authorize(Policy = "medic")]
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] PrescriptionDto prescriptionDto)
         {
-            await prescriptionRepository.Add(new Prescription(prescriptionDto.Description));
-            return Ok();
+            string? userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            if (userId == null)
+                return NotFound();
+            User? user = await userRepository.Get(Guid.Parse(userId));
+            if (user == null)
+                return NotFound();
+
+            if (user.IsMedic)
+            {
+                await prescriptionRepository.Add(new Prescription(prescriptionDto.Description));
+                return Ok();
+            }
+
+            return Forbid();
         }
 
-        //[Authorize(Policy = "medic")]
+        [Authorize]
         [HttpPut("{prescriptionId:guid}")]
         public async Task<IActionResult> Update(Guid prescriptionId, [FromBody] PrescriptionDto prescriptionDto)
         {
-            Prescription? prescription = await prescriptionRepository.Get(prescriptionId);
-            if (prescription == null)
+            string? userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            if (userId == null)
                 return NotFound();
-            prescription = prescriptionDto.ApplyModificationsToModel(prescription);
-            mapper.Map(prescriptionDto, prescription);
-            prescriptionRepository.Update(prescription);
-            await prescriptionRepository.SaveChanges();
-            return NoContent();
+            User? user = await userRepository.Get(Guid.Parse(userId));
+            if (user == null)
+                return NotFound();
+
+            if (user.IsMedic)
+            {
+                Prescription? prescription = await prescriptionRepository.Get(prescriptionId);
+                if (prescription == null)
+                    return NotFound();
+                prescription = prescriptionDto.ApplyModificationsToModel(prescription);
+                mapper.Map(prescriptionDto, prescription);
+                prescriptionRepository.Update(prescription);
+                await prescriptionRepository.SaveChanges();
+                return NoContent();
+            }
+
+            return Forbid();
         }
 
-        //[Authorize(Policy = "medic")]
+        [Authorize]
         [HttpDelete("{prescriptionId:guid}")]
         public async Task<IActionResult> Delete(Guid prescriptionId)
         {
-            Prescription? prescription = await prescriptionRepository.Get(prescriptionId);
-            if (prescription == null)
+            string? userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            if (userId == null)
                 return NotFound();
-            prescriptionRepository.Delete(prescription);
-            await prescriptionRepository.SaveChanges();
-            return NoContent();
+            User? user = await userRepository.Get(Guid.Parse(userId));
+            if (user == null)
+                return NotFound();
+
+            if (user.IsMedic)
+            {
+                Prescription? prescription = await prescriptionRepository.Get(prescriptionId);
+                if (prescription == null)
+                    return NotFound();
+                prescriptionRepository.Delete(prescription);
+                await prescriptionRepository.SaveChanges();
+                return NoContent();
+            }
+
+            return Forbid();
         }
     }
 }
