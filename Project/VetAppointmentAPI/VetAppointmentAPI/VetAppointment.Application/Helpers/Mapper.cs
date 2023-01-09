@@ -34,7 +34,7 @@ namespace VetAppointment.WebAPI.Helpers
                 .ForMember(x => x.OfficeId, opt => opt.MapFrom(y => y.OfficeId))
                 .ForMember(x => x.JoinedDate, opt => opt.MapFrom(y => y.JoinedDate));
             CreateMap<OfficeDto, Office>()
-                .ForMember(x => x.OfficeId, opt => opt.MapFrom(y => y.OfficeId))
+                .ForMember(x => x.OfficeId, opt => opt.Ignore())
                 .ForMember(x => x.Address, opt => opt.MapFrom(y => y.Address));
             CreateMap<Office, OfficeDto>()
                 .ForMember(x => x.OfficeId, opt => opt.MapFrom(y => y.OfficeId))

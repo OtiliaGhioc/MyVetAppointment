@@ -37,7 +37,7 @@ namespace VetAppointment.Domain.Entities
             if (UserOffice == null)
                 return Result.Failure("User does not have an office registered!");
             UserOffice = null;
-            OfficeId = Guid.Empty;
+            OfficeId = null;
             HasOffice = false;
             return Result.Success();
         }
