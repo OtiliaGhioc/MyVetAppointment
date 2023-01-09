@@ -12,6 +12,7 @@ import MedicalHistoryListPage from './pages/medical_history_list/MedicalHistoryL
 import NotFound from './pages/not_found/NotFound';
 import ProfilePage from './pages/profile/ProfilePage';
 import RegisterPage from './pages/register/RegisterPage';
+import PrescriptionPage from './pages/prescription/PrescriptionPage';
 
 const App = () => {
   const [currentPath, setCurrentPath] = React.useState(window.location.pathname);
@@ -29,6 +30,7 @@ const App = () => {
           <Route exact path="/appointments" element={<AppointmentsListPage locationChangeCallback={handleLocationChange} />} />
           <Route exact path="/medical-history" element={<MedicalHistoryListPage locationChangeCallback={handleLocationChange} />} />
           <Route exact path="/drug-stocks" element={<DrugStocksPage locationChangeCallback={handleLocationChange} />} />
+          <Route exact path="/prescriptions" element={<PrescriptionPage locationChangeCallback={handleLocationChange} />} />
           <Route exact path="/login" element={<LoginPage locationChangeCallback={handleLocationChange} />} />
           <Route exact path="/register" element={<RegisterPage locationChangeCallback={handleLocationChange} />} />
           <Route exact path="/medical-history/:id" element={<MedicalHistoryPage />} />
