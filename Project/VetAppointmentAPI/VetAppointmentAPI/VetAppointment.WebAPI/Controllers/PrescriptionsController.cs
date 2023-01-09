@@ -53,7 +53,11 @@ namespace VetAppointment.WebAPI.Controllers
                 }
             }
 
-            return Ok(filteredPrescriptions);
+            //return Ok(filteredPrescriptions);
+            //PRESCRIPTIILE SUNT LEGATE DE USER PRIN MEDICAL HISTORY;
+            //PANA NU E IMPLEMENTAT ALA CA SA PUTEM ADAUGA PRESCRIPTIA IN MEDICAL HISTORY DEGEABA FILTRAM
+
+            return Ok(prescriptions);
         }
 
         private async Task<IEnumerable<MedicalHistoryEntry>> GetUserMedicalHistoryEntries(User user)
@@ -72,6 +76,7 @@ namespace VetAppointment.WebAPI.Controllers
             return Ok(new PrescriptionDto());
         }
 
+        //[Authorize(Policy = "medic")]
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] PrescriptionDto prescriptionDto)
         {
@@ -79,6 +84,7 @@ namespace VetAppointment.WebAPI.Controllers
             return Ok();
         }
 
+        //[Authorize(Policy = "medic")]
         [HttpPut("{prescriptionId:guid}")]
         public async Task<IActionResult> Update(Guid prescriptionId, [FromBody] PrescriptionDto prescriptionDto)
         {
@@ -92,6 +98,7 @@ namespace VetAppointment.WebAPI.Controllers
             return NoContent();
         }
 
+        //[Authorize(Policy = "medic")]
         [HttpDelete("{prescriptionId:guid}")]
         public async Task<IActionResult> Delete(Guid prescriptionId)
         {
