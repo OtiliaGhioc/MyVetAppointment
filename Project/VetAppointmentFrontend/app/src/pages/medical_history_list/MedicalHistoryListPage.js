@@ -19,7 +19,8 @@ const MedicalHistoryListPage = ({ locationChangeCallback }) => {
     }, [location]);
 
     const setPageData = (data) => {
-        setMedicalHistoryEntries(data.medicalHistoryEntries);
+        console.log(data);
+        setMedicalHistoryEntries(data);
     }
 
     React.useEffect(() => {
@@ -27,7 +28,7 @@ const MedicalHistoryListPage = ({ locationChangeCallback }) => {
 
         const fetchMyMedicalHistoryEntries = async () => {
             const res = await makeRequestWithJWT(
-                `${API_ROOT}/v1.0/Users/me/medical-history`, {
+                `${API_ROOT}/v1.0/MedicalEntries`, {
                 method: 'GET',
                 mode: 'cors'
             }, {
@@ -48,6 +49,8 @@ const MedicalHistoryListPage = ({ locationChangeCallback }) => {
             }
 
             const jsonData = await res.json();
+            
+            console.log(jsonData);
             setPageData(jsonData);
         }
 
