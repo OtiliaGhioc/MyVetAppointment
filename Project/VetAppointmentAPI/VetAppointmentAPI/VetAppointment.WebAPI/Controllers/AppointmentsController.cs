@@ -64,7 +64,7 @@ namespace VetAppointment.WebAPI.Controllers
             await appointmentRepository.Add(appointment);
             await appointmentRepository.SaveChanges();
 
-            return Created(nameof(Get), mapper.Map<AppointmentDetailDto>(appointment));
+            return Created(nameof(Get), new AppointmentDetailDto(appointment));
         }
 
         [HttpPut("{appointmentId:guid}")]

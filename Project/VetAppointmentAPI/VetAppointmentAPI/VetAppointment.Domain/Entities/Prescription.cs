@@ -13,7 +13,7 @@ namespace VetAppointment.Domain.Entities
 
         public Guid PrescriptionId { get; private set; }
         public IEnumerable<PrescriptionDrug> Drugs { get; private set; }
-        public string Description { get; private set; }
+        public string Description { get; set; }
 
         public Result AddDrugToPrescription(PrescriptionDrug drug)
         {
