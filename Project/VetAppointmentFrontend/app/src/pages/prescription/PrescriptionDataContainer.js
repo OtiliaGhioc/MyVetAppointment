@@ -36,7 +36,6 @@ const PrescriptionDataContainer = () => {
         }
 
         const json_data = await response.json();
-        console.log(json_data);
 
         setPrescription(json_data);
     }

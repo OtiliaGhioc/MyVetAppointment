@@ -20,7 +20,7 @@ namespace VetAppointment.WebAPI.Controllers
         {
             this.appointmentRepository = appointmentRepository;
             this.userRepository = userRepository;
-            this.appoinmentValidator= validator;
+            this.appoinmentValidator = validator;
             this.mapper = mapper;
         }
 
@@ -34,7 +34,7 @@ namespace VetAppointment.WebAPI.Controllers
         public async Task<IActionResult> Get(Guid id)
         {
             Appointment? appointment = await appointmentRepository.Get(id);
-            if (appointment == null) 
+            if (appointment == null)
                 return NotFound();
 
             User? appointer = await userRepository.Get(appointment.AppointerId);
@@ -74,7 +74,6 @@ namespace VetAppointment.WebAPI.Controllers
             if (appointment == null)
                 return NotFound();
             appointment = appointmentDto.ApplyModificationsToModel(appointment);
-            mapper.Map(appointmentDto, appointment);
             appointmentRepository.Update(appointment);
             await appointmentRepository.SaveChanges();
             return NoContent();

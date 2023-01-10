@@ -2,7 +2,7 @@ import Container from '@mui/material/Container';
 import * as React from 'react';
 import BaseDataTable from '../../components/data_table/BaseDataTable';
 
-const createAppointmentRowEntry = (appointmentId, title, dueDate, dueTime, appointer) => {
+const createAppointmentRowEntry = (appointmentId, title, dueDate, dueTime, appointer,appointmentCallback) => {
     return {
         title,
         dueDate,
@@ -16,7 +16,7 @@ const createAppointmentRowEntry = (appointmentId, title, dueDate, dueTime, appoi
     };
 }
 
-const AppointmentsList = ({ appointments }) => {
+const AppointmentsList = ({ appointments, appointmentCallback }) => {
     const appointmentsTableHeaderValues = [
         {
             id: 'title',
@@ -52,7 +52,8 @@ const AppointmentsList = ({ appointments }) => {
             disablePadding: false,
             canBeSorted: false,
             label: 'View',
-        }
+        },
+       
     ]
 
     const [appointmentsData, setAppointmentsData] = React.useState([]);
@@ -60,7 +61,7 @@ const AppointmentsList = ({ appointments }) => {
     React.useEffect(() => {
         if (typeof appointments === 'undefined') return;
         setAppointmentsData([...appointments.map((item) => {
-            return createAppointmentRowEntry(item.appointmentId, item.title, item.dueDate, item.dueTime, item.appointer);
+            return createAppointmentRowEntry(item.appointmentId, item.title, item.dueDate, item.dueTime, item.appointer,appointmentCallback);
         })])
     }, [appointments])
 
