@@ -32,6 +32,7 @@ const ProfilePage = ({ locationChangeCallback }) => {
     const [isMedic, setIsMedic] = React.useState(false);
     const [hasOffice, setHasOffice] = React.useState(false);
     const [joinedDate, setJoinedDate] = React.useState('March 2020');
+    const [officeId, setOfficeId] = React.useState('officeId');
 
     const navigate = useNavigate();
 
@@ -50,6 +51,7 @@ const ProfilePage = ({ locationChangeCallback }) => {
         setIsMedic(data.isMedic);
         setJoinedDate(data.joinedDate);
         setHasOffice(data.hasOffice);
+        setOfficeId(data.officeId);
     }
 
     React.useEffect(() => {
@@ -78,6 +80,7 @@ const ProfilePage = ({ locationChangeCallback }) => {
             }
 
             const jsonData = await res.json();
+            console.log(jsonData);
             setPageData(jsonData);
         }
         fetchData();
@@ -90,7 +93,7 @@ const ProfilePage = ({ locationChangeCallback }) => {
                     <Grid item xs={4}/>
                     <Grid item xs={4}>
                         <Item>
-                            <ProfileUserCard username={username} isMedic={isMedic} joinedDate={joinedDate} hasOffice={hasOffice} />
+                            <ProfileUserCard locationChangeCallback={locationChangeCallback} username={username} isMedic={isMedic} joinedDate={joinedDate} hasOffice={hasOffice} officeId={officeId}/>
                         </Item>
                     </Grid>
                     <Grid item xs={4} />
