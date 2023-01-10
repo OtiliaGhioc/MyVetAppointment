@@ -30,11 +30,6 @@ const PrescriptionDataContainer = () => {
             return;
         }
 
-        if (!response.ok) {
-            navigate("/not-found");
-            return;
-        }
-
         const json_data = await response.json();
 
         setPrescription(json_data);

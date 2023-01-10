@@ -71,7 +71,6 @@ const PrescriptionPage = ({ locationChangeCallback }) => {
                             <Item>
                                 <Container style={{ width: '100%', height: 'fit-content', padding: '1rem', backgroundColor: "#8fc3e3", backgroundImage: 'url(/img/dog_paws_pattern.jpg)', backgroundSize: '500%' }}>
                                     <Button variant="contained" style={{ margin: '0 auto', border: '3px solid', color: 'white', backgroundColor: "#0155a4" }} onClick={openCreateDrugModal}>Add Prescription</Button>
-                                    <Button variant="contained" style={{ margin: '0 auto', border: '3px solid', color: 'red', backgroundColor: "#0155a4" }} href='/me'>Back</Button>
                                     
                                     <CreatePrescriptionModal
                                         isOpen={isCreatePrescriptionModalOpen}

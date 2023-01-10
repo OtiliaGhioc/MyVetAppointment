@@ -1,5 +1,4 @@
-﻿using Microsoft.VisualBasic;
-using VetAppointment.Domain.Entities;
+﻿using VetAppointment.Domain.Entities;
 
 namespace VetAppointment.Application.DTOs
 {

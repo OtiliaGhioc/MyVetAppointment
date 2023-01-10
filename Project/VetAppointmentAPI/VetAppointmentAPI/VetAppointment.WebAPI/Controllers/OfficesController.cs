@@ -4,14 +4,11 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
-using VetAppointment.Application.Commands;
 using VetAppointment.Application.Dtos;
 using VetAppointment.Application.Queries;
-using VetAppointment.Application.Repositories.Impl;
 using VetAppointment.Application.Repositories.Interfaces;
 using VetAppointment.Domain.Entities;
 using VetAppointment.WebAPI.Dtos;
-using VetAppointment.WebAPI.Validators;
 
 namespace VetAppointment.WebAPI.Controllers
 {

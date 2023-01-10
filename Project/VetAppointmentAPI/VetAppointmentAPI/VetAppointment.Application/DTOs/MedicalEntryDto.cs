@@ -1,9 +1,8 @@
-﻿using VetAppointment.Application.Repositories.Interfaces;
-using VetAppointment.Domain.Entities;
+﻿using VetAppointment.Domain.Entities;
 
 namespace VetAppointment.WebAPI.Dtos
 {
-    namespace MedicalEntryDto 
+    namespace MedicalEntryDto
     {
         public class MedicalEntryCreateDto
         {
