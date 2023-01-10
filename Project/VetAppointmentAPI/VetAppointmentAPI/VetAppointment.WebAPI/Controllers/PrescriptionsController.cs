@@ -53,11 +53,7 @@ namespace VetAppointment.WebAPI.Controllers
                 }
             }
 
-            return Ok(filteredPrescriptions);
-            //PRESCRIPTIILE SUNT LEGATE DE USER PRIN MEDICAL HISTORY;
-            //PANA NU E IMPLEMENTAT ALA CA SA PUTEM ADAUGA PRESCRIPTIA IN MEDICAL HISTORY DEGEABA FILTRAM
-
-            //return Ok(prescriptions);
+            return Ok(prescriptions);
         }
 
         private async Task<IEnumerable<MedicalHistoryEntry>> GetUserMedicalHistoryEntries(User user)
