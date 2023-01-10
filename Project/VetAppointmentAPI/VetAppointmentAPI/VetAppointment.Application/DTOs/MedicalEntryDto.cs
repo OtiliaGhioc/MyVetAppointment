@@ -1,4 +1,5 @@
-﻿using VetAppointment.Domain.Entities;
+﻿using VetAppointment.Application.Repositories.Interfaces;
+using VetAppointment.Domain.Entities;
 
 namespace VetAppointment.WebAPI.Dtos
 {
@@ -42,6 +43,21 @@ namespace VetAppointment.WebAPI.Dtos
             public string Appointer { get; private set; }
             public string Title { get; private set; }
             public string Date { get; private set; }
+        }
+
+        public class MedicalEntryEssentialOnlyDtoWithPrescription
+        {
+            public MedicalEntryEssentialOnlyDtoWithPrescription(MedicalHistoryEntry medicalHistoryEntry, string title)
+            {
+                Title = title;
+                PrescriptionId = medicalHistoryEntry.PrescriptionId;
+                AppointmentId = medicalHistoryEntry.AppointmentId;
+            }
+
+            public Guid MedicalHistoryEntryId { get; private set; }
+            public string Title { get; private set; }
+            public Guid PrescriptionId { get; private set; }
+            public Guid AppointmentId { get; private set; }
         }
     }
 }

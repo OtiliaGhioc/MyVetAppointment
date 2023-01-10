@@ -1,6 +1,9 @@
 ﻿using AutoMapper;
 using FluentValidation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
+using VetAppointment.Application.Repositories.Impl;
 using VetAppointment.Application.Repositories.Interfaces;
 using VetAppointment.Domain.Entities;
 using VetAppointment.WebAPI.Dtos.MedicalEntryDto;
@@ -17,21 +20,41 @@ namespace VetAppointment.WebAPI.Controllers
         private readonly IPrescriptionRepository prescriptionRepository;
         private readonly IValidator<MedicalEntryCreateDto> medicalEntryValidator;
         private readonly IMapper mapper;
+        private readonly IUserRepository userRepository;
 
         public MedicalEntriesController(IMedicalHistoryEntryRepository medicalHistoryEntryRepository,
-            IAppointmentRepository appointmentRepository, IPrescriptionRepository prescriptionRepository, IValidator<MedicalEntryCreateDto> medicalEntryValidator, IMapper mapper)
+            IAppointmentRepository appointmentRepository, IPrescriptionRepository prescriptionRepository, IUserRepository userRepository, IValidator<MedicalEntryCreateDto> medicalEntryValidator, IMapper mapper)
         {
             this.medicalHistoryEntryRepository = medicalHistoryEntryRepository;
             this.appointmentRepository = appointmentRepository;
             this.prescriptionRepository = prescriptionRepository;
             this.medicalEntryValidator = medicalEntryValidator;
             this.mapper = mapper;
+            this.userRepository = userRepository;
         }
 
+        //[Authorize]
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            return Ok(await medicalHistoryEntryRepository.All());
+            //string? userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            //if (userId == null)
+            //    return NotFound();
+            //User? user = await userRepository.Get(Guid.Parse(userId));
+            //if (user == null)
+            //    return NotFound();
+
+            var history = await medicalHistoryEntryRepository.All();
+
+            List<MedicalEntryEssentialOnlyDtoWithPrescription> historyEntries = new();
+            foreach (var item in history)
+            {
+                Appointment? appointment = await appointmentRepository.Get(item.AppointmentId);
+                historyEntries.Add(new MedicalEntryEssentialOnlyDtoWithPrescription(item, appointment.Title));
+            }
+
+            return Ok(historyEntries);
         }
 
         [HttpGet("{medicalEntryId:guid}")]
@@ -63,7 +86,7 @@ namespace VetAppointment.WebAPI.Controllers
             await medicalHistoryEntryRepository.Add(medicalHistoryEntry);
             await medicalHistoryEntryRepository.SaveChanges();
 
-            return Created(nameof(Get), mapper.Map<MedicalEntryDetailDto>(medicalHistoryEntry));
+            return Ok();
         }
 
         [HttpDelete("{medicalEntryId:guid}")]

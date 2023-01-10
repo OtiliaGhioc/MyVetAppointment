@@ -40,7 +40,7 @@ const AppointmentDataContainer = () => {
         });
 
         if (res.ok) {
-            navigate("/appointments");
+            navigate("/appointappointmentsnts");
             return;
         }
     }
