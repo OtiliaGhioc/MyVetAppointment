@@ -60,7 +60,6 @@ const PrescriptionDataContainer = () => {
             let id = prescription[i].prescriptionId;
             
             prescriptionList.push(<Container style={{ width: '100%', padding: '1rem', backgroundColor: "#8fc3e3", border: '1px solid white', backgroundImage: 'url(/img/dog_paws_pattern.jpg)', backgroundSize: '250%'}}>
-            <h3 style={{color: "white"}}>Drugs: {drug}</h3>
             <h3 style={{color: "white"}}>Description: {descr}</h3>
             <Button variant="contained" style={{ margin: '0 auto 0 1rem', border: '3px solid', color: 'red', backgroundColor: "#0155a4" }} onClick={() => cancelPrescription(id)}>Remove</Button>
         </Container>);
