@@ -99,6 +99,36 @@ namespace VetAppointment.WebAPI.Controllers
             return Ok(await userRepository.All());
         }
 
+        [HttpGet("medics")]
+        public async Task<IActionResult> GetMedics()
+        {
+            List<User> users = (List<User>)await userRepository.All();
+            List<DetailUserDto> userDtos = new();
+
+            foreach(User user in users)
+            {
+                if (user.IsMedic)
+                    userDtos.Add(new DetailUserDto(user));
+            }
+
+            return Ok(userDtos);
+        }
+
+        [HttpGet("patients")]
+        public async Task<IActionResult> GetPatients()
+        {
+            List<User> users = (List<User>)await userRepository.All();
+            List<DetailUserDto> userDtos = new();
+
+            foreach (User user in users)
+            {
+                if (!user.IsMedic)
+                    userDtos.Add(new DetailUserDto(user));
+            }
+
+            return Ok(userDtos);
+        }
+
         // GET api/<UsersController>/5
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(Guid id)

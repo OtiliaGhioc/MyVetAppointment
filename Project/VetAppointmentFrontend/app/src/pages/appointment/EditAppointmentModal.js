@@ -15,7 +15,6 @@ import { useNavigate, useParams } from "react-router-dom";
 
 const editAppointmentSchema = object({
     title: string().min(1, 'Title is required'),
-    date: string().min(1, "Choose a date"),
     description: string()
 });
 
@@ -67,12 +66,11 @@ const EditAppointmentModal = ({ isOpen, handleClose, appointmentId, appointmentT
         submitAppointmentUpdate(data);
     };
 
-    console.log(appointmentData)
     return (
         <>
             <Dialog open={open} onClose={handleClose}>
                 <DialogTitle>
-                    <span style={{ fontWeight: '600', marginRight: '2rem' }}>Edit Appointment with id: {appointmentId}</span>
+                    <span style={{ fontWeight: '600', marginRight: '2rem' }}>Edit Appointment</span>
                     <IconButton
                         aria-label="close"
                         onClick={handleClose}
@@ -87,57 +85,41 @@ const EditAppointmentModal = ({ isOpen, handleClose, appointmentId, appointmentT
                     </IconButton>
                 </DialogTitle>
                 <DialogContent>
-                <Box component="form" noValidate onSubmit={handleSubmit(processSubmit)} sx={{ mt: 1 }}>
-                            <TextField
-                                {...register("title", { required: true })}
-                                margin="title"
-                                required
-                                fullWidth
-                                id="title"
-                                label="Title"
-                                name="title"
-                                type="string"
-                                autoFocus
-                                error={!!errors['title']}
-                                helperText={errors['title'] ? errors['title'].message : ''}
-                                style={{ margin: '1rem 0' }}
-                                defaultValue={appointmentTitle}
-                            />
-                             <TextField
-                                {...register("date", { required: true })}
-                                    id="datetime-local"
-                                    label="Next appointment"
-                                    type="datetime-local"
-                                    fullWidth
-                                    defaultValue={appointmentData}
-                                    sx={{ width: 250 }}
-                                    InputLabelProps={{
-                                        shrink: true,
-                                    }}
-                                    
-                            />
-                            <br></br>
-                            <label>
-                                Description
-                                <TextField
-                                    {...register("description", {required: false})}
-                                        id="description"
-                                        labelId="description"
-                                        fullWidth
-                                        multiline
-                                        rows={5}
-                                        defaultValue={appointmentDesc}
-                                    />
-                            </label>
-                            <Button
-                                type="submit"
-                                fullWidth
-                                variant="contained"
-                                sx={{ mt: 3, mb: 2 }}
-                                style={{ color: 'green' }}
-                            >
-                                Edit
-                            </Button>
+                    <Box component="form" noValidate onSubmit={handleSubmit(processSubmit)} sx={{ mt: 1 }}>
+                        <TextField
+                            {...register("title", { required: true })}
+                            margin="title"
+                            required
+                            fullWidth
+                            id="title"
+                            label="Title"
+                            name="title"
+                            type="string"
+                            autoFocus
+                            error={!!errors['title']}
+                            helperText={errors['title'] ? errors['title'].message : ''}
+                            style={{ margin: '1rem 0' }}
+                            defaultValue={appointmentTitle}
+                        />
+
+                        <TextField
+                            {...register("description", { required: false })}
+                            id="description"
+                            label="Description"
+                            fullWidth
+                            multiline
+                            rows={5}
+                            defaultValue={appointmentDesc}
+                        />
+                        <Button
+                            type="submit"
+                            fullWidth
+                            variant="contained"
+                            sx={{ mt: 3, mb: 2 }}
+                            style={{ color: 'green', backgroundColor: '#12521a' }}
+                        >
+                            Edit
+                        </Button>
                     </Box>
                 </DialogContent>
             </Dialog>

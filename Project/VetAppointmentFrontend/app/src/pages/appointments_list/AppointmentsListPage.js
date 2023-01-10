@@ -15,9 +15,12 @@ const AppointmentsListPage = ({ locationChangeCallback }) => {
     const [isEditAppointmentModalOpen, setIsEditAppointmentModalOpen] = React.useState(false);
     const [isCreateAppointmentModalOpen, setIsCreateAppointmentModalOpen] = React.useState(false);
 
-    const [usersList, setUsersList] = React.useState([]);
+    const [medicsList, setMedicsList] = React.useState([]);
+    const [patientsList, setPatientsList] = React.useState([]);
     const [currentuser, setCurrentUser] = React.useState();
     const [currentusername, setCurrentUserName] = React.useState();
+
+    const [isMedic, setIsMedic] = React.useState(false);
 
     React.useEffect(() => {
         document.title = getDocumentName('Appointments');
@@ -29,7 +32,6 @@ const AppointmentsListPage = ({ locationChangeCallback }) => {
 
     const setPageData = (dataApp, dataUser) => {
         setAppointments(dataApp.appointments);
-        setUsersList(dataUser);
     }
 
     React.useEffect(() => {
@@ -37,6 +39,30 @@ const AppointmentsListPage = ({ locationChangeCallback }) => {
 
         const fetchDataPage = async () => {
             let res = await makeRequestWithJWT(
+                `${API_ROOT}/v1.0/Users/me/`, {
+                method: 'GET',
+                mode: 'cors'
+            }, {
+                accessToken: getAccessToken(),
+                refreshToken: getRefreshToken()
+            }
+            )
+
+            if (res.status === 401) {
+                disconnectUser();
+                navigate('/login');
+                return;
+            }
+
+            if (!res.ok) {
+                navigate('/not-found');
+                return;
+            }
+
+            let userJson = await res.json();
+            setIsMedic(userJson.isMedic);
+
+            res = await makeRequestWithJWT(
                 `${API_ROOT}/v1.0/Users/me/appointments`, {
                 method: 'GET',
                 mode: 'cors'
@@ -61,26 +87,43 @@ const AppointmentsListPage = ({ locationChangeCallback }) => {
             setCurrentUser(jsonData.userId);
             setCurrentUserName(jsonData.username)
 
-            res = await makeRequestWithJWT(
-                `${API_ROOT}/v1.0/Users/`, {
-                method: 'GET',
-                mode: 'cors'
-            }, {
-                accessToken: getAccessToken(),
-                refreshToken: getRefreshToken()
+            if(isMedic) {
+                res = await makeRequestWithJWT(
+                    `${API_ROOT}/v1.0/Users/patients`, {
+                    method: 'GET',
+                    mode: 'cors'
+                }, {
+                    accessToken: getAccessToken(),
+                    refreshToken: getRefreshToken()
+                }
+                )
+                if (res.status === 401) {
+                    disconnectUser();
+                    navigate('/login');
+                    return;
+                }
+                let patientsJson = await res.json();
+                setPatientsList(patientsJson);
+            } else {
+                res = await makeRequestWithJWT(
+                    `${API_ROOT}/v1.0/Users/medics`, {
+                    method: 'GET',
+                    mode: 'cors'
+                }, {
+                    accessToken: getAccessToken(),
+                    refreshToken: getRefreshToken()
+                }
+                )
+                if (res.status === 401) {
+                    disconnectUser();
+                    navigate('/login');
+                    return;
+                }
+                let medicsJson = await res.json();
+                setMedicsList(medicsJson);
             }
-            )
-            if (res.status === 401) {
-                disconnectUser();
-                navigate('/login');
-                return;
-            }
-
-            const usersListData = await res.json();
-
-            setPageData(jsonData, usersListData);
-            console.log(usersListData)
-            console.log(jsonData)
+            
+            setPageData(jsonData);
         }
 
         fetchDataPage();
@@ -114,7 +157,7 @@ const AppointmentsListPage = ({ locationChangeCallback }) => {
                 sx={{ mt: 3, mb: 2 }}
                      onClick={openCreateAppointmentModal}
                 >
-                Add appointmnet
+                Add appointment
              </Button>
             <CreateAppointmentModal
                 currentUserId={currentuser}
@@ -122,7 +165,9 @@ const AppointmentsListPage = ({ locationChangeCallback }) => {
                 isOpen={isCreateAppointmentModalOpen}
                 handleClose={handleCreateAppointmentModalClose}
                 updateAppointmentList={updateAppointmentListState}
-                usersList={usersList} 
+                isMedic={isMedic}
+                medicsList={medicsList} 
+                patientsList={patientsList} 
             />
             </Container>
             <AppointmentsList appointments={appointments}></AppointmentsList>

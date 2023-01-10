@@ -19,7 +19,6 @@ const MedicalHistoryListPage = ({ locationChangeCallback }) => {
     }, [location]);
 
     const setPageData = (data) => {
-        console.log(data);
         setMedicalHistoryEntries(data);
     }
 
@@ -50,7 +49,6 @@ const MedicalHistoryListPage = ({ locationChangeCallback }) => {
 
             const jsonData = await res.json();
             
-            console.log(jsonData);
             setPageData(jsonData);
         }
 

@@ -81,7 +81,6 @@ const LoginPage = ({ locationChangeCallback }) => {
         }
 
         const jsonData = await res.json();
-        console.log(jsonData);
         storeTokens(jsonData.accessToken, jsonData.refreshToken);
         navigate("/me");
     }

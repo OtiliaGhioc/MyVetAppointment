@@ -24,7 +24,6 @@ test('test side drawer', async () => {
     const dom = render(<Router><SideDrawer locationChangeCallback={() => { }} /></Router>);
     const pageTitle = getById(dom.container, 'pageTitle');
     const pathname = window.location.pathname
-    console.log(pathname)
 
     if (pathname == '/me')
         expect(pageTitle).toHaveTextContent('My Profile')

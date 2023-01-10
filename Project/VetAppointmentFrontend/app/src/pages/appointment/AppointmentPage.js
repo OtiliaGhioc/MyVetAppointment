@@ -6,6 +6,7 @@ import Paper from '@mui/material/Paper';
 import { createTheme, styled, ThemeProvider } from '@mui/material/styles';
 import * as React from 'react';
 import { useEffect } from 'react';
+import { getDocumentName } from '../../util/DocumentUtil';
 import AppointmentDataContainer from './AppointmentDataContainer';
 
 const profileTheme = createTheme({
@@ -27,6 +28,10 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 const AppointmentPage = () => {
+    React.useEffect(() => {
+        document.title = getDocumentName('Appointment')
+    }, [])
+
     useEffect(() => { document.body.style.backgroundColor = '#ebf6fc' }, [])
 
     return (

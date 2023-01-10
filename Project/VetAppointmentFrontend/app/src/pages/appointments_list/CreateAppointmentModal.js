@@ -16,16 +16,14 @@ import { object, preprocess, string, number } from 'zod';
 const CreateAppointmentSchema = object({
     title: string().min(1, 'Title is required'),
     date: string(),
-    appointerId: string().min(1,'Appointer is required'),
-    appointeeId: string().min(1,'Appointee required'),
+    appointerId: string(),
+    appointeeId: string(),
     description: string()
 });
 
-const CreateAppointmentModal = ({currentUserId,currentUserName, isOpen, handleClose, updateAppointmentList, usersList }) => {
+const CreateAppointmentModal = ({ currentUserId, currentUserName, isOpen, handleClose, updateAppointmentList, medicsList, patientsList, isMedic }) => {
     const [open, setOpen] = React.useState(false);
-    const [user, setUser] = React.useState('');
-    const [date, setDate] = React.useState('');
-
+    
     const {
         register,
         handleSubmit,
@@ -53,7 +51,7 @@ const CreateAppointmentModal = ({currentUserId,currentUserName, isOpen, handleCl
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                appointerId: currentUserId,
+                appointerId: data.appointerId,
                 appointeeId: data.appointeeId,
                 dueDate: data.date,
                 title: data.title,
@@ -62,27 +60,19 @@ const CreateAppointmentModal = ({currentUserId,currentUserName, isOpen, handleCl
             })
         });
 
-        window.location.reload();
+
         if (res.ok) {
             let jsonData = await res.json();
             updateAppointmentList(jsonData);
             handleClose();
+            window.location.reload();
             return;
         }
     }
 
     const processSubmit = (data) => {
         submitAppointmentUpdate(data);
-        console.log(data)
     };
-
-    const handleUserChange = (event) => {
-        setUser(event.target.value);
-    };
-    const handleDateChange = (event) => {
-        setDate(event.target.value);
-    };
-
 
     return (
         <>
@@ -103,62 +93,54 @@ const CreateAppointmentModal = ({currentUserId,currentUserName, isOpen, handleCl
                     </IconButton>
                 </DialogTitle>
                 <DialogContent>
-                   {usersList.length > 1 ?
-                        <Box component="form" noValidate onSubmit={handleSubmit(processSubmit)} sx={{ mt: 1 }}>
-                            <TextField
-                                {...register("title", { required: true })}
-                                margin="title"
-                                required
-                                fullWidth
-                                id="title"
-                                label="Title"
-                                name="title"
-                                type="string"
-                                autoFocus
-                                error={!!errors['title']}
-                                helperText={errors['title'] ? errors['title'].message : ''}
-                                style={{ margin: '1rem 0' }}
-                            />
-                            <TextField 
-                             {...register("appointerId", { required: true })}
-                                InputProps={{
-                                    readOnly: true,
-                                }}
-                                margin="appointerId"
-                                required
-                                fullWidth
-                                id="outlined-disabled"
-                                label="Appointer"
-                                name="title"
-                                type="string"
-                                autoFocus
-                                error={!!errors['appointerId']}
-                                helperText={errors['appointerId'] ? errors['appointerId'].message : ''}
-                                style={{ margin: '1rem 0' }}
-                                defaultValue={currentUserName}
-                               
-                            /> 
-                            <FormControl fullWidth style={{ margin: '1rem 0' }}>
-                                <InputLabel id="selectAppointee">Appointee</InputLabel>
-                                <Select
-                                    {...register("appointeeId", { required: true })}
-                                    labelId="selectAppointeeIdLabel"
-                                    id="selectAppointeeId"
-                                   // value={user}
-                                    label="Appointee"
-                                    onChange={handleUserChange}
-                                >
-                                    {usersList.map(user => {
-                                        return (
-                                            <MenuItem value={user.userId}>{user.username}</MenuItem>
-                                        )
-                                    })}
-                                </Select>
-                            </FormControl> 
-                             <TextField
-                                {...register("date", { required: true })}
+                    {isMedic ?
+                        patientsList.length > 1 ?
+                            <Box component="form" noValidate onSubmit={handleSubmit(processSubmit)} sx={{ mt: 1 }}>
+                                <TextField
+                                    {...register("title", { required: true })}
+                                    required
+                                    fullWidth
+                                    id="title"
+                                    label="Title"
+                                    name="title"
+                                    type="string"
+                                    autoFocus
+                                    error={!!errors['title']}
+                                    helperText={errors['title'] ? errors['title'].message : ''}
+                                    style={{ margin: '1rem 0' }}
+                                />
+                                <FormControl fullWidth style={{ margin: '1rem 0' }}>
+                                    <InputLabel id="selectAppointer">Appointer</InputLabel>
+                                    <Select
+                                        {...register("appointerId", { required: true })}
+                                        id="selectAppointerId"
+                                        label="Appointer"
+                                        defaultValue={currentUserId}
+                                        style={{ margin: '1rem 0' }}
+                                    >
+                                        <MenuItem value={currentUserId}>{currentUserName}</MenuItem>
+                                    </Select>
+                                </FormControl>
+                                <FormControl fullWidth style={{ margin: '1rem 0' }}>
+                                    <InputLabel id="selectAppointee">Appointee</InputLabel>
+                                    <Select
+                                        {...register("appointeeId", { required: true })}
+                                        id="selectAppointeeId"
+                                        label="Appointee"
+                                        defaultValue={patientsList[0].userId}
+                                        style={{ margin: '1rem 0' }}
+                                    >
+                                        {patientsList.map(user => {
+                                            return (
+                                                <MenuItem value={user.userId}>{user.username}</MenuItem>
+                                            )
+                                        })}
+                                    </Select>
+                                </FormControl>
+                                <TextField
+                                    {...register("date", { required: true })}
                                     id="datetime-local"
-                                    label="Next appointment"
+                                    label="Date"
                                     type="datetime-local"
                                     defaultValue="2023-01-10T10:30"
                                     fullWidth
@@ -166,35 +148,118 @@ const CreateAppointmentModal = ({currentUserId,currentUserName, isOpen, handleCl
                                     InputLabelProps={{
                                         shrink: true,
                                     }}
-                                    
-                            />
-                            <br></br>
-                            <TextField
-                                {...register("description", {required: false})}
+                                    style={{ margin: '1rem auto 2rem auto' }}
+
+                                />
+                                <TextField
+                                    {...register("description", { required: false })}
                                     id="description"
-                                    labelId="description"
+                                    label="Description"
                                     fullWidth
                                     multiline
                                     rows={5}
-                                    defaultValue="Write a Description"
+                                    placeholder="Write a Description"
                                 />
-                            <Button
-                                type="submit"
-                                fullWidth
-                                variant="contained"
-                                sx={{ mt: 3, mb: 2 }}
-                            >
-                                Create
-                            </Button>
-                        </Box> :
-                        <Box>
-                            <Typography variant="h5" component="div" style={{ overflow: 'hidden', padding: '0.5rem' }} >
-                                No users to appoint
-                            </Typography>
-                            <Typography variant="h7" component="div" style={{ overflow: 'hidden', padding: '0.5rem' }} >
-                                Add uses to be able to create an appointment
-                            </Typography>
-                        </Box>} 
+                                <Button
+                                    type="submit"
+                                    fullWidth
+                                    variant="contained"
+                                    sx={{ mt: 3, mb: 2 }}
+                                >
+                                    Create
+                                </Button>
+                            </Box> :
+                            <Box>
+                                <Typography variant="h5" component="div" style={{ overflow: 'hidden', padding: '0.5rem' }} >
+                                    No users to appoint
+                                </Typography>
+                                <Typography variant="h7" component="div" style={{ overflow: 'hidden', padding: '0.5rem' }} >
+                                    Add uses to be able to create an appointment
+                                </Typography>
+                            </Box>
+                        : medicsList.length > 1 ?
+                            <Box component="form" noValidate onSubmit={handleSubmit(processSubmit)} sx={{ mt: 1 }}>
+                                <TextField
+                                    {...register("title", { required: true })}
+                                    required
+                                    fullWidth
+                                    id="title"
+                                    label="Title"
+                                    name="title"
+                                    type="string"
+                                    autoFocus
+                                    error={!!errors['title']}
+                                    helperText={errors['title'] ? errors['title'].message : ''}
+                                    style={{ margin: '1rem 0' }}
+                                />
+                                <FormControl fullWidth style={{ margin: '1rem 0' }}>
+                                    <InputLabel id="selectAppointer">Appointer</InputLabel>
+                                    <Select
+                                        {...register("appointerId")}
+                                        id="selectAppointeeId"
+                                        label="Appointer"
+                                        defaultValue={medicsList[0].userId}
+                                    >
+                                        {medicsList.map(user => {
+                                            return (
+                                                <MenuItem value={user.userId}>{user.username}</MenuItem>
+                                            )
+                                        })}
+                                    </Select>
+                                </FormControl>
+                                <FormControl fullWidth style={{ margin: '1rem 0' }}>
+                                    <InputLabel id="selectAppointee">Appointee</InputLabel>
+                                    <Select
+                                        {...register("appointeeId")}
+                                        id="selectAppointeeId"
+                                        label="Appointee"
+                                        defaultValue={currentUserId}
+                                        style={{ margin: '1rem 0' }}
+                                    >
+                                        <MenuItem value={currentUserId}>{currentUserName}</MenuItem>
+                                    </Select>
+                                </FormControl>
+                                <TextField
+                                    {...register("date", { required: true })}
+                                    id="datetime-local"
+                                    label="Date"
+                                    type="datetime-local"
+                                    defaultValue="2023-01-10T10:30"
+                                    fullWidth
+                                    sx={{ width: 250 }}
+                                    InputLabelProps={{
+                                        shrink: true,
+                                    }}
+                                    style={{ margin: '1rem auto 2rem auto' }}
+
+                                />
+                                <TextField
+                                    {...register("description", { required: false })}
+                                    id="description"
+                                    label="Description"
+                                    fullWidth
+                                    multiline
+                                    rows={5}
+                                    placeholder="Write a Description"
+                                />
+                                <Button
+                                    type="submit"
+                                    fullWidth
+                                    variant="contained"
+                                    sx={{ mt: 3, mb: 2 }}
+                                >
+                                    Create
+                                </Button>
+                            </Box> :
+                            <Box>
+                                <Typography variant="h5" component="div" style={{ overflow: 'hidden', padding: '0.5rem' }} >
+                                    No users to appoint
+                                </Typography>
+                                <Typography variant="h7" component="div" style={{ overflow: 'hidden', padding: '0.5rem' }} >
+                                    Add uses to be able to create an appointment
+                                </Typography>
+                            </Box>
+                    }
                 </DialogContent>
             </Dialog>
         </>

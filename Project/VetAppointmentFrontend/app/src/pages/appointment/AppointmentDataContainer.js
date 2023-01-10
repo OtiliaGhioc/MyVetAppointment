@@ -40,7 +40,7 @@ const AppointmentDataContainer = () => {
         });
 
         if (res.ok) {
-            navigate("/appointappointmentsnts");
+            navigate("/appointments");
             return;
         }
     }
@@ -79,8 +79,8 @@ const AppointmentDataContainer = () => {
                             <h3>Created by: {appointment.appointer}</h3>
                             <h3>Appointed to: {appointment.appointee}</h3>
                             <h3>Description: {appointment.description}</h3>
-                            <Button id=" cancel" type="button" variant="contained" style={{ margin: '0 auto 0 1rem', border: '2px solid', color: 'red' }} onClick={openCancelAppointmentModal}>Cancel</Button>
-                            <Button id="edit" type="button" variant="contained" style={{ margin: '0 auto 0 1rem', border: '2px solid', color: 'green' }} onClick={openEditAppointmentModal}>Edit</Button>
+                            <Button id="cancel" type="button" variant="contained" style={{ margin: '0 auto 0 1rem', border: '2px solid', color: 'red', backgroundColor: '#751919' }} onClick={openCancelAppointmentModal}>Cancel</Button>
+                            <Button id="edit" type="button" variant="contained" style={{ margin: '0 auto 0 1rem', border: '2px solid', color: 'green', backgroundColor: '#12521a' }} onClick={openEditAppointmentModal}>Edit</Button>
                             <CancelAppointmentModal isOpen={isCancelAppointmentModalOpen} handleClose={handleCancelAppointmentModalClose} cancelAppointmentCallback={cancelAppointment}/>
                             <EditAppointmentModal 
                                 isOpen={isEditAppointmentModalOpen} 
